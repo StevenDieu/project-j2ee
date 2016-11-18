@@ -26,7 +26,7 @@
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
-      <module name="project-j2ee" target="1.5" />
+      <module name="project-j2ee" target="1.6" />
     </bytecodeTargetLevel>
   </component>
 </project>
