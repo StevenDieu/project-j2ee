@@ -1,23 +1,29 @@
 package com.rizomm.ipii.steven.model;
 
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
+import java.io.Serializable;
+
 
 /**
  * Created by steven on 17/11/2016.
  */
 @Entity
-public class Category {
+@NamedQueries({
+        @NamedQuery(name = "findAll", query = "select c from Category c"),
+})
+public class Category{
+
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     int id;
 
     @NotNull
     String label;
+
+    public static final String FIND_ALL = "Category.findAll";
 
     public Category() {}
 

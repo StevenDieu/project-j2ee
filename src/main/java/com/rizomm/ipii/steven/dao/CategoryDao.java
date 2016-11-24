@@ -9,6 +9,8 @@ import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
 import javax.persistence.PersistenceContext;
+import javax.persistence.TypedQuery;
+import java.util.List;
 
 /**
  * Created by steven on 17/11/2016.
@@ -22,7 +24,7 @@ public class CategoryDao implements ICategoryDao{
     protected EntityManager em;
 
     @Override
-    public boolean createCategoty(Category category) {
+    public boolean createCategory(Category category) {
         if(Utils.isNotEmpty(category.getLabel())){
             em.persist(category);
             return true;
@@ -31,34 +33,40 @@ public class CategoryDao implements ICategoryDao{
     }
 
     @Override
-    public Category findCategotyById(int idCategory) {
+    public Category findCategoryById(int idCategory) {
         Category findCategory = em.find(Category.class, idCategory);
         return findCategory;
     }
 
     @Override
-    public Category findAllCategoty() {
-        Category findCategory = em.find(Category.class,);
-        return findCategory;
+    public List<Category> findAllCategory() {
+        TypedQuery<Category> query = em.createNamedQuery(Category.FIND_ALL, Category.class);
+        em.joinTransaction();
+        return query.getResultList();
     }
 
     @Override
-    public Boolean deleteCategotyById(int idCategory) {
+    public Boolean deleteCategoryById(int idCategory) {
         Category category = em.find(Category.class, idCategory);
         if(Utils.isNotEmpty(category.getId())){
-            return deleteCategoty(category);
+            return deleteCategory(category);
         }
         return false;
     }
 
     @Override
-    public Boolean deleteCategoty(Category category) {
+    public Boolean deleteCategory(Category category) {
         em.remove(category);
         Category findCategory = em.find(Category.class, category.getId());
         if(Utils.isEmpty(findCategory.getId())){
             return true;
         }
         return false;
+    }
+
+    @Override
+    public Category updateCategory(Category category) {
+        return em.merge(category);
     }
 
 }

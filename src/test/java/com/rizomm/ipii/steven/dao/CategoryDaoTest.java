@@ -27,7 +27,7 @@ public class CategoryDaoTest extends AbstractPersistentTest {
     public void shouldCreateACategoty() throws Exception {
         Category category = new Category(1,"Test Test");
         assertNull("Category should not be found", em.find(Category.class, category.getId()));
-        cd.createCategoty(category);
+        cd.createCategory(category);
         assertNotNull("Category should not be found", em.find(Category.class, category.getId()));
     }
 
@@ -36,7 +36,7 @@ public class CategoryDaoTest extends AbstractPersistentTest {
     public void shouldCreateACategotyEmpty() throws Exception {
         Category category = new Category();
         assertNull("Category should not be found", em.find(Category.class, category.getId()));
-        boolean isCreate = cd.createCategoty(category);
+        boolean isCreate = cd.createCategory(category);
         assertFalse("Category should be created with category empty", isCreate);
     }
 
@@ -44,9 +44,9 @@ public class CategoryDaoTest extends AbstractPersistentTest {
     public void shouldFindACategoty() throws Exception {
         Category category = new Category(1,"Test Test");
         assertNull("Category should not be found", em.find(Category.class, category.getId()));
-        cd.createCategoty(category);
+        cd.createCategory(category);
         assertNotNull("Category should not be found", em.find(Category.class, category.getId()));
-        Category findCategorie = cd.findCategotyById(category.getId());
+        Category findCategorie = cd.findCategoryById(category.getId());
         assertEquals("Category should be find with category", findCategorie.getId(), 1);
     }
 
@@ -54,9 +54,9 @@ public class CategoryDaoTest extends AbstractPersistentTest {
     public void shouldFindACategotyById() throws Exception {
         Category category = new Category(1,"Test Test");
         assertNull("Category should not be found", em.find(Category.class, category.getId()));
-        cd.createCategoty(category);
+        cd.createCategory(category);
         assertNotNull("Category should not be found", em.find(Category.class, category.getId()));
-        Category findCategorie = cd.findCategotyById(category.getId());
+        Category findCategorie = cd.findCategoryById(category.getId());
         assertEquals("Category should be find with category", findCategorie.getId(), 1);
     }
 
