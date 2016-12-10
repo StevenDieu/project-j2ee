@@ -6,14 +6,20 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.io.Serializable;
 
+import static com.rizomm.ipii.steven.model.Category.*;
+
 
 /**
  * Created by steven on 17/11/2016.
  */
 @Entity
 @NamedQueries({
-        @NamedQuery(name = "findAll", query = "select c from Category c"),
-})
+
+
+        @NamedQuery(name = FIND_ALL, query = "select c from Category c"),
+        @NamedQuery(name = DELETE_ALL, query = " delete from Category"),
+
+        })
 public class Category{
 
     @Id
@@ -23,7 +29,8 @@ public class Category{
     @NotNull
     String label;
 
-    public static final String FIND_ALL = "Category.findAll";
+    public static final String FIND_ALL = "Category.findAllCategory";
+    public static final String DELETE_ALL = "Category.deleteAllCategory";
 
     public Category() {}
 

@@ -12,6 +12,8 @@ import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
 import java.util.List;
 
+import static com.rizomm.ipii.steven.model.Category.*;
+
 /**
  * Created by steven on 17/11/2016.
  */
@@ -22,6 +24,7 @@ public class CategoryDao implements ICategoryDao{
 
     @PersistenceContext(unitName = "projectJ2ee")
     protected EntityManager em;
+    protected boolean isNotTest = true;
 
     @Override
     public boolean createCategory(Category category) {
@@ -41,14 +44,21 @@ public class CategoryDao implements ICategoryDao{
     @Override
     public List<Category> findAllCategory() {
         TypedQuery<Category> query = em.createNamedQuery(Category.FIND_ALL, Category.class);
-        em.joinTransaction();
+        if(isNotTest){
+            em.joinTransaction();
+        }
         return query.getResultList();
+    }
+
+    @Override
+    public void deleteAllCategory() {
+        em.createNamedQuery(Category.DELETE_ALL, Category.class).executeUpdate();
     }
 
     @Override
     public Boolean deleteCategoryById(int idCategory) {
         Category category = em.find(Category.class, idCategory);
-        if(Utils.isNotEmpty(category.getId())){
+        if(Utils.isNotEmpty(category)){
             return deleteCategory(category);
         }
         return false;
@@ -58,7 +68,7 @@ public class CategoryDao implements ICategoryDao{
     public Boolean deleteCategory(Category category) {
         em.remove(category);
         Category findCategory = em.find(Category.class, category.getId());
-        if(Utils.isEmpty(findCategory.getId())){
+        if(Utils.isEmpty(findCategory)){
             return true;
         }
         return false;
