@@ -43,7 +43,7 @@ public class CategoryDao implements ICategoryDao{
 
     @Override
     public List<Category> findAllCategory() {
-        TypedQuery<Category> query = em.createNamedQuery(Category.FIND_ALL, Category.class);
+        TypedQuery<Category> query = em.createNamedQuery(FIND_ALL, Category.class);
         if(isNotTest){
             em.joinTransaction();
         }
@@ -52,7 +52,7 @@ public class CategoryDao implements ICategoryDao{
 
     @Override
     public void deleteAllCategory() {
-        em.createNamedQuery(Category.DELETE_ALL, Category.class).executeUpdate();
+        em.createNamedQuery(DELETE_ALL, Category.class).executeUpdate();
     }
 
     @Override

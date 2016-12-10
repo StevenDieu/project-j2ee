@@ -14,20 +14,17 @@ import static com.rizomm.ipii.steven.model.Category.*;
  */
 @Entity
 @NamedQueries({
-
-
         @NamedQuery(name = FIND_ALL, query = "select c from Category c"),
         @NamedQuery(name = DELETE_ALL, query = " delete from Category"),
-
-        })
+})
 public class Category{
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    int id;
+    private int id;
 
     @NotNull
-    String label;
+    private String label;
 
     public static final String FIND_ALL = "Category.findAllCategory";
     public static final String DELETE_ALL = "Category.deleteAllCategory";

@@ -10,10 +10,16 @@ import java.util.List;
 public interface ICategoryDao {
 
     boolean createCategory(Category category);
+
     Category findCategoryById(int idCategory);
+
     void deleteAllCategory();
+
     Boolean deleteCategoryById(int idCategory);
+
     List<Category> findAllCategory();
+
     Category updateCategory(Category category);
+
     Boolean deleteCategory(Category category);
 }

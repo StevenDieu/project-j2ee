@@ -4,19 +4,14 @@
              xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence http://xmlns.jcp.org/xml/ns/persistence/persistence_2_1.xsd"
              version="2.1">
 
-    <persistence-unit name="projectJ2ee" transaction-type="RESOURCE_LOCAL">
-        <provider>org.eclipse.persistence.jpa.PersistenceProvider</provider>
-        <class>com.rizomm.ipii.steven.model.Category</class>
-        <class>com.rizomm.ipii.steven.model.Product</class>
-        <class>com.rizomm.ipii.steven.model.Order</class>
-        <properties>
-            <property name="javax.persistence.schema-generation.scripts.create-target" value="create.sql"/>
-            <property name="javax.persistence.schema-generation.scripts.drop-target" value="drop.sql"/>
-            <property name="javax.persistence.schema-generation.database.action" value="drop-and-create"/>
-            <property name="javax.persistence.jdbc.driver" value="org.apache.derby.jdbc.EmbeddedDriver"/>
-            <property name="javax.persistence.jdbc.url" value="jdbc:derby:memory:chapitre1DB;create=true"/>
-            <property name="eclipselink.logging.level" value="INFO"/>
-        </properties>
-    </persistence-unit>
-
+  <persistence-unit name="projectJ2ee" transaction-type="JTA">
+    <jta-data-source>jdbc/__default</jta-data-source>
+    <class>com.rizomm.ipii.steven.model.Category</class>
+    <class>com.rizomm.ipii.steven.model.Product</class>
+    <class>com.rizomm.ipii.steven.model.Order</class>
+    <properties>
+      <property name="javax.persistence.schema-generation.database.action" value="drop-and-create"/>
+      <property name="eclipselink.logging.level" value="INFO"/>
+    </properties>
+  </persistence-unit>
 </persistence>
