@@ -18,7 +18,7 @@ public class UserController implements Serializable {
     }
 
     public String pageCreateUser() {
-        return "bonjour.xhtml";
+        return "index.xhtml";
     }
 
 

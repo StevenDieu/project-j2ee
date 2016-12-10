@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="war" name="project-j2ee:war">
+    <output-path>$PROJECT_DIR$/target</output-path>
+    <root id="archive" name="steven-1.0.0-SNAPSHOT.war">
+      <element id="artifact" artifact-name="project-j2ee:war exploded" />
+    </root>
+  </artifact>
+</component>
