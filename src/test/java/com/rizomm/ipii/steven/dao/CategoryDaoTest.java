@@ -3,10 +3,7 @@ package com.rizomm.ipii.steven.dao;
 import com.rizomm.ipii.steven.AbstractPersistentTest;
 import com.rizomm.ipii.steven.model.Category;
 import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.Test;
-
-import javax.rmi.PortableRemoteObject;
 
 import java.util.List;
 
@@ -20,7 +17,7 @@ public class CategoryDaoTest extends AbstractPersistentTest {
     private CategoryDao cd = null;
 
     @Before
-    public void init(){
+    public void init() {
         cd = new CategoryDao();
         cd.em = em;
         cd.isNotTest = false;
@@ -28,7 +25,7 @@ public class CategoryDaoTest extends AbstractPersistentTest {
 
     @Test
     public void shouldCreateACategoty() throws Exception {
-        Category category = new Category(1,"Test Test");
+        Category category = new Category(1, "Test Test");
         assertNull("Category should not be found", em.find(Category.class, category.getId()));
 
         cd.createCategory(category);
@@ -47,7 +44,7 @@ public class CategoryDaoTest extends AbstractPersistentTest {
 
     @Test
     public void shouldFindACategoty() throws Exception {
-        Category category = new Category(1,"Test Test");
+        Category category = new Category(1, "Test Test");
         assertNull("Category should not be found", em.find(Category.class, category.getId()));
 
         cd.createCategory(category);
@@ -59,7 +56,7 @@ public class CategoryDaoTest extends AbstractPersistentTest {
 
     @Test
     public void shouldFindACategotyById() throws Exception {
-        Category category = new Category(1,"Test Test");
+        Category category = new Category(1, "Test Test");
         assertNull("Category should not be found", em.find(Category.class, category.getId()));
 
         cd.createCategory(category);
@@ -92,8 +89,8 @@ public class CategoryDaoTest extends AbstractPersistentTest {
 
     @Test
     public void shouldDeleteCategory() throws Exception {
-        Category category = new Category(1,"Test Test");
-        Category category2 = new Category(2,"Test Test");
+        Category category = new Category(1, "Test Test");
+        Category category2 = new Category(2, "Test Test");
         assertNull("Category should not be found", em.find(Category.class, category.getId()));
 
         tx.begin();
@@ -113,8 +110,8 @@ public class CategoryDaoTest extends AbstractPersistentTest {
 
     @Test
     public void shouldDeleteCategoryById() throws Exception {
-        Category category = new Category(1,"Test Test");
-        Category category2 = new Category(2,"Test Test");
+        Category category = new Category(1, "Test Test");
+        Category category2 = new Category(2, "Test Test");
         assertNull("Category should not be found", em.find(Category.class, category.getId()));
 
         tx.begin();
@@ -137,8 +134,8 @@ public class CategoryDaoTest extends AbstractPersistentTest {
 
     @Test
     public void shouldUpdateCategory() throws Exception {
-        Category category = new Category(1,"Test Test");
-        Category category2 = new Category(1,"Test2 Test2");
+        Category category = new Category(1, "Test Test");
+        Category category2 = new Category(1, "Test2 Test2");
         assertNull("Category should not be found", em.find(Category.class, category.getId()));
 
         tx.begin();

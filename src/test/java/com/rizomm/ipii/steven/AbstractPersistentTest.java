@@ -12,30 +12,30 @@ import java.util.Random;
 
 public abstract class AbstractPersistentTest {
 
-  // ======================================
-  // =             Attributes             =
-  // ======================================
+    // ======================================
+    // =             Attributes             =
+    // ======================================
 
-  protected static EntityManagerFactory emf = Persistence.createEntityManagerFactory("projectJ2eeLocal");
-  protected EntityManager em;
-  protected EntityTransaction tx;
+    protected static EntityManagerFactory emf = Persistence.createEntityManagerFactory("projectJ2eeLocal");
+    protected EntityManager em;
+    protected EntityTransaction tx;
 
-  // ======================================
-  // =          Lifecycle Methods         =
-  // ======================================
+    // ======================================
+    // =          Lifecycle Methods         =
+    // ======================================
 
-  @Before
-  public void initEntityManager() throws Exception {
-    em = emf.createEntityManager();
-    tx = em.getTransaction();
-  }
+    @Before
+    public void initEntityManager() throws Exception {
+        em = emf.createEntityManager();
+        tx = em.getTransaction();
+    }
 
-  @After
-  public void closeEntityManager() throws SQLException {
-    if (em != null) em.close();
-  }
+    @After
+    public void closeEntityManager() throws SQLException {
+        if (em != null) em.close();
+    }
 
-  protected Long getRandomId() {
-    return Math.abs(new Random().nextLong());
-  }
+    protected Long getRandomId() {
+        return Math.abs(new Random().nextLong());
+    }
 }

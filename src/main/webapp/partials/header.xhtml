@@ -1,0 +1,30 @@
+<ui:composition
+        xmlns="http://www.w3.org/1999/xhtml"
+        xmlns:h="http://xmlns.jcp.org/jsf/html"
+        xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+
+    <h:outputStylesheet library="library" name="css/bootstrap.css"/>
+    <h:outputStylesheet library="library" name="css/style.css"/>
+    <h:outputStylesheet library="library" name="css/flexslider.css"/>
+
+    <h:outputScript library="library" name="js/jquery.min.js" />
+
+    <h:panelGroup layout="block" styleClass="header">
+        <h:panelGroup layout="block" styleClass="header-top-strip">
+            <h:panelGroup layout="block" styleClass="container">
+                <h:panelGroup layout="block" styleClass="header-right">
+                    <h:panelGroup layout="block" styleClass="cart box_1">
+                        <h:link>
+                            <h3>
+                                <h:outputText value="0.00€" styleClass="simpleCart_total"/>
+                                (<h:outputText value="0" id="simpleCart_quantity" styleClass="simpleCart_quantity"/>)
+                            </h3>
+                            <h:panelGroup layout="block" styleClass="clearfix"></h:panelGroup>
+                        </h:link>
+                    </h:panelGroup>
+                </h:panelGroup>
+                <h:panelGroup layout="block" styleClass="clearfix"></h:panelGroup>
+            </h:panelGroup>
+        </h:panelGroup>
+    </h:panelGroup>
+</ui:composition>

@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html lang="fr"
+      xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+<h:head>
+    <title><ui:insert name="title">Default title</ui:insert></title>
+</h:head>
+<h:body>
+    <ui:include src="/partials/header.xhtml" />
+    <ui:include src="/partials/menu.xhtml" />
+    <div id="content"><ui:insert name="content">Default content</ui:insert></div>
+    <ui:include src="/partials/footer.xhtml" />
+</h:body>
+</html>

@@ -1,10 +1,11 @@
 package com.rizomm.ipii.steven.model;
 
-import com.sun.istack.NotNull;
-
 import javax.persistence.*;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotNull;
 
-import static com.rizomm.ipii.steven.model.Product.*;
+import static com.rizomm.ipii.steven.model.Product.DELETE_ALL;
+import static com.rizomm.ipii.steven.model.Product.FIND_ALL;
 
 /**
  * Created by steven on 17/11/2016.
@@ -15,26 +16,26 @@ import static com.rizomm.ipii.steven.model.Product.*;
         @NamedQuery(name = DELETE_ALL, query = " delete from Product"),
 })
 public class Product {
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private int id;
-
-    @ManyToOne(cascade = CascadeType.PERSIST)
-    @JoinColumn(name = "category_fk", nullable = false)
-    private Category idCategory;
-
-    @NotNull
-    private int stock;
-    @NotNull
-    private float price;
-    @NotNull
-    private String name;
-    private String description;
-    @NotNull
-    private String urlPicture;
 
     public static final String FIND_ALL = "Product.findAllProduct";
     public static final String DELETE_ALL = "Product.deleteAllProduct";
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private int id;
+    @ManyToOne(cascade = CascadeType.PERSIST)
+    @JoinColumn(name = "category_fk", nullable = false)
+    private Category idCategory;
+    @NotNull(message = "The stock can't be empty")
+    @Min(value = 0, message = "The stock can't be negative")
+    private int stock;
+    @NotNull(message = "The price can't be empty")
+    @Min(value = 0, message = "The value can't be negative")
+    private float price;
+    @NotNull(message = "The name can't be empty")
+    private String name;
+    private String description;
+    @NotNull(message = "The urlPicture can't be empty")
+    private String urlPicture;
 
     public Product() {
     }

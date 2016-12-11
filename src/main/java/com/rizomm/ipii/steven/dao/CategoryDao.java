@@ -7,12 +7,12 @@ import com.rizomm.ipii.steven.model.Category;
 import javax.ejb.Local;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
-import javax.persistence.EntityTransaction;
 import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
 import java.util.List;
 
-import static com.rizomm.ipii.steven.model.Category.*;
+import static com.rizomm.ipii.steven.model.Category.DELETE_ALL;
+import static com.rizomm.ipii.steven.model.Category.FIND_ALL;
 
 /**
  * Created by steven on 17/11/2016.
@@ -20,7 +20,7 @@ import static com.rizomm.ipii.steven.model.Category.*;
 
 @Stateless
 @Local
-public class CategoryDao implements ICategoryDao{
+public class CategoryDao implements ICategoryDao {
 
     @PersistenceContext(unitName = "projectJ2ee")
     protected EntityManager em;
@@ -28,7 +28,7 @@ public class CategoryDao implements ICategoryDao{
 
     @Override
     public boolean createCategory(Category category) {
-        if(Utils.isNotEmpty(category.getLabel())){
+        if (Utils.isNotEmpty(category.getLabel())) {
             em.persist(category);
             return true;
         }
@@ -44,7 +44,7 @@ public class CategoryDao implements ICategoryDao{
     @Override
     public List<Category> findAllCategory() {
         TypedQuery<Category> query = em.createNamedQuery(FIND_ALL, Category.class);
-        if(isNotTest){
+        if (isNotTest) {
             em.joinTransaction();
         }
         return query.getResultList();
@@ -58,7 +58,7 @@ public class CategoryDao implements ICategoryDao{
     @Override
     public Boolean deleteCategoryById(int idCategory) {
         Category category = em.find(Category.class, idCategory);
-        if(Utils.isNotEmpty(category)){
+        if (Utils.isNotEmpty(category)) {
             return deleteCategory(category);
         }
         return false;
@@ -68,7 +68,7 @@ public class CategoryDao implements ICategoryDao{
     public Boolean deleteCategory(Category category) {
         em.remove(category);
         Category findCategory = em.find(Category.class, category.getId());
-        if(Utils.isEmpty(findCategory)){
+        if (Utils.isEmpty(findCategory)) {
             return true;
         }
         return false;

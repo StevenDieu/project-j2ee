@@ -1,6 +1,5 @@
 package com.rizomm.ipii.steven;
 
-import javax.ejb.EJB;
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Named;
 import java.io.Serializable;
@@ -22,7 +21,7 @@ public class UserController implements Serializable {
     }
 
 
-    public String doFindUser(){
+    public String doFindUser() {
         return "viewUser.xhtml";
     }
 

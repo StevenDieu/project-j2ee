@@ -5,36 +5,36 @@ package com.rizomm.ipii.steven.helper;
  */
 public class Utils {
 
-    public static boolean isEmpty(String s){
-        if(s == null || s.isEmpty()){
+    public static boolean isEmpty(String s) {
+        if (s == null || s.isEmpty()) {
             return true;
         }
         return false;
     }
 
-    public static boolean isNotEmpty(String s){
+    public static boolean isNotEmpty(String s) {
         return !Utils.isEmpty(s);
     }
 
-    public static boolean isEmpty(int i){
-        if(i == 0){
+    public static boolean isEmpty(int i) {
+        if (i == 0) {
             return true;
         }
         return false;
     }
 
-    public static boolean isNotEmpty(int i){
+    public static boolean isNotEmpty(int i) {
         return !Utils.isEmpty(i);
     }
 
-    public static boolean isEmpty(Object o){
-        if(o == null){
+    public static boolean isEmpty(Object o) {
+        if (o == null) {
             return true;
         }
         return false;
     }
 
-    public static boolean isNotEmpty(Object i){
+    public static boolean isNotEmpty(Object i) {
         return !Utils.isEmpty(i);
     }
 

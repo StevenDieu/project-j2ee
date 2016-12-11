@@ -16,12 +16,12 @@ public class CartService {
     private String id;
     private List<Product> listProduct;
 
-    public CartService getCart(){
+    public CartService getCart() {
 
         return null;
     }
 
-    public boolean payer(){
+    public boolean payer() {
 
         return false;
     }

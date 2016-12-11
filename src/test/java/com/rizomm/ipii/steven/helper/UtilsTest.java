@@ -1,11 +1,8 @@
 package com.rizomm.ipii.steven.helper;
 
-import com.rizomm.ipii.steven.model.Category;
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
 
 /**
  * Created by steven on 17/11/2016.

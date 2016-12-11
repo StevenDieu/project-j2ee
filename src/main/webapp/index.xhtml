@@ -1,19 +1,54 @@
-<!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:h="http://java.sun.com/jsf/html"
-      xmlns:a="http://xmlns.jcp.org/jsf/passthrough"
-      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+<ui:composition template="/partials/template.xhtml"
+                xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:f="http://xmlns.jcp.org/jsf/core"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
 
-    <h:head>
-        <title>
-            <ui:insert name="title">Ma super appli</ui:insert>
-        </title>
-    </h:head>
-    <h:body>
-        <h:form >
-            <h:panelGrid>
-               
-            </h:panelGrid>
-        </h:form>
-    </h:body>
-</html>
+    <ui:define name="title">
+        New page title here
+    </ui:define>
+
+    <ui:define name="content">
+        <div class="banner">
+            <div class="container">
+                <div class="banner-bottom">
+                    <div class="banner-bottom-left">
+                        <h2></h2>
+                    </div>
+                    <div class="banner-bottom-right">
+                        <div  class="callbacks_container">
+                            <ul class="rslides" id="slider4">
+                                <li>
+                                    <div class="banner-info">
+                                        <h3>Smart But Casual</h3>
+                                        <p>Start your shopping here...</p>
+                                    </div>
+                                </li>
+                                <li>
+                                    <div class="banner-info">
+                                        <h3>Shop Online</h3>
+                                        <p>Start your shopping here...</p>
+                                    </div>
+                                </li>
+                                <li>
+                                    <div class="banner-info">
+                                        <h3>Pack your Bag</h3>
+                                        <p>Start your shopping here...</p>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                        <!--banner-->
+                        <h:outputScript library="library" name="js/responsiveslides.min.js" />
+                        <h:outputScript library="library" name="js/responsiveSlidesHome.js" />
+
+                    </div>
+                    <div class="clearfix"> </div>
+                </div>
+                <div class="shop">
+                    <a href="single.html">SHOP COLLECTION NOW</a>
+                </div>
+            </div>
+        </div>
+    </ui:define>
+</ui:composition>
