@@ -9,7 +9,6 @@
         <class>com.rizomm.ipii.steven.model.Category</class>
         <class>com.rizomm.ipii.steven.model.Product</class>
         <class>com.rizomm.ipii.steven.model.Order</class>
-        <exclude-unlisted-classes>true</exclude-unlisted-classes>
         <properties>
             <property name="javax.persistence.schema-generation.database.action" value="drop-and-create"/>
             <property name="eclipselink.logging.level" value="INFO"/>
