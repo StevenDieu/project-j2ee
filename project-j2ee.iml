@@ -43,13 +43,13 @@
       <excludeFolder url="file://$MODULE_DIR$/target/surefire-reports" />
       <excludeFolder url="file://$MODULE_DIR$/target/test-classes" />
     </content>
-    <orderEntry type="inheritedJdk" />
+    <orderEntry type="jdk" jdkName="1.8" jdkType="JavaSDK" />
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="library" scope="PROVIDED" name="Maven: org.glassfish.main.extras:glassfish-embedded-all:4.0" level="project" />
     <orderEntry type="module-library">
       <library name="Maven: com.sun:tools-jar:1">
         <CLASSES>
-          <root url="jar://C:/Program Files/Java/jdk1.8.0_111/lib/tools.jar!/" />
+          <root url="jar://C:/Program Files/Java/jdk1.8.0_65/lib/tools.jar!/" />
         </CLASSES>
         <JAVADOC />
         <SOURCES />
