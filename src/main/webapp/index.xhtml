@@ -9,14 +9,14 @@
     </ui:define>
 
     <ui:define name="content">
-        <div class="banner">
-            <div class="container">
-                <div class="banner-bottom">
-                    <div class="banner-bottom-left">
+        <h:panelGroup layout="block" styleClass="banner">
+            <h:panelGroup layout="block" styleClass="container">
+                <h:panelGroup layout="block" styleClass="banner-bottom">
+                    <h:panelGroup layout="block" styleClass="banner-bottom-left">
                         <h2><h:outputText value=" &lt;br/&gt; &lt;br/&gt; &lt;br/&gt;" escape="false" /></h2>
-                    </div>
-                    <div class="banner-bottom-right">
-                        <div  class="callbacks_container">
+                    </h:panelGroup>
+                    <h:panelGroup layout="block" styleClass="banner-bottom-right">
+                        <h:panelGroup layout="block" styleClass="callbacks_container">
                             <ul class="rslides" id="slider4">
                                 <li>
                                     <div class="banner-info">
@@ -37,17 +37,17 @@
                                     </div>
                                 </li>
                             </ul>
-                        </div>
-                        <!--banner-->
+                        </h:panelGroup>
                         <h:outputScript library="library" name="js/responsiveslides.min.js" />
                         <h:outputScript library="library" name="js/responsiveSlidesHome.js" />
-                    </div>
-                    <div class="clearfix"> </div>
-                </div>
-                <div class="shop">
-                    <a href="collection.xhtml">VOIR LA COLLECTION</a>
-                </div>
-            </div>
-        </div>
+                    </h:panelGroup>
+
+                    <h:panelGroup layout="block" styleClass="clearfix"></h:panelGroup>
+                </h:panelGroup>
+                <h:panelGroup layout="block" styleClass="shop">
+                    <h:link outcome="collection">VOIR LA COLLECTION</h:link>
+                </h:panelGroup>
+            </h:panelGroup>
+        </h:panelGroup>
     </ui:define>
 </ui:composition>
