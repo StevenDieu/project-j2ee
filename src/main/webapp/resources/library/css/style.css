@@ -122,7 +122,8 @@ a.simpleCart_empty {
     margin-right: 3px;
 }
 .banner-top {
-	padding-top: 25px;
+    padding-top: 10px;
+    padding-bottom: 10px;
     background-color: #f8f8f8;
 }
 .inner-head {
@@ -143,6 +144,7 @@ a.simpleCart_empty {
 .navbar-nav {
     float: right;
     margin: 0;
+    padding-top: 5px;
 }
 .navbar-collapse.collapse {
     padding: 0;
