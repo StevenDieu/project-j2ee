@@ -6,47 +6,72 @@
         <param-value>0</param-value>
     </context-param>
 
-    <!-- Changer cette valeur à "Production" lors du déploiement final de l'application -->
     <context-param>
         <param-name>javax.faces.PROJECT_STAGE</param-name>
         <param-value>Development</param-value>
     </context-param>
 
-    <!-- Déclaration du contrôleur central de JSF : la FacesServlet -->
+    <context-param>
+        <param-name>resteasy.resources</param-name>
+        <param-value>com.rizomm.ipii.steven.rest.ProductRest</param-value>
+    </context-param>
+
+    <context-param>
+        <param-name>resteasy.servlet.mapping.prefix</param-name>
+        <param-value>/rest</param-value>
+    </context-param>
+
+    <listener>
+        <listener-class>org.jboss.resteasy.plugins.server.servlet.ResteasyBootstrap</listener-class>
+    </listener>
+
     <servlet>
         <servlet-name>Faces Servlet</servlet-name>
         <servlet-class>javax.faces.webapp.FacesServlet</servlet-class>
         <load-on-startup>1</load-on-startup>
     </servlet>
 
-    <!-- Mapping : association des requêtes dont le fichier porte l'extension .xhtml à la FacesServlet -->
+    <servlet>
+        <servlet-name>resteasy-servlet</servlet-name>
+        <servlet-class>org.jboss.resteasy.plugins.server.servlet.HttpServletDispatcher</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>resteasy-servlet</servlet-name>
+        <url-pattern>/rest/*</url-pattern>
+    </servlet-mapping>
+
     <servlet-mapping>
         <servlet-name>Faces Servlet</servlet-name>
         <url-pattern>/javax.faces.resource/*</url-pattern>
         <url-pattern>*.xhtml</url-pattern>
     </servlet-mapping>
 
+
     <welcome-file-list>
         <welcome-file>index.xhtml</welcome-file>
     </welcome-file-list>
 
-    <!-- web fonts -->
     <mime-mapping>
         <extension>eot</extension>
         <mime-type>application/vnd.ms-fontobject</mime-type>
     </mime-mapping>
+
     <mime-mapping>
         <extension>otf</extension>
         <mime-type>font/opentype</mime-type>
     </mime-mapping>
+
     <mime-mapping>
         <extension>ttf</extension>
         <mime-type>application/x-font-ttf</mime-type>
     </mime-mapping>
+
     <mime-mapping>
         <extension>woff</extension>
         <mime-type>application/x-font-woff</mime-type>
     </mime-mapping>
+
     <mime-mapping>
         <extension>svg</extension>
         <mime-type>image/svg+xml</mime-type>
