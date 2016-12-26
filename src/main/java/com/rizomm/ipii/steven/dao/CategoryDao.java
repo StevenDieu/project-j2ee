@@ -3,13 +3,20 @@ package com.rizomm.ipii.steven.dao;
 
 import com.rizomm.ipii.steven.helper.Utils;
 import com.rizomm.ipii.steven.model.Category;
+import org.codehaus.jettison.json.JSONException;
+import org.codehaus.jettison.json.JSONObject;
 
 import javax.ejb.Local;
+import javax.ejb.Remote;
 import javax.ejb.Stateless;
+import javax.inject.Named;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
+import java.io.Serializable;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import static com.rizomm.ipii.steven.model.Category.DELETE_ALL;
 import static com.rizomm.ipii.steven.model.Category.FIND_ALL;
@@ -19,20 +26,24 @@ import static com.rizomm.ipii.steven.model.Category.FIND_ALL;
  */
 
 @Stateless
-@Local
-public class CategoryDao implements ICategoryDao {
+@Remote
+@Named
+public class CategoryDao implements ICategoryDao, Serializable {
 
     @PersistenceContext(unitName = "projectJ2ee")
     protected EntityManager em;
     protected boolean isNotTest = true;
 
     @Override
-    public boolean createCategory(Category category) {
+    public int createCategory(Category category) {
         if (Utils.isNotEmpty(category.getLabel())) {
             em.persist(category);
-            return true;
+            if(isNotTest){
+                em.flush();
+            }
+            return category.getId();
         }
-        return false;
+        return 0;
     }
 
     @Override
@@ -72,6 +83,42 @@ public class CategoryDao implements ICategoryDao {
             return true;
         }
         return false;
+    }
+
+    @Override
+    public Map<String, Object> convertJsonToProduct(String categoryString) {
+        JSONObject jsonCategory = null;
+        Map<String, Object> result = new HashMap();
+        Category category = new Category();
+
+        try {
+
+            jsonCategory = new JSONObject(categoryString);
+
+            if(Utils.isNotEmpty(jsonCategory,"id")){
+
+                String idString = jsonCategory.getString("id");
+
+                if(!Utils.isInt(idString)){
+                    return Utils.generateMessageError400("L'id de la Category doit être un chiffre ! ");
+                }
+
+                category.setId(Integer.parseInt(idString));
+
+            }else if(Utils.isNotEmpty(jsonCategory,"label")){
+                category.setLabel(jsonCategory.getString("label"));
+            }else{
+                return Utils.generateMessageError400("La category est mal paramétré ! ");
+            }
+
+        } catch (JSONException e) {
+            return Utils.generateMessageError400(e.getMessage());
+        }
+
+        result.put("ERROR",false);
+        result.put("CATEGORY",category);
+        return result;
+
     }
 
     @Override

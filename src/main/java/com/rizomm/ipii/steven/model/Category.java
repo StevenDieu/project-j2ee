@@ -1,9 +1,12 @@
 package com.rizomm.ipii.steven.model;
 
 
+import javax.ejb.Remote;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+
+import java.io.Serializable;
 
 import static com.rizomm.ipii.steven.model.Category.DELETE_ALL;
 import static com.rizomm.ipii.steven.model.Category.FIND_ALL;
@@ -17,7 +20,8 @@ import static com.rizomm.ipii.steven.model.Category.FIND_ALL;
         @NamedQuery(name = FIND_ALL, query = "select c from Category c"),
         @NamedQuery(name = DELETE_ALL, query = " delete from Category"),
 })
-public class Category {
+@Remote
+public class Category implements Serializable {
 
     public static final String FIND_ALL = "Category.findAllCategory";
     public static final String DELETE_ALL = "Category.deleteAllCategory";

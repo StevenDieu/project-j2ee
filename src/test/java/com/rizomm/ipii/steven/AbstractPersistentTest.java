@@ -16,7 +16,7 @@ public abstract class AbstractPersistentTest {
     // =             Attributes             =
     // ======================================
 
-    protected static EntityManagerFactory emf = Persistence.createEntityManagerFactory("projectJ2eeLocal");
+    protected static EntityManagerFactory emf = Persistence.createEntityManagerFactory("projectJ2ee");
     protected EntityManager em;
     protected EntityTransaction tx;
 

@@ -46,8 +46,8 @@ public class ProductDaoTest extends AbstractPersistentTest {
         Product product = new Product();
         assertNull("Product should not be found", em.find(Product.class, product.getId()));
 
-        boolean isCreate = pd.createProduct(product);
-        assertFalse("Product should be created with product empty", isCreate);
+        int isCreate = pd.createProduct(product);
+        assertEquals("Product should be created with product empty", isCreate,0);
     }
 
     @Test
@@ -84,6 +84,7 @@ public class ProductDaoTest extends AbstractPersistentTest {
         assertNull("Product should not be found", em.find(Product.class, product.getId()));
 
         tx.begin();
+        cd.createCategory(category);
         pd.createProduct(product);
         tx.commit();
 
@@ -107,6 +108,7 @@ public class ProductDaoTest extends AbstractPersistentTest {
         assertNull("Product should not be found", em.find(Product.class, product.getId()));
 
         tx.begin();
+        cd.createCategory(category);
         pd.createProduct(product);
         tx.commit();
 
@@ -134,6 +136,7 @@ public class ProductDaoTest extends AbstractPersistentTest {
         assertNull("Product should not be found", em.find(Product.class, product.getId()));
 
         tx.begin();
+        cd.createCategory(category);
         pd.createProduct(product);
         tx.commit();
 
@@ -162,6 +165,7 @@ public class ProductDaoTest extends AbstractPersistentTest {
         assertNull("Product should not be found", em.find(Product.class, product.getId()));
 
         tx.begin();
+        cd.createCategory(category);
         pd.createProduct(product);
         tx.commit();
 

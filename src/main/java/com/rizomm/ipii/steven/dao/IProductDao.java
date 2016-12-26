@@ -3,13 +3,14 @@ package com.rizomm.ipii.steven.dao;
 import com.rizomm.ipii.steven.model.Product;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by steven on 17/11/2016.
  */
 public interface IProductDao {
 
-    boolean createProduct(Product product);
+    int createProduct(Product product);
 
     Product findProductById(int idProduct);
 
@@ -22,4 +23,6 @@ public interface IProductDao {
     Boolean deleteProduct(Product product);
 
     Product updateProduct(Product product);
+
+    Map<String, Object> convertJsonToProduct(String jsonString, ICategoryDao CD);
 }

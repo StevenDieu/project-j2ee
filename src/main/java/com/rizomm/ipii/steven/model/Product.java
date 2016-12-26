@@ -1,8 +1,17 @@
 package com.rizomm.ipii.steven.model;
 
+import org.codehaus.jettison.json.JSONException;
+import org.codehaus.jettison.json.JSONObject;
+
+import javax.ejb.Remote;
 import javax.persistence.*;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
+import javax.ws.rs.core.Response;
+
+import java.io.Serializable;
+import java.util.HashMap;
+import java.util.Map;
 
 import static com.rizomm.ipii.steven.model.Product.DELETE_ALL;
 import static com.rizomm.ipii.steven.model.Product.FIND_ALL;
@@ -15,14 +24,15 @@ import static com.rizomm.ipii.steven.model.Product.FIND_ALL;
         @NamedQuery(name = FIND_ALL, query = "select c from Product c"),
         @NamedQuery(name = DELETE_ALL, query = " delete from Product"),
 })
-public class Product {
+@Remote
+public class Product implements Serializable {
 
     public static final String FIND_ALL = "Product.findAllProduct";
     public static final String DELETE_ALL = "Product.deleteAllProduct";
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private int id;
-    @ManyToOne(cascade = CascadeType.PERSIST)
+    @ManyToOne
     @JoinColumn(name = "category_fk", nullable = false)
     private Category idCategory;
     @NotNull(message = "The stock can't be empty")
@@ -132,4 +142,6 @@ public class Product {
     public void setUrlPicture(String urlPicture) {
         this.urlPicture = urlPicture;
     }
+
+
 }

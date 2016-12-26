@@ -3,13 +3,14 @@ package com.rizomm.ipii.steven.dao;
 import com.rizomm.ipii.steven.model.Category;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by steven on 17/11/2016.
  */
 public interface ICategoryDao {
 
-    boolean createCategory(Category category);
+    int createCategory(Category category);
 
     Category findCategoryById(int idCategory);
 
@@ -22,4 +23,6 @@ public interface ICategoryDao {
     Category updateCategory(Category category);
 
     Boolean deleteCategory(Category category);
+
+    Map<String, Object> convertJsonToProduct(String category);
 }
