@@ -20,7 +20,6 @@ import static com.rizomm.ipii.steven.model.Category.FIND_ALL;
         @NamedQuery(name = FIND_ALL, query = "select c from Category c"),
         @NamedQuery(name = DELETE_ALL, query = " delete from Category"),
 })
-@Remote
 public class Category implements Serializable {
 
     public static final String FIND_ALL = "Category.findAllCategory";

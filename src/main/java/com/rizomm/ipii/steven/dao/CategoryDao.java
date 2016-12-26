@@ -35,15 +35,15 @@ public class CategoryDao implements ICategoryDao, Serializable {
     protected boolean isNotTest = true;
 
     @Override
-    public int createCategory(Category category) {
+    public Category createCategory(Category category) {
         if (Utils.isNotEmpty(category.getLabel())) {
             em.persist(category);
             if(isNotTest){
                 em.flush();
             }
-            return category.getId();
+            return category;
         }
-        return 0;
+        return null;
     }
 
     @Override

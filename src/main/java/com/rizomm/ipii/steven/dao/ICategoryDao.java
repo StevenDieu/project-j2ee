@@ -10,7 +10,7 @@ import java.util.Map;
  */
 public interface ICategoryDao {
 
-    int createCategory(Category category);
+    Category createCategory(Category category);
 
     Category findCategoryById(int idCategory);
 

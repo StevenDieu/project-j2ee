@@ -13,22 +13,24 @@ import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map;
 
-import static com.rizomm.ipii.steven.model.Product.DELETE_ALL;
-import static com.rizomm.ipii.steven.model.Product.FIND_ALL;
+import static com.rizomm.ipii.steven.model.Product.*;
+
 
 /**
  * Created by steven on 17/11/2016.
  */
 @Entity
 @NamedQueries({
-        @NamedQuery(name = FIND_ALL, query = "select c from Product c"),
+        @NamedQuery(name = FIND_ALL, query = "select c from Product c order by c.id asc"),
+        @NamedQuery(name = COUNT_ALL, query = "select count(c) from Product c"),
         @NamedQuery(name = DELETE_ALL, query = " delete from Product"),
 })
-@Remote
 public class Product implements Serializable {
 
     public static final String FIND_ALL = "Product.findAllProduct";
+    public static final String COUNT_ALL = "Product.countAllProduct";
     public static final String DELETE_ALL = "Product.deleteAllProduct";
+
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private int id;
@@ -142,6 +144,5 @@ public class Product implements Serializable {
     public void setUrlPicture(String urlPicture) {
         this.urlPicture = urlPicture;
     }
-
 
 }

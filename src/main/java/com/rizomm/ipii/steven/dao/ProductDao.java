@@ -2,6 +2,7 @@ package com.rizomm.ipii.steven.dao;
 
 import com.rizomm.ipii.steven.model.Category;
 import com.rizomm.ipii.steven.model.Product;
+import org.codehaus.jettison.json.JSONArray;
 import org.codehaus.jettison.json.JSONException;
 import org.codehaus.jettison.json.JSONObject;
 
@@ -17,8 +18,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import static com.rizomm.ipii.steven.model.Product.DELETE_ALL;
-import static com.rizomm.ipii.steven.model.Product.FIND_ALL;
+import static com.rizomm.ipii.steven.model.Product.*;
 import static com.rizomm.ipii.steven.helper.Utils.*;
 
 /**
@@ -34,15 +34,15 @@ public class ProductDao implements IProductDao, Serializable {
     protected boolean isNotTest = true;
 
     @Override
-    public int createProduct(Product product) {
+    public Product createProduct(Product product) {
         if (isNotEmpty(product.getName())) {
             em.persist(product);
             if(isNotTest){
                 em.flush();
             }
-            return product.getId();
+            return product;
         }
-        return 0;
+        return null;
     }
 
     @Override
@@ -54,6 +54,27 @@ public class ProductDao implements IProductDao, Serializable {
     @Override
     public List<Product> findAllProduct() {
         TypedQuery<Product> query = em.createNamedQuery(FIND_ALL, Product.class);
+        if (isNotTest) {
+            em.joinTransaction();
+        }
+        return query.getResultList();
+    }
+
+
+    @Override
+    public List<Product> findAllProductByPage(int start, int limit) {
+        TypedQuery<Product> query = em.createNamedQuery(FIND_ALL, Product.class)
+                .setFirstResult(start)
+                .setMaxResults(limit);
+        if (isNotTest) {
+            em.joinTransaction();
+        }
+        return query.getResultList();
+    }
+
+    @Override
+    public List<Product> countAllProduct() {
+        TypedQuery<Product> query = em.createNamedQuery(COUNT_ALL, Product.class);
         if (isNotTest) {
             em.joinTransaction();
         }
@@ -108,7 +129,7 @@ public class ProductDao implements IProductDao, Serializable {
                 Category category = (Category) resultCategory.get("CATEGORY");
 
                 if(category.getId() == 0){
-                    category.setId(CD.createCategory(category));
+                    category.setId(CD.createCategory(category).getId());
                 }else{
                     int idCategory = category.getId();
                     category = CD.findCategoryById(idCategory);
@@ -169,4 +190,36 @@ public class ProductDao implements IProductDao, Serializable {
 
         return result;
     }
+
+    @Override
+    public JSONObject convertProductsToJson(List<Product> products) {
+        JSONObject jsonProducts = new JSONObject();
+
+        try {
+            JSONArray jsonArray = new JSONArray();
+            for(Product product : products){
+                jsonArray.put(convertProductToJson(product));
+            }
+            jsonProducts.put("products", jsonArray);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        return jsonProducts;
+    }
+
+    @Override
+    public JSONObject convertProductToJson(Product product) throws JSONException {
+        JSONObject jsonproduct = new JSONObject();
+        jsonproduct.put("id", product.getId());
+        jsonproduct.put("description", product.getDescription());
+        jsonproduct.put("idCategory", product.getIdCategory().getId());
+        jsonproduct.put("labelCategory", product.getIdCategory().getLabel());
+        jsonproduct.put("name", product.getName());
+        jsonproduct.put("price", product.getPrice());
+        jsonproduct.put("stock", product.getStock());
+        jsonproduct.put("urlPicture", product.getUrlPicture());
+        return jsonproduct;
+    }
+
 }

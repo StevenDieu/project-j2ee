@@ -35,22 +35,39 @@ public class ProductRest {
     public Response addProduct(String productString) {
         Map<String, Object> result = PD.convertJsonToProduct(productString,CD);
         if(!((boolean) result.get("ERROR"))){
-            int idProduct = PD.createProduct((Product) result.get("PRODUCT"));
-            result = Utils.generateMessageSuccess201("Product créé avec l'id : " + idProduct);
+            Product product = PD.createProduct((Product) result.get("PRODUCT"));
+            result = Utils.generateMessageSuccess201("Product créé avec l'id : " + product.getId());
         }
 
-        return Response.status((int) result.get("CODE_HTTP")).entity((String) result.get("MESSAGE_HTTP")).build() ;
-
+        return Response.status((int) result.get("CODE_HTTP")).entity(result.get("MESSAGE_HTTP")).build() ;
     }
 
     @GET
-    @Path("/all")
-    public Response getAllProduct(String productString) {
-        List<Product> listProduct = PD.findAllProduct();
+    @Path("/{numberPage : \\d+}/page")
+    @Produces("application/json")
+    public Response getAllProduct(String productString,@PathParam("numberPage") int numberPage) {
+        int start = numberPage * 9;
+        int limit = (numberPage + 1 * 9) - 1;
+        List<Product> listProduct = PD.findAllProductByPage(start,limit);
 
-        Map<String, Object> result = Utils.generateMessageSuccess201("Tout les produits sont récupérés ");
+        JSONObject jsonProducts = PD.convertProductsToJson(listProduct);
 
-        return Response.status((int) result.get("CODE_HTTP")).entity((String) result.get("MESSAGE_HTTP")).build() ;
+        Map<String, Object> result = Utils.generateMessageSuccess200(jsonProducts);
+
+        return Response.status((int) result.get("CODE_HTTP")).entity(result.get("MESSAGE_HTTP")).build() ;
+    }
+
+    @GET
+    @Path("/count")
+    @Produces("application/json")
+    public Response getCountAllProduct(String productString) {
+        List<Product> listProduct = PD.countAllProduct();
+
+        JSONObject jsonProducts = PD.convertProductsToJson(listProduct);
+
+        Map<String, Object> result = Utils.generateMessageSuccess200(jsonProducts);
+
+        return Response.status((int) result.get("CODE_HTTP")).entity(result.get("MESSAGE_HTTP")).build() ;
     }
 
 }

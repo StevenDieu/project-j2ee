@@ -46,8 +46,8 @@ public class ProductDaoTest extends AbstractPersistentTest {
         Product product = new Product();
         assertNull("Product should not be found", em.find(Product.class, product.getId()));
 
-        int isCreate = pd.createProduct(product);
-        assertEquals("Product should be created with product empty", isCreate,0);
+        Product isCreate = pd.createProduct(product);
+        assertNull("Product should be created with product empty", isCreate);
     }
 
     @Test

@@ -65,6 +65,17 @@ public class Utils {
         return generateMessage(message,400,true);
     }
 
+    public static Map<String, Object> generateMessageSuccess200(JSONObject message){
+        return generateMessage(message,200,false);
+    }
+
+    private static Map<String, Object> generateMessage(JSONObject message, int codeHttp, boolean error){
+        Map<String, Object> result = new HashMap();
+        result.put("CODE_HTTP", codeHttp);
+        result.put("MESSAGE_HTTP", message.toString());
+        result.put("ERROR",error);
+        return result;
+    }
 
     private static Map<String, Object> generateMessage(String message, int codeHttp, boolean error){
         Map<String, Object> result = new HashMap();

@@ -1,6 +1,9 @@
 package com.rizomm.ipii.steven.dao;
 
 import com.rizomm.ipii.steven.model.Product;
+import org.codehaus.jettison.json.JSONArray;
+import org.codehaus.jettison.json.JSONException;
+import org.codehaus.jettison.json.JSONObject;
 
 import java.util.List;
 import java.util.Map;
@@ -10,11 +13,13 @@ import java.util.Map;
  */
 public interface IProductDao {
 
-    int createProduct(Product product);
+    Product createProduct(Product product);
 
     Product findProductById(int idProduct);
 
     List<Product> findAllProduct();
+
+    List<Product> countAllProduct();
 
     void deleteAllProduct();
 
@@ -25,4 +30,10 @@ public interface IProductDao {
     Product updateProduct(Product product);
 
     Map<String, Object> convertJsonToProduct(String jsonString, ICategoryDao CD);
+
+    JSONObject convertProductsToJson(List<Product> products);
+
+    JSONObject convertProductToJson(Product product) throws JSONException;
+
+    List<Product> findAllProductByPage(int start, int limit);
 }

@@ -38,8 +38,8 @@ public class CategoryDaoTest extends AbstractPersistentTest {
         Category category = new Category();
         assertNull("Category should not be found", em.find(Category.class, category.getId()));
 
-        int isCreate = cd.createCategory(category);
-        assertEquals("Category should be created with category empty", isCreate,0);
+        Category isCreate = cd.createCategory(category);
+        assertNull("Category should be created with category empty", isCreate);
     }
 
     @Test
