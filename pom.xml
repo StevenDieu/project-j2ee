@@ -79,6 +79,13 @@
                 <version>2.5.1</version>
             </dependency>
 
+            <!-- https://mvnrepository.com/artifact/org.apache.derby/derby -->
+            <dependency>
+                <groupId>org.apache.derby</groupId>
+                <artifactId>derby</artifactId>
+                <version>10.13.1.1</version>
+            </dependency>
+
         </dependencies>
 
 </project>
