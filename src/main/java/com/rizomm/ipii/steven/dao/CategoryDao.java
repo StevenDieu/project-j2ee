@@ -1,12 +1,10 @@
 package com.rizomm.ipii.steven.dao;
 
 
-import com.rizomm.ipii.steven.helper.Utils;
 import com.rizomm.ipii.steven.model.Category;
 import org.codehaus.jettison.json.JSONException;
 import org.codehaus.jettison.json.JSONObject;
 
-import javax.ejb.Local;
 import javax.ejb.Remote;
 import javax.ejb.Stateless;
 import javax.inject.Named;
@@ -18,8 +16,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import static com.rizomm.ipii.steven.model.Category.DELETE_ALL;
-import static com.rizomm.ipii.steven.model.Category.FIND_ALL;
+import static com.rizomm.ipii.steven.helper.Utils.*;
+import static com.rizomm.ipii.steven.model.Category.*;
 
 /**
  * Created by steven on 17/11/2016.
@@ -36,7 +34,7 @@ public class CategoryDao implements ICategoryDao, Serializable {
 
     @Override
     public Category createCategory(Category category) {
-        if (Utils.isNotEmpty(category.getLabel())) {
+        if (isNotEmpty(category.getLabel())) {
             em.persist(category);
             if(isNotTest){
                 em.flush();
@@ -69,7 +67,7 @@ public class CategoryDao implements ICategoryDao, Serializable {
     @Override
     public Boolean deleteCategoryById(int idCategory) {
         Category category = em.find(Category.class, idCategory);
-        if (Utils.isNotEmpty(category)) {
+        if (isNotEmpty(category)) {
             return deleteCategory(category);
         }
         return false;
@@ -79,7 +77,7 @@ public class CategoryDao implements ICategoryDao, Serializable {
     public Boolean deleteCategory(Category category) {
         em.remove(category);
         Category findCategory = em.find(Category.class, category.getId());
-        if (Utils.isEmpty(findCategory)) {
+        if (isEmpty(findCategory)) {
             return true;
         }
         return false;
@@ -95,24 +93,24 @@ public class CategoryDao implements ICategoryDao, Serializable {
 
             jsonCategory = new JSONObject(categoryString);
 
-            if(Utils.isNotEmpty(jsonCategory,"id")){
+            if(isNotEmpty(jsonCategory,"id")){
 
                 String idString = jsonCategory.getString("id");
 
-                if(!Utils.isInt(idString)){
-                    return Utils.generateMessageError400("L'id de la Category doit être un chiffre ! ");
+                if(!isInt(idString)){
+                    return generateMessageError400("L'id de la Category doit être un chiffre ! ");
                 }
 
                 category.setId(Integer.parseInt(idString));
 
-            }else if(Utils.isNotEmpty(jsonCategory,"label")){
+            }else if(isNotEmpty(jsonCategory,"label")){
                 category.setLabel(jsonCategory.getString("label"));
             }else{
-                return Utils.generateMessageError400("La category est mal paramétré ! ");
+                return generateMessageError400("La category est mal paramétré ! ");
             }
 
         } catch (JSONException e) {
-            return Utils.generateMessageError400(e.getMessage());
+            return generateMessageError400(e.getMessage());
         }
 
         result.put("ERROR",false);

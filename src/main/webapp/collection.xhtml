@@ -1,6 +1,7 @@
 <ui:composition template="/partials/template.xhtml"
                 xmlns="http://www.w3.org/1999/xhtml"
                 xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:c="http://java.sun.com/jstl/core"
                 xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
 
     <ui:define name="css">
@@ -21,16 +22,11 @@
             <div class="products-page">
                 <div class="products">
                     <div class="product-listy">
-                        <h2>our Products</h2>
+                        <h2>Les catégories</h2>
                         <ul class="product-list">
-                            <li><a href="">New Products</a></li>
-                            <li><a href="">Old Products</a></li>
-                            <li><a href="">T-shirts</a></li>
-                            <li><a href="">pants</a></li>
-                            <li><a href="">Dress</a></li>
-                            <li><a href="">Shorts</a></li>
-                            <li><a href="#">Shirts</a></li>
-                            <li><a href="register.html">Register</a></li>
+                            <c:forEach var="category" items="#{productController.findAllCategory()}">
+                                <li><a href="Javascript:void(0);" data-idcategory="#{category.id}"><h:outputText value="#{category.label}"/></a></li>
+                            </c:forEach>
                         </ul>
                     </div>
                 </div>
@@ -38,7 +34,7 @@
                     <div class="new-product-top">
                         <ul class="product-top-list">
                             <li><a href="index.xhtml">Accueil</a><h:outputText value="&#160;"/><span>&gt;</span></li>
-                            <li><a href="collection.xhtml">La collection</a><h:outputText value="&#160;"/></li>
+                            <li><a href="collection">La collection</a><h:outputText value="&#160;"/></li>
                         </ul>
                         <div class="clearfix"></div>
                     </div>

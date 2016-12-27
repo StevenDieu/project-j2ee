@@ -1,17 +1,9 @@
 package com.rizomm.ipii.steven.model;
 
-import org.codehaus.jettison.json.JSONException;
-import org.codehaus.jettison.json.JSONObject;
-
-import javax.ejb.Remote;
 import javax.persistence.*;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
-import javax.ws.rs.core.Response;
-
 import java.io.Serializable;
-import java.util.HashMap;
-import java.util.Map;
 
 import static com.rizomm.ipii.steven.model.Product.*;
 
@@ -22,6 +14,7 @@ import static com.rizomm.ipii.steven.model.Product.*;
 @Entity
 @NamedQueries({
         @NamedQuery(name = FIND_ALL, query = "select c from Product c order by c.id asc"),
+        @NamedQuery(name = FIND_ALL_BY_CATEGORY, query = "select c from Product c where c.idCategory.id = :idCategory order by c.id asc"),
         @NamedQuery(name = COUNT_ALL, query = "select count(c) from Product c"),
         @NamedQuery(name = DELETE_ALL, query = " delete from Product"),
 })
@@ -30,6 +23,7 @@ public class Product implements Serializable {
     public static final String FIND_ALL = "Product.findAllProduct";
     public static final String COUNT_ALL = "Product.countAllProduct";
     public static final String DELETE_ALL = "Product.deleteAllProduct";
+    public static final String FIND_ALL_BY_CATEGORY = "Product.findAllProductByCategory";
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)

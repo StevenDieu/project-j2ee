@@ -12,14 +12,13 @@ import javax.inject.Named;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
-import javax.ws.rs.core.Response;
 import java.io.Serializable;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import static com.rizomm.ipii.steven.model.Product.*;
 import static com.rizomm.ipii.steven.helper.Utils.*;
+import static com.rizomm.ipii.steven.model.Product.*;
 
 /**
  * Created by steven on 17/11/2016.
@@ -60,7 +59,6 @@ public class ProductDao implements IProductDao, Serializable {
         return query.getResultList();
     }
 
-
     @Override
     public List<Product> findAllProductByPage(int start, int limit) {
         TypedQuery<Product> query = em.createNamedQuery(FIND_ALL, Product.class)
@@ -73,12 +71,24 @@ public class ProductDao implements IProductDao, Serializable {
     }
 
     @Override
-    public List<Product> countAllProduct() {
-        TypedQuery<Product> query = em.createNamedQuery(COUNT_ALL, Product.class);
+    public List<Product> findAllProductByPageAndCategory(int start, int limit, int category) {
+        TypedQuery<Product> query = em.createNamedQuery(FIND_ALL_BY_CATEGORY, Product.class)
+                .setFirstResult(start)
+                .setMaxResults(limit)
+                .setParameter("idCategory", category);
         if (isNotTest) {
             em.joinTransaction();
         }
         return query.getResultList();
+    }
+
+    @Override
+    public int countAllProduct() {
+        TypedQuery<Integer> query = em.createNamedQuery(COUNT_ALL, Integer.class);
+        if (isNotTest) {
+            em.joinTransaction();
+        }
+        return ((Number) query.getSingleResult()).intValue();
     }
 
     @Override

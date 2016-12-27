@@ -1,10 +1,8 @@
 package com.rizomm.ipii.steven.helper;
 
-import org.codehaus.jettison.json.JSONArray;
 import org.codehaus.jettison.json.JSONException;
 import org.codehaus.jettison.json.JSONObject;
 
-import javax.ws.rs.core.Response;
 import java.util.HashMap;
 import java.util.Map;
 

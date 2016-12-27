@@ -1,7 +1,6 @@
 package com.rizomm.ipii.steven.dao;
 
 import com.rizomm.ipii.steven.model.Product;
-import org.codehaus.jettison.json.JSONArray;
 import org.codehaus.jettison.json.JSONException;
 import org.codehaus.jettison.json.JSONObject;
 
@@ -19,7 +18,7 @@ public interface IProductDao {
 
     List<Product> findAllProduct();
 
-    List<Product> countAllProduct();
+    int countAllProduct();
 
     void deleteAllProduct();
 
@@ -36,4 +35,6 @@ public interface IProductDao {
     JSONObject convertProductToJson(Product product) throws JSONException;
 
     List<Product> findAllProductByPage(int start, int limit);
+
+    List<Product> findAllProductByPageAndCategory(int start, int limit, int category);
 }
