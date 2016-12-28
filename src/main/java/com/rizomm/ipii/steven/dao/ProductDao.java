@@ -183,7 +183,7 @@ public class ProductDao implements IProductDao, Serializable {
                 if(!isInt(json.getString("id"))){
                     return generateMessageError400("L'id doit être un chiffre !");
                 }
-                product.setDescription(json.getString("id"));
+                product.setId(json.getInt("id"));
             }
 
             if(isNotEmpty(json,"description")){

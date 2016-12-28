@@ -6,6 +6,9 @@
 <h:head>
     <title><ui:insert name="title"></ui:insert> - Steven</title>
     <ui:insert name="css"></ui:insert>
+    <script type="text/javascript">
+        var urlImages = "#{resource['images']}" + "/";
+    </script>
 </h:head>
 <h:body>
     <ui:include src="/partials/header.xhtml" />
