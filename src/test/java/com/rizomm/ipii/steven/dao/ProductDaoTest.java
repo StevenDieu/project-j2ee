@@ -33,7 +33,7 @@ public class ProductDaoTest extends AbstractPersistentTest {
     public void shouldCreateACategoty() throws Exception {
 
         Category category = new Category(1, "test");
-        Product product = new Product(1, category, 5, 1.F, "Name of product", "/img/picture");
+        Product product = new Product(1, category, 5, 1.F, "Name of product","description Product" ,"/img/picture");
         assertNull("Product should not be found", em.find(Product.class, product.getId()));
 
         pd.createProduct(product);
@@ -53,7 +53,7 @@ public class ProductDaoTest extends AbstractPersistentTest {
     @Test
     public void shouldFindACategoty() throws Exception {
         Category category = new Category(1, "test");
-        Product product = new Product(1, category, 5, 1.F, "Name of product", "/img/picture");
+        Product product = new Product(1, category, 5, 1.F, "Name of product", "description Product" ,"/img/picture");
         assertNull("Product should not be found", em.find(Product.class, product.getId()));
 
         pd.createProduct(product);
@@ -66,7 +66,7 @@ public class ProductDaoTest extends AbstractPersistentTest {
     @Test
     public void shouldFindACategotyById() throws Exception {
         Category category = new Category(1, "test");
-        Product product = new Product(1, category, 5, 1.F, "Name of product", "/img/picture");
+        Product product = new Product(1, category, 5, 1.F, "Name of product","description Product" , "/img/picture");
         assertNull("Product should not be found", em.find(Product.class, product.getId()));
 
         pd.createProduct(product);
@@ -79,8 +79,8 @@ public class ProductDaoTest extends AbstractPersistentTest {
     @Test
     public void shouldFindAllCategoty() throws Exception {
         Category category = new Category(1, "test");
-        Product product = new Product(1, category, 5, 1.F, "Name of product", "/img/picture");
-        Product product2 = new Product(2, category, 5, 1.F, "Name of product2", "/img/picture");
+        Product product = new Product(1, category, 5, 1.F, "Name of product","description Product" , "/img/picture");
+        Product product2 = new Product(2, category, 5, 1.F, "Name of product2","description Product" , "/img/picture");
         assertNull("Product should not be found", em.find(Product.class, product.getId()));
 
         tx.begin();
@@ -103,8 +103,8 @@ public class ProductDaoTest extends AbstractPersistentTest {
     @Test
     public void shouldDeleteProduct() throws Exception {
         Category category = new Category(1, "test");
-        Product product = new Product(1, category, 5, 1.F, "Name of product", "/img/picture");
-        Product product2 = new Product(2, category, 5, 1.F, "Name of product2", "/img/picture");
+        Product product = new Product(1, category, 5, 1.F, "Name of product","description Product" , "/img/picture");
+        Product product2 = new Product(2, category, 5, 1.F, "Name of product2","description Product" , "/img/picture");
         assertNull("Product should not be found", em.find(Product.class, product.getId()));
 
         tx.begin();
@@ -131,8 +131,8 @@ public class ProductDaoTest extends AbstractPersistentTest {
     @Test
     public void shouldDeleteProductById() throws Exception {
         Category category = new Category(1, "test");
-        Product product = new Product(1, category, 5, 1.F, "Name of product", "/img/picture");
-        Product product2 = new Product(2, category, 5, 1.F, "Name of product2", "/img/picture");
+        Product product = new Product(1, category, 5, 1.F, "Name of product","description Product" , "/img/picture");
+        Product product2 = new Product(2, category, 5, 1.F, "Name of product2","description Product" , "/img/picture");
         assertNull("Product should not be found", em.find(Product.class, product.getId()));
 
         tx.begin();
@@ -160,8 +160,8 @@ public class ProductDaoTest extends AbstractPersistentTest {
     @Test
     public void shouldUpdateProduct() throws Exception {
         Category category = new Category(1, "test");
-        Product product = new Product(1, category, 5, 1.F, "Name of product", "/img/picture");
-        Product productUpdate = new Product(1, category, 5, 1.F, "Name of product2", "/img/picture");
+        Product product = new Product(1, category, 5, 1.F, "Name of product","description Product" , "/img/picture");
+        Product productUpdate = new Product(1, category, 5, 1.F, "Name of product2","description Product" , "/img/picture");
         assertNull("Product should not be found", em.find(Product.class, product.getId()));
 
         tx.begin();

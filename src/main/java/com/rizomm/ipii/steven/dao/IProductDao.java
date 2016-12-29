@@ -20,6 +20,8 @@ public interface IProductDao {
 
     int countAllProduct();
 
+    int countAllProduct(int idCategory);
+
     void deleteAllProduct();
 
     Boolean deleteProductById(int idProduct);
@@ -36,5 +38,5 @@ public interface IProductDao {
 
     List<Product> findAllProductByPage(int start, int limit);
 
-    List<Product> findAllProductByPageAndCategory(int start, int limit, int category);
+    List<Product> findAllProductByPageAndCategory(int start, int limit, int idCategory);
 }

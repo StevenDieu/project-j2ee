@@ -6,6 +6,7 @@
 
     <ui:define name="css">
         <h:outputStylesheet library="library" name="css/component.css"/>
+        <h:outputStylesheet library="css" name="collection.css"/>
     </ui:define>
 
     <ui:define name="js">
@@ -26,7 +27,7 @@
                         <h2>Les catégories</h2>
                         <ul class="product-list">
                             <c:forEach var="category" items="#{productController.findAllCategory()}">
-                                <li><a href="Javascript:void(0);" data-idcategory="#{category.id}"><h:outputText value="#{category.label}"/></a></li>
+                                <li><a href="Javascript:void(0);" data-id="#{category.id}" class="change-category" data-idcategory="#{category.id}"><h:outputText value="#{category.label}"/></a></li>
                             </c:forEach>
                         </ul>
                     </div>
@@ -61,7 +62,7 @@
                         <c:set var="nbPage" value="#{productController.getCountAllProduct()}"/>
 
                         <c:if test='#{nbPage > 0}'>
-                            <ul class="women_pagenation">
+                            <ul class="women_pagenation pagination_product">
                                 <li>Page : </li>
 
                                 <c:forEach var="page" begin="1" end="${nbPage}" >
@@ -71,7 +72,7 @@
                                         <c:set var="class" value="active"/>
                                     </c:if>
 
-                                    <li class="${class}"><a href="#">#{page}</a></li>
+                                    <li class="pagination ${class}"><a href="Javascript:void(0);" class="change-page pagination-#{page}" data-id="#{page}">#{page}</a></li>
                                 </c:forEach>
                             </ul>
                             <div class="clearfix"></div>
@@ -89,6 +90,22 @@
 
                         </ul>
                     </div>
+                    <c:if test='#{nbPage > 0}'>
+                        <ul class="women_pagenation pagination_product">
+                            <li>Page : </li>
+
+                            <c:forEach var="page" begin="1" end="${nbPage}" >
+
+                                <c:set var="class" value=""/>
+                                <c:if test='#{page eq 1}'>
+                                    <c:set var="class" value="active"/>
+                                </c:if>
+
+                                <li class="pagination ${class}"><a href="Javascript:void(0);" class="change-page pagination-#{page}" data-id="#{page}">#{page}</a></li>
+                            </c:forEach>
+                        </ul>
+                        <div class="clearfix"></div>
+                    </c:if>
                     <script src="js/cbpViewModeSwitch.js" type="text/javascript"></script>
                     <script src="js/classie.js" type="text/javascript"></script>
                 </div>

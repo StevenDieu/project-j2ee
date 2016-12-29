@@ -1187,6 +1187,16 @@ ul.product-list li a{
 	font-weight:400;
 	display: block;
 }
+ul.product-list li a.active {
+    background: #23527c;
+    color: #fff;
+    padding: 5px 2em;
+    transition: 0.5s all;
+    -webkit-transition: 0.5s all;
+    -o-transition: 0.5s all;
+    -moz-transition: 0.5s all;
+    -ms-transition: 0.5s all;
+}
 ul.product-list li a:hover{
 	background:#816263;
 	color:#fff;
@@ -1197,6 +1207,7 @@ ul.product-list li a:hover{
 	-moz-transition:0.5s all;
 	-ms-transition:0.5s all;
 }
+
 .latest-bis {
 	margin: 1.5em 0;
 	position:relative;
@@ -3057,3 +3068,9 @@ p.right {
 		font-size: 13px;
 	}
 }
+
+.center{
+    margin: auto;
+    text-align: center;
+}
+

@@ -16,12 +16,14 @@ import static com.rizomm.ipii.steven.model.Product.*;
         @NamedQuery(name = FIND_ALL, query = "select c from Product c order by c.id asc"),
         @NamedQuery(name = FIND_ALL_BY_CATEGORY, query = "select c from Product c where c.idCategory.id = :idCategory order by c.id asc"),
         @NamedQuery(name = COUNT_ALL, query = "select count(c) from Product c"),
+        @NamedQuery(name = COUNT_ALL_BY_CATEGORY, query = "select count(c) from Product c where c.idCategory.id = :idCategory"),
         @NamedQuery(name = DELETE_ALL, query = " delete from Product"),
 })
 public class Product implements Serializable {
 
     public static final String FIND_ALL = "Product.findAllProduct";
     public static final String COUNT_ALL = "Product.countAllProduct";
+    public static final String COUNT_ALL_BY_CATEGORY = "Product.countAllProductByCategory";
     public static final String DELETE_ALL = "Product.deleteAllProduct";
     public static final String FIND_ALL_BY_CATEGORY = "Product.findAllProductByCategory";
 
@@ -36,9 +38,10 @@ public class Product implements Serializable {
     private int stock;
     @NotNull(message = "The price can't be empty")
     @Min(value = 0, message = "The value can't be negative")
-    private float price;
+    private double price;
     @NotNull(message = "The name can't be empty")
     private String name;
+    @NotNull(message = "The desciption can't be empty")
     private String description;
     @NotNull(message = "The urlPicture can't be empty")
     private String urlPicture;
@@ -53,15 +56,6 @@ public class Product implements Serializable {
         this.price = price;
         this.name = name;
         this.description = description;
-        this.urlPicture = urlPicture;
-    }
-
-    public Product(int id, Category idCategory, int stock, float price, String name, String urlPicture) {
-        this.id = id;
-        this.idCategory = idCategory;
-        this.stock = stock;
-        this.price = price;
-        this.name = name;
         this.urlPicture = urlPicture;
     }
 
@@ -107,11 +101,11 @@ public class Product implements Serializable {
         this.stock = stock;
     }
 
-    public float getPrice() {
+    public double getPrice() {
         return price;
     }
 
-    public void setPrice(float price) {
+    public void setPrice(double price) {
         this.price = price;
     }
 

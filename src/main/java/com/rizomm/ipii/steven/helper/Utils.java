@@ -3,6 +3,8 @@ package com.rizomm.ipii.steven.helper;
 import org.codehaus.jettison.json.JSONException;
 import org.codehaus.jettison.json.JSONObject;
 
+import java.math.BigDecimal;
+import java.text.NumberFormat;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -101,9 +103,10 @@ public class Utils {
         return true;
     }
 
-    public static boolean isFloat(String string) {
+
+    public static boolean isDouble(String string) {
         try{
-            Float.parseFloat(string);
+            Double.parseDouble(string);
         } catch (NumberFormatException e){
             return false;
         }
@@ -111,5 +114,25 @@ public class Utils {
         return true;
     }
 
+    public static double convertDoubleToDixieme(String string) {
+        if(isDouble(string)){
+            Double d = Double.parseDouble(string);
+            return convertDoubleToDixieme(d);
+        }
+        return 0d;
+    }
+
+    public static double convertDoubleToDixieme(Double d) {
+        BigDecimal bd = new BigDecimal(d);
+        bd= bd.setScale(2,BigDecimal.ROUND_HALF_UP);
+        d = bd.doubleValue();
+        return d;
+    }
+
+    public static String convertDoubleToStringWithDixieme(double d){
+        NumberFormat format = NumberFormat.getInstance();
+        format.setMinimumFractionDigits(2);
+        return format.format(d);
+    }
 
 }

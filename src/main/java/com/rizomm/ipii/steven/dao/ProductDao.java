@@ -71,11 +71,11 @@ public class ProductDao implements IProductDao, Serializable {
     }
 
     @Override
-    public List<Product> findAllProductByPageAndCategory(int start, int limit, int category) {
+    public List<Product> findAllProductByPageAndCategory(int start, int limit, int idCategory) {
         TypedQuery<Product> query = em.createNamedQuery(FIND_ALL_BY_CATEGORY, Product.class)
                 .setFirstResult(start)
                 .setMaxResults(limit)
-                .setParameter("idCategory", category);
+                .setParameter("idCategory", idCategory);
         if (isNotTest) {
             em.joinTransaction();
         }
@@ -85,6 +85,16 @@ public class ProductDao implements IProductDao, Serializable {
     @Override
     public int countAllProduct() {
         TypedQuery<Integer> query = em.createNamedQuery(COUNT_ALL, Integer.class);
+        if (isNotTest) {
+            em.joinTransaction();
+        }
+        return ((Number) query.getSingleResult()).intValue();
+    }
+
+    @Override
+    public int countAllProduct(int idCategory) {
+        TypedQuery<Integer> query = em.createNamedQuery(COUNT_ALL_BY_CATEGORY, Integer.class)
+                .setParameter("idCategory", idCategory);
         if (isNotTest) {
             em.joinTransaction();
         }
@@ -162,7 +172,7 @@ public class ProductDao implements IProductDao, Serializable {
 
             if(isEmpty(json,"price")){
                 return generateMessageError400("Le prix est obligatoire !");
-            }else if(!isFloat(json.getString("price"))){
+            }else if(!isDouble(json.getString("price"))){
                 return generateMessageError400("Le prix doit être un nombre !");
             }
 
@@ -174,10 +184,15 @@ public class ProductDao implements IProductDao, Serializable {
                 return generateMessageError400("L'url de l'image est obligatoire !");
             }
 
+            if(isEmpty(json,"description")){
+                return generateMessageError400("La description est obligatoire !");
+            }
+
             product.setStock(json.getInt("stock"));
-            product.setPrice(Float.parseFloat(json.getString("price")));
+            product.setPrice(convertDoubleToDixieme(json.getString("price")));
             product.setName(json.getString("name"));
             product.setUrlPicture(json.getString("urlPicture"));
+            product.setDescription(json.getString("description"));
 
             if(isNotEmpty(json,"id")){
                 if(!isInt(json.getString("id"))){
@@ -186,9 +201,6 @@ public class ProductDao implements IProductDao, Serializable {
                 product.setId(json.getInt("id"));
             }
 
-            if(isNotEmpty(json,"description")){
-                product.setDescription(json.getString("description"));
-            }
 
             result.put("PRODUCT",product);
             result.put("ERROR",false);
@@ -200,6 +212,8 @@ public class ProductDao implements IProductDao, Serializable {
 
         return result;
     }
+
+
 
     @Override
     public JSONObject convertProductsToJson(List<Product> products) {
@@ -226,7 +240,7 @@ public class ProductDao implements IProductDao, Serializable {
         jsonproduct.put("idCategory", product.getIdCategory().getId());
         jsonproduct.put("labelCategory", product.getIdCategory().getLabel());
         jsonproduct.put("name", product.getName());
-        jsonproduct.put("price", product.getPrice());
+        jsonproduct.put("price", convertDoubleToStringWithDixieme(product.getPrice()));
         jsonproduct.put("stock", product.getStock());
         jsonproduct.put("urlPicture", product.getUrlPicture());
         return jsonproduct;

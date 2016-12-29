@@ -92,4 +92,22 @@ public class ProductRest {
         return Response.status((int) result.get("CODE_HTTP")).entity(result.get("MESSAGE_HTTP")).build() ;
     }
 
+    @GET
+    @Path("/count/{idCategory : \\d+}/category")
+    @Produces("application/json")
+    public Response getCountAllProductByCategory(String productString,@PathParam("idCategory") int idCategory) {
+        int countProduct = PD.countAllProduct(idCategory);
+
+        JSONObject jsonCountProducts = new JSONObject();
+        try {
+            jsonCountProducts.put("COUNT_PRODUCT", countProduct);
+            jsonCountProducts.put("COUNT_PAGE", Math.ceil((double) countProduct / 9));
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        Map<String, Object> result = Utils.generateMessageSuccess200(jsonCountProducts);
+
+        return Response.status((int) result.get("CODE_HTTP")).entity(result.get("MESSAGE_HTTP")).build() ;
+    }
+
 }
