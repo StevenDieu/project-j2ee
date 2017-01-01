@@ -36,18 +36,25 @@ public class Utils {
     }
 
     public static boolean isEmpty(JSONObject json, String value) {
-        if(!json.has(value) && json.isNull(value)){
+        if (!json.has(value) && json.isNull(value)) {
             return true;
         }
         return false;
     }
 
     public static boolean isNotEmpty(JSONObject json, String value) {
-        return !Utils.isEmpty(json,value);
+        return !Utils.isEmpty(json, value);
     }
 
     public static boolean isEmpty(Object o) {
         if (o == null) {
+            return true;
+        }
+        return false;
+    }
+
+    public static boolean isTooLarge(JSONObject json, String value, int sizeMax) throws JSONException {
+        if (json.getString(value).length() > sizeMax) {
             return true;
         }
         return false;
@@ -58,26 +65,30 @@ public class Utils {
     }
 
     public static Map<String, Object> generateMessageSuccess201(String message) {
-        return generateMessage(message,201,false);
+        return generateMessage(message, 201, false);
     }
 
-    public static Map<String, Object> generateMessageError400(String message){
-        return generateMessage(message,400,true);
+    public static Map<String, Object> generateMessageSuccess200(String message) {
+        return generateMessage(message, 200, false);
     }
 
-    public static Map<String, Object> generateMessageSuccess200(JSONObject message){
-        return generateMessage(message,200,false);
+    public static Map<String, Object> generateMessageError400(String message) {
+        return generateMessage(message, 400, true);
     }
 
-    private static Map<String, Object> generateMessage(JSONObject message, int codeHttp, boolean error){
+    public static Map<String, Object> generateMessageSuccess200(JSONObject message) {
+        return generateMessage(message, 200, false);
+    }
+
+    private static Map<String, Object> generateMessage(JSONObject message, int codeHttp, boolean error) {
         Map<String, Object> result = new HashMap();
         result.put("CODE_HTTP", codeHttp);
         result.put("MESSAGE_HTTP", message.toString());
-        result.put("ERROR",error);
+        result.put("ERROR", error);
         return result;
     }
 
-    private static Map<String, Object> generateMessage(String message, int codeHttp, boolean error){
+    private static Map<String, Object> generateMessage(String message, int codeHttp, boolean error) {
         Map<String, Object> result = new HashMap();
         result.put("CODE_HTTP", codeHttp);
         String messageReturn = "{\"message\" :" + message + "}";
@@ -88,15 +99,15 @@ public class Utils {
         } catch (JSONException e) {
             e.printStackTrace();
         }
-        result.put("MESSAGE_HTTP",messageReturn);
-        result.put("ERROR",error);
+        result.put("MESSAGE_HTTP", messageReturn);
+        result.put("ERROR", error);
         return result;
     }
 
-    public static boolean isInt(String string){
+    public static boolean isInt(String string) {
         try {
             Integer.parseInt(string);
-        } catch (NumberFormatException e){
+        } catch (NumberFormatException e) {
             return false;
         }
 
@@ -105,9 +116,9 @@ public class Utils {
 
 
     public static boolean isDouble(String string) {
-        try{
+        try {
             Double.parseDouble(string);
-        } catch (NumberFormatException e){
+        } catch (NumberFormatException e) {
             return false;
         }
 
@@ -115,7 +126,7 @@ public class Utils {
     }
 
     public static double convertDoubleToDixieme(String string) {
-        if(isDouble(string)){
+        if (isDouble(string)) {
             Double d = Double.parseDouble(string);
             return convertDoubleToDixieme(d);
         }
@@ -124,15 +135,27 @@ public class Utils {
 
     public static double convertDoubleToDixieme(Double d) {
         BigDecimal bd = new BigDecimal(d);
-        bd= bd.setScale(2,BigDecimal.ROUND_HALF_UP);
+        bd = bd.setScale(2, BigDecimal.ROUND_HALF_UP);
         d = bd.doubleValue();
         return d;
     }
 
-    public static String convertDoubleToStringWithDixieme(double d){
+    public static boolean isNotConvertDoubleToDixieme(Double d) {
+        try {
+            BigDecimal bd = new BigDecimal(d);
+            bd = bd.setScale(2, BigDecimal.ROUND_HALF_UP);
+            bd.doubleValue();
+        } catch (NumberFormatException e) {
+            return true;
+        }
+        return false;
+    }
+
+    public static String convertDoubleToStringWithDixieme(double d) {
         NumberFormat format = NumberFormat.getInstance();
         format.setMinimumFractionDigits(2);
         return format.format(d);
     }
+
 
 }

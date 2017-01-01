@@ -2,18 +2,18 @@ var page = 0;
 var category = "";
 var loadProductInProgress = false;
 
-function getPagination(){
+function getPagination() {
     $(".pagination").remove()
     $(".pagination_product").append('<div class="pagination center"><img class="img-pagination-loader" width="30px" src="' + urlImages + 'loader.gif"/></div>')
     $.ajax({
         url: "http://localhost:8080/steven-1.0.0-SNAPSHOT/json/product/count/" + category,
         context: document.body
-    }).done(function(result) {
+    }).done(function (result) {
         var listPagination = result.COUNT_PAGE;
         $(".pagination").remove()
-        for(page = 1; page <= listPagination; page++){
+        for (page = 1; page <= listPagination; page++) {
             var classPagination = "pagination";
-            if(page == 1){
+            if (page == 1) {
                 classPagination = classPagination + " active";
             }
             $(".pagination_product").append('<li class="' + classPagination + '"><a href="Javascript:void(0);" class="change-page" data-id="' + page + '">' + page + '</a></li>')
@@ -22,18 +22,18 @@ function getPagination(){
     });
 }
 
-function getListProduct(){
+function getListProduct() {
     $("#listeProduct").html('<div class="center"><img src="' + urlImages + 'loader.gif" width="200px"/></div>')
     loadProductInProgress = true;
     $.ajax({
         url: "http://localhost:8080/steven-1.0.0-SNAPSHOT/json/product/" + page + "/page/" + category,
         context: document.body
-    }).done(function(result) {
+    }).done(function (result) {
         var listProduct = result.products;
         $("#listeProduct").empty();
-        if(result.products.length === 0){
+        if (result.products.length === 0) {
             $("#listeProduct").html("Aucun produit n'est disponible.");
-        }else{
+        } else {
             showProduct(listProduct);
         }
         loadProductInProgress = false;
@@ -41,12 +41,12 @@ function getListProduct(){
 }
 
 
-function showProduct(listProduct){
-    $.each(listProduct, function(key,product) {
+function showProduct(listProduct) {
+    $.each(listProduct, function (key, product) {
         $("#listeProduct").append(
             '<li>' +
             '<div class="simpleCart_shelfItem">' +
-            '<a class="cbp-vm-image" href="single.html">' +
+            '<a class="cbp-vm-image" href="product?id=' + product.id + '">' +
             '<div class="view view-first">' +
             '<div class="inner_content clearfix">' +
             '<div class="product_image">' +
@@ -78,11 +78,11 @@ function showProduct(listProduct){
     });
 }
 
-function loadActonChangePage(){
-    $(".change-page").on("click",function(){
-        if(!loadProductInProgress){
+function loadActonChangePage() {
+    $(".change-page").on("click", function () {
+        if (!loadProductInProgress) {
             var pageInput = $(this).data("id") - 1;
-            if(pageInput != page){
+            if (pageInput != page) {
                 $(".pagination.active").removeClass("active");
                 $(".pagination-" + $(this).data("id")).parent().addClass("active");
                 page = pageInput;
@@ -92,19 +92,19 @@ function loadActonChangePage(){
     })
 }
 
-$(function() {
+$(function () {
     loadActonChangePage();
     getListProduct();
 
-    $(".change-category").on("click",function(){
-        if(!loadProductInProgress){
+    $(".change-category").on("click", function () {
+        if (!loadProductInProgress) {
             var categoryInput = $(this).data("id");
-            if((categoryInput + "/category") != category){
+            if ((categoryInput + "/category") != category) {
                 $(".change-category.active").removeClass("active");
                 $(this).addClass("active");
                 category = categoryInput + "/category";
                 page = 0;
-            }else{
+            } else {
                 $(this).removeClass("active");
                 category = "";
                 page = 0;

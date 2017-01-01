@@ -35,8 +35,45 @@ public class ProductRest {
     public Response addProduct(String productString) {
         Map<String, Object> result = PD.convertJsonToProduct(productString,CD);
         if(!((boolean) result.get("ERROR"))){
-            Product product = PD.createProduct((Product) result.get("PRODUCT"));
-            result = Utils.generateMessageSuccess201("Produit créé avec l'id : " + product.getId());
+            Product productResult = (Product) result.get("PRODUCT");
+            if(Utils.isNotEmpty(productResult.getId()) && Utils.isNotEmpty(PD.findProductById(productResult.getId()))){
+                result = Utils.generateMessageError400("Le produit existe déja, utiliser la methode PUT pour le modifier.");
+            }else{
+                Product product = PD.createProduct(productResult);
+                result = Utils.generateMessageSuccess201("Produit créé avec l'id : " + product.getId() + " et avec la catégorie id : " + product.getCategory().getId());
+            }
+        }
+
+        return Response.status((int) result.get("CODE_HTTP")).entity(result.get("MESSAGE_HTTP")).build() ;
+    }
+
+    @PUT
+    @Produces("application/json")
+    public Response updateProduct(String productString) {
+        Map<String, Object> result = PD.convertJsonToProduct(productString,CD);
+        if(!((boolean) result.get("ERROR"))){
+            Product productResult = (Product) result.get("PRODUCT");
+            Product product;
+            if(Utils.isNotEmpty(productResult.getId()) && Utils.isNotEmpty(PD.findProductById(productResult.getId()))){
+                product = PD.updateProduct(productResult);
+                result = Utils.generateMessageSuccess201("Produit modifié avec succés");
+            }else{
+                result = Utils.generateMessageError400("Le produit n'existe pas, utiliser la méthode POST pour l'ajouter.");
+            }
+    }
+
+        return Response.status((int) result.get("CODE_HTTP")).entity(result.get("MESSAGE_HTTP")).build() ;
+    }
+
+    @DELETE
+    @Path("/{idProduct : \\d+}")
+    @Produces("application/json")
+    public Response deleteProduct(@PathParam("idProduct") int idProduct) {
+        Map<String, Object> result;
+        if(PD.deleteProductById(idProduct)){
+            result = Utils.generateMessageSuccess200("Produit supprimé avec succés.");
+        }else{
+            result = Utils.generateMessageError400("Le produit n'existe pas.");
         }
 
         return Response.status((int) result.get("CODE_HTTP")).entity(result.get("MESSAGE_HTTP")).build() ;

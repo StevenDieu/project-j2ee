@@ -17,13 +17,15 @@
         <load-on-startup>1</load-on-startup>
     </servlet>
 
+    <context-param>
+        <param-name>org.omnifaces.FACES_VIEWS_SCAN_PATHS</param-name>
+        <param-value>/*.xhtml</param-value>
+    </context-param>
 
     <servlet-mapping>
         <servlet-name>Faces Servlet</servlet-name>
         <url-pattern>/javax.faces.resource/*</url-pattern>
-        <url-pattern>*.xhtml</url-pattern>
     </servlet-mapping>
-
 
     <welcome-file-list>
         <welcome-file>index.xhtml</welcome-file>

@@ -1,0 +1,90 @@
+<ui:composition template="/partials/template.xhtml"
+                xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                xmlns:f="http://xmlns.jcp.org/jsf/core"
+                xmlns:c="http://java.sun.com/jsp/jstl/core" xmlns:h="http://xmlns.jcp.org/jsf/html">
+
+
+
+    <ui:define name="js">
+        <h:outputScript library="library" name="js/imagezoom.js"/>
+        <h:outputScript library="library" name="js/jquery.flexslider.js"/>
+    </ui:define>
+
+
+    <ui:define name="title">
+        Page produit
+    </ui:define>
+
+    <ui:define name="content">
+
+        <f:metadata>
+            <f:viewParam name="id" value="#{productController.product.id}"/>
+            <f:viewAction action="#{productController.doFindProduct()}" />
+        </f:metadata>
+
+        <c:if test="#{not empty productController.product}">
+            <c:set var="product" value="#{productController.product}" scope="request" />
+
+            <div class="container">
+                <div class="products-page">
+                        <div class="col-md-5 zoom-grid">
+                            <div class="flexslider">
+                                <ul class="slides">
+                                    <li data-thumb="images/si.jpg">
+                                        <div class="thumb-image"> <img src="#{resource['images']}/${product.urlPicture}" data-imagezoom="true" class="img-responsive" alt="" /> </div>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="col-md-7 dress-info">
+                            <div class="dress-name">
+                                <h3>${product.name}</h3>
+                                <span>${productController.priceDixieme} €</span>
+                                <div class="clearfix"></div>
+                                <p>${product.description}</p>
+                            </div>
+                            <div class="span span1">
+                                <p class="left">STOCK</p>
+                                <c:if test="#{product.stock > 0}">
+                                    <p class="right">Dispo</p>
+                                </c:if>
+                                <c:if test="#{product.stock eq 0}">
+                                    <p class="right">Pas dispo</p>
+                                </c:if>
+                                <div class="clearfix"></div>
+                            </div>
+                            <div class="span span4">
+                                <p class="left">CATEGORIE</p>
+                                ${product.category.label}
+                                <div class="clearfix"></div>
+                            </div>
+                            <c:if test="#{product.stock > 0}">
+                                <div class="purchase">
+                                    <a class="cbp-vm-icon cbp-vm-add item_add" href="#">Ajouter au panier</a>
+                                    <div class="clearfix"></div>
+                                </div>
+                            </c:if>
+                            <script>
+                                $(window).load(function() {
+                                    $('.flexslider').flexslider({
+                                        animation: "slide",
+                                        controlNav: "thumbnails"
+                                    });
+                                });
+                            </script>
+                        </div>
+                    <div class="clearfix"></div>
+                </div>
+            </div>
+
+        </c:if>
+        <c:if test="#{empty productController.product}">
+            <div class="container">
+                <div class="products-page">
+                    Ce produit n'existe malheureusement pas, cliquez <h:link outcome="collection">ICI</h:link> pour revenir à la collection.
+                </div>
+            </div>
+        </c:if>
+    </ui:define>
+</ui:composition>

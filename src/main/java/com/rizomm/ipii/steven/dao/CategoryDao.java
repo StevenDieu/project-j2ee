@@ -104,9 +104,14 @@ public class CategoryDao implements ICategoryDao, Serializable {
                 category.setId(Integer.parseInt(idString));
 
             }else if(isNotEmpty(jsonCategory,"label")){
+
+                if(isTooLarge(jsonCategory,"label",255)){
+                    return generateMessageError400("Le label de la catégorie est trop long !");
+                }
+
                 category.setLabel(jsonCategory.getString("label"));
             }else{
-                return generateMessageError400("La category est mal paramétré ! ");
+                return generateMessageError400("La category est mal paramétrée ! ");
             }
 
         } catch (JSONException e) {

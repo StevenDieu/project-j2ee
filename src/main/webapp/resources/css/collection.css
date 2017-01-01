@@ -1,13 +1,13 @@
-.img-pagination-loader{
+.img-pagination-loader {
     margin-top: -13px;
     margin-left: 10px;
 }
 
-.relative{
+.relative {
     position: relative;
 }
 
-.product_image:hover .mask{
+.product_image:hover .mask {
     transform: translateY(-50%);
     top: 50%;
     margin: 0 auto;

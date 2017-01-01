@@ -14,9 +14,9 @@ import static com.rizomm.ipii.steven.model.Product.*;
 @Entity
 @NamedQueries({
         @NamedQuery(name = FIND_ALL, query = "select c from Product c order by c.id asc"),
-        @NamedQuery(name = FIND_ALL_BY_CATEGORY, query = "select c from Product c where c.idCategory.id = :idCategory order by c.id asc"),
+        @NamedQuery(name = FIND_ALL_BY_CATEGORY, query = "select c from Product c where c.category.id = :idCategory order by c.id asc"),
         @NamedQuery(name = COUNT_ALL, query = "select count(c) from Product c"),
-        @NamedQuery(name = COUNT_ALL_BY_CATEGORY, query = "select count(c) from Product c where c.idCategory.id = :idCategory"),
+        @NamedQuery(name = COUNT_ALL_BY_CATEGORY, query = "select count(c) from Product c where c.category.id = :idCategory"),
         @NamedQuery(name = DELETE_ALL, query = " delete from Product"),
 })
 public class Product implements Serializable {
@@ -32,7 +32,7 @@ public class Product implements Serializable {
     private int id;
     @ManyToOne
     @JoinColumn(name = "category_fk", nullable = false)
-    private Category idCategory;
+    private Category category;
     @NotNull(message = "The stock can't be empty")
     @Min(value = 0, message = "The stock can't be negative")
     private int stock;
@@ -42,6 +42,8 @@ public class Product implements Serializable {
     @NotNull(message = "The name can't be empty")
     private String name;
     @NotNull(message = "The desciption can't be empty")
+    @Lob
+    @Column
     private String description;
     @NotNull(message = "The urlPicture can't be empty")
     private String urlPicture;
@@ -49,9 +51,9 @@ public class Product implements Serializable {
     public Product() {
     }
 
-    public Product(int id, Category idCategory, int stock, float price, String name, String description, String urlPicture) {
+    public Product(int id, Category category, int stock, float price, String name, String description, String urlPicture) {
         this.id = id;
-        this.idCategory = idCategory;
+        this.category = category;
         this.stock = stock;
         this.price = price;
         this.name = name;
@@ -59,8 +61,8 @@ public class Product implements Serializable {
         this.urlPicture = urlPicture;
     }
 
-    public Product(Category idCategory, int stock, float price, String name, String description, String urlPicture) {
-        this.idCategory = idCategory;
+    public Product(Category category, int stock, float price, String name, String description, String urlPicture) {
+        this.category = category;
         this.stock = stock;
         this.price = price;
         this.name = name;
@@ -68,8 +70,8 @@ public class Product implements Serializable {
         this.urlPicture = urlPicture;
     }
 
-    public Product(Category idCategory, int stock, float price, String name, String urlPicture) {
-        this.idCategory = idCategory;
+    public Product(Category category, int stock, float price, String name, String urlPicture) {
+        this.category = category;
         this.stock = stock;
         this.price = price;
         this.name = name;
@@ -85,12 +87,12 @@ public class Product implements Serializable {
         this.id = id;
     }
 
-    public Category getIdCategory() {
-        return idCategory;
+    public Category getCategory() {
+        return category;
     }
 
-    public void setIdCategory(Category idCategory) {
-        this.idCategory = idCategory;
+    public void setCategory(Category idCategory) {
+        this.category = idCategory;
     }
 
     public int getStock() {
@@ -133,4 +135,11 @@ public class Product implements Serializable {
         this.urlPicture = urlPicture;
     }
 
+    public String getShortDescription() {
+       if(this.description.length() <= 103){
+           return description;
+       }else{
+           return description.substring(0,100) + "...";
+       }
+    }
 }

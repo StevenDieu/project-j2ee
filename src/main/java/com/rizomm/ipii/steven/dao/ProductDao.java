@@ -139,49 +139,35 @@ public class ProductDao implements IProductDao, Serializable {
         try {
             JSONObject json = new JSONObject(jsonString);
 
-            if (json.has("category") && !json.isNull("category")) {
-                Map<String, Object> resultCategory = CD.convertJsonToProduct(json.getString("category"));
-
-                if((boolean) resultCategory.get("ERROR")){
-                    return resultCategory;
-                }
-
-                Category category = (Category) resultCategory.get("CATEGORY");
-
-                if(category.getId() == 0){
-                    category.setId(CD.createCategory(category).getId());
-                }else{
-                    int idCategory = category.getId();
-                    category = CD.findCategoryById(idCategory);
-                    if(category == null){
-                        return generateMessageError400("La catégorie avec l'id : " + idCategory + " n'éxiste pas");
-                    }
-                }
-
-                product.setIdCategory(category);
-
-            }else{
-                return generateMessageError400("Une catégorie est obligatoire !");
-            }
 
             if(isEmpty(json,"stock")){
                 return generateMessageError400("Le stock est obligatoire !");
             }else if(!isInt(json.getString("stock"))){
                 return generateMessageError400("Le stock doit être un chiffre !");
+            }else if(json.getInt("stock") < 0){
+                return generateMessageError400("Le stock doit être un chiffre positif !");
             }
 
             if(isEmpty(json,"price")){
                 return generateMessageError400("Le prix est obligatoire !");
             }else if(!isDouble(json.getString("price"))){
                 return generateMessageError400("Le prix doit être un nombre !");
+            }else if(isNotConvertDoubleToDixieme( Double.parseDouble(json.getString("price")))){
+                return generateMessageError400("Le prix est trop grand !");
+            }else if(convertDoubleToDixieme(json.getString("price")) < 0){
+                return generateMessageError400("Le prix doit être un chiffre positif !");
             }
 
             if(isEmpty(json,"name")){
                 return generateMessageError400("Le nom est obligatoire !");
+            }else if(isTooLarge(json,"name",255)){
+                return generateMessageError400("Le nom est trop long !");
             }
 
             if(isEmpty(json,"urlPicture")){
                 return generateMessageError400("L'url de l'image est obligatoire !");
+            }else if(isTooLarge(json,"urlPicture",255)){
+                return generateMessageError400("L'url de l'image est trop longue !");
             }
 
             if(isEmpty(json,"description")){
@@ -201,6 +187,31 @@ public class ProductDao implements IProductDao, Serializable {
                 product.setId(json.getInt("id"));
             }
 
+
+            if (json.has("category") && !json.isNull("category")) {
+                Map<String, Object> resultCategory = CD.convertJsonToProduct(json.getString("category"));
+
+                if((boolean) resultCategory.get("ERROR")){
+                    return resultCategory;
+                }
+
+                Category category = (Category) resultCategory.get("CATEGORY");
+
+                if(category.getId() == 0){
+                    category.setId(CD.createCategory(category).getId());
+                }else{
+                    int idCategory = category.getId();
+                    category = CD.findCategoryById(idCategory);
+                    if(category == null){
+                        return generateMessageError400("La catégorie avec l'id : " + idCategory + " n'éxiste pas");
+                    }
+                }
+
+                product.setCategory(category);
+
+            }else{
+                return generateMessageError400("Une catégorie est obligatoire !");
+            }
 
             result.put("PRODUCT",product);
             result.put("ERROR",false);
@@ -236,9 +247,9 @@ public class ProductDao implements IProductDao, Serializable {
     public JSONObject convertProductToJson(Product product) throws JSONException {
         JSONObject jsonproduct = new JSONObject();
         jsonproduct.put("id", product.getId());
-        jsonproduct.put("description", product.getDescription());
-        jsonproduct.put("idCategory", product.getIdCategory().getId());
-        jsonproduct.put("labelCategory", product.getIdCategory().getLabel());
+        jsonproduct.put("description", product.getShortDescription());
+        jsonproduct.put("idCategory", product.getCategory().getId());
+        jsonproduct.put("labelCategory", product.getCategory().getLabel());
         jsonproduct.put("name", product.getName());
         jsonproduct.put("price", convertDoubleToStringWithDixieme(product.getPrice()));
         jsonproduct.put("stock", product.getStock());
