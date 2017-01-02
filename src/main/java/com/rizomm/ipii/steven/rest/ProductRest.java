@@ -33,82 +33,86 @@ public class ProductRest {
     @POST
     @Produces("application/json")
     public Response addProduct(String productString) {
-        Map<String, Object> result = PD.convertJsonToProduct(productString,CD);
-        if(!((boolean) result.get("ERROR"))){
+        Map<String, Object> result = PD.convertJsonToProduct(productString, CD);
+
+        if (!((boolean) result.get("ERROR"))) {
             Product productResult = (Product) result.get("PRODUCT");
-            if(Utils.isNotEmpty(productResult.getId()) && Utils.isNotEmpty(PD.findProductById(productResult.getId()))){
+            if (Utils.isNotEmpty(productResult.getId()) && Utils.isNotEmpty(PD.findProductById(productResult.getId()))) {
                 result = Utils.generateMessageError400("Le produit existe déja, utiliser la methode PUT pour le modifier.");
-            }else{
+            } else {
                 Product product = PD.createProduct(productResult);
                 result = Utils.generateMessageSuccess201("Produit créé avec l'id : " + product.getId() + " et avec la catégorie id : " + product.getCategory().getId());
             }
         }
 
-        return Response.status((int) result.get("CODE_HTTP")).entity(result.get("MESSAGE_HTTP")).build() ;
+        return Response.status((int) result.get("CODE_HTTP")).entity(result.get("MESSAGE_HTTP")).build();
     }
 
     @PUT
     @Produces("application/json")
     public Response updateProduct(String productString) {
-        Map<String, Object> result = PD.convertJsonToProduct(productString,CD);
-        if(!((boolean) result.get("ERROR"))){
+        Map<String, Object> result = PD.convertJsonToProduct(productString, CD);
+
+        if (!((boolean) result.get("ERROR"))) {
             Product productResult = (Product) result.get("PRODUCT");
             Product product;
-            if(Utils.isNotEmpty(productResult.getId()) && Utils.isNotEmpty(PD.findProductById(productResult.getId()))){
+            if (Utils.isNotEmpty(productResult.getId()) && Utils.isNotEmpty(PD.findProductById(productResult.getId()))) {
                 product = PD.updateProduct(productResult);
-                result = Utils.generateMessageSuccess201("Produit modifié avec succés");
-            }else{
+                result = Utils.generateMessageSuccess200("Produit modifié avec succés");
+            } else {
                 result = Utils.generateMessageError400("Le produit n'existe pas, utiliser la méthode POST pour l'ajouter.");
             }
-    }
+        }
 
-        return Response.status((int) result.get("CODE_HTTP")).entity(result.get("MESSAGE_HTTP")).build() ;
+        return Response.status((int) result.get("CODE_HTTP")).entity(result.get("MESSAGE_HTTP")).build();
     }
 
     @DELETE
-    @Path("/{idProduct : \\d+}")
     @Produces("application/json")
-    public Response deleteProduct(@PathParam("idProduct") int idProduct) {
-        Map<String, Object> result;
-        if(PD.deleteProductById(idProduct)){
-            result = Utils.generateMessageSuccess200("Produit supprimé avec succés.");
-        }else{
-            result = Utils.generateMessageError400("Le produit n'existe pas.");
+    public Response deleteProduct(String jsonProduct) {
+        Map<String, Object> result = PD.convertJsonToProductForDelete(jsonProduct);
+
+        if (!((boolean) result.get("ERROR"))) {
+            if (PD.deleteProductById((int) result.get("idProduct"))) {
+                result = Utils.generateMessageSuccess200("Produit supprimé avec succés.");
+            } else {
+                result = Utils.generateMessageError400("Le produit n'existe pas.");
+            }
         }
 
-        return Response.status((int) result.get("CODE_HTTP")).entity(result.get("MESSAGE_HTTP")).build() ;
+        return Response.status((int) result.get("CODE_HTTP")).entity(result.get("MESSAGE_HTTP")).build();
     }
 
     @GET
     @Path("/{numberPage : \\d+}/page")
     @Produces("application/json")
-    public Response getAllProductByPage(String productString,@PathParam("numberPage") int numberPage) {
+    public Response getAllProductByPage(String productString, @PathParam("numberPage") int numberPage) {
         int start = numberPage * 9;
         int limit = numberPage + 1 * 9;
-        List<Product> listProduct = PD.findAllProductByPage(start,limit);
+        List<Product> listProduct = PD.findAllProductByPage(start, limit);
 
         JSONObject jsonProducts = PD.convertProductsToJson(listProduct);
 
         Map<String, Object> result = Utils.generateMessageSuccess200(jsonProducts);
 
-        return Response.status((int) result.get("CODE_HTTP")).entity(result.get("MESSAGE_HTTP")).build() ;
+        return Response.status((int) result.get("CODE_HTTP")).entity(result.get("MESSAGE_HTTP")).build();
     }
 
     @GET
     @Path("/{numberPage : \\d+}/page/{idCategory : \\d+}/category")
     @Produces("application/json")
     public Response getAllProductByPageAndCategory(String productString
-            ,@PathParam("numberPage") int numberPage
-            ,@PathParam("idCategory") int idCategory) {
+            , @PathParam("numberPage") int numberPage
+            , @PathParam("idCategory") int idCategory) {
         int start = numberPage * 9;
         int limit = numberPage + 1 * 9;
-        List<Product> listProduct = PD.findAllProductByPageAndCategory(start,limit,idCategory);
+        List<Product> listProduct = PD.findAllProductByPageAndCategory(start, limit, idCategory);
 
         JSONObject jsonProducts = PD.convertProductsToJson(listProduct);
 
         Map<String, Object> result = Utils.generateMessageSuccess200(jsonProducts);
 
-        return Response.status((int) result.get("CODE_HTTP")).entity(result.get("MESSAGE_HTTP")).build() ;
+        return Response.status((int) result.get("CODE_HTTP")).entity(result.get("MESSAGE_HTTP")).build();
     }
 
     @GET
@@ -126,13 +130,13 @@ public class ProductRest {
         }
         Map<String, Object> result = Utils.generateMessageSuccess200(jsonCountProducts);
 
-        return Response.status((int) result.get("CODE_HTTP")).entity(result.get("MESSAGE_HTTP")).build() ;
+        return Response.status((int) result.get("CODE_HTTP")).entity(result.get("MESSAGE_HTTP")).build();
     }
 
     @GET
     @Path("/count/{idCategory : \\d+}/category")
     @Produces("application/json")
-    public Response getCountAllProductByCategory(String productString,@PathParam("idCategory") int idCategory) {
+    public Response getCountAllProductByCategory(String productString, @PathParam("idCategory") int idCategory) {
         int countProduct = PD.countAllProduct(idCategory);
 
         JSONObject jsonCountProducts = new JSONObject();
@@ -144,7 +148,7 @@ public class ProductRest {
         }
         Map<String, Object> result = Utils.generateMessageSuccess200(jsonCountProducts);
 
-        return Response.status((int) result.get("CODE_HTTP")).entity(result.get("MESSAGE_HTTP")).build() ;
+        return Response.status((int) result.get("CODE_HTTP")).entity(result.get("MESSAGE_HTTP")).build();
     }
 
 }

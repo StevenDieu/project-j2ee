@@ -82,6 +82,7 @@ public class ProductDao implements IProductDao, Serializable {
         return query.getResultList();
     }
 
+
     @Override
     public int countAllProduct() {
         TypedQuery<Integer> query = em.createNamedQuery(COUNT_ALL, Integer.class);
@@ -224,7 +225,32 @@ public class ProductDao implements IProductDao, Serializable {
         return result;
     }
 
+    @Override
+    public Map<String, Object> convertJsonToProductForDelete(String jsonString) {
+        Map<String, Object> result = new HashMap();
+        Product product = new Product();
 
+        try {
+            JSONObject json = new JSONObject(jsonString);
+
+            if(isEmpty(json,"id")){
+                return generateMessageError400("L'id est obligatoire !");
+            }else if(!isInt(json.getString("id"))){
+                return generateMessageError400("L'id doit être un chiffre !");
+            }else if(json.getInt("id") < 0){
+                return generateMessageError400("L'id doit être un chiffre positif !");
+            }
+
+            result.put("ID",json.getInt("id"));
+            result.put("ERROR",false);
+        } catch (JSONException e) {
+            return generateMessageError400("Le format de la requête n'est pas respecté !");
+        }catch (Exception e) {
+            return generateMessageError400("Aie, une erreur est survenue !");
+        }
+
+        return result;
+    }
 
     @Override
     public JSONObject convertProductsToJson(List<Product> products) {

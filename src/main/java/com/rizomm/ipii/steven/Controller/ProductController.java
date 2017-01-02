@@ -5,6 +5,7 @@ import com.rizomm.ipii.steven.dao.IProductDao;
 import com.rizomm.ipii.steven.helper.Utils;
 import com.rizomm.ipii.steven.model.Category;
 import com.rizomm.ipii.steven.model.Product;
+import com.rizomm.ipii.steven.service.IShoppingCartService;
 import org.codehaus.jettison.json.JSONException;
 import org.codehaus.jettison.json.JSONObject;
 
@@ -21,7 +22,6 @@ import java.util.Map;
 
 @Named
 @RequestScoped
-@Path("/home")
 public class ProductController implements Serializable {
 
     @EJB
@@ -31,11 +31,8 @@ public class ProductController implements Serializable {
     private IProductDao PD;
 
     private Product product = new Product();
-    private String priceDixieme;
-
     private static final long serialVersionUID = 1L;
 
-    @Path("/test")
     public List<Category> findAllCategory(){
         return CD.findAllCategory();
     }
@@ -56,4 +53,5 @@ public class ProductController implements Serializable {
     public String getPriceDixieme() {
         return Utils.convertDoubleToStringWithDixieme(product.getPrice());
     }
+
 }
