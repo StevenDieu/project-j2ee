@@ -71,7 +71,7 @@ function showProduct(listProduct) {
             '<div class="cbp-vm-details">' +
             product.description +
             '</div>' +
-            '<a class="cbp-vm-icon cbp-vm-add item_add" href="#">Ajouter au panier</a>' +
+            '<a class="cbp-vm-icon cbp-vm-add item_add" href="cart?id=' + product.id + '">Ajouter au panier</a>' +
             '</div>' +
             '</div>' +
             '</li>');

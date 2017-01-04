@@ -6,6 +6,7 @@
 
     <persistence-unit name="projectJ2ee" transaction-type="JTA">
         <jta-data-source>jdbc/__default</jta-data-source>
+
         <properties>
             <property name="javax.persistence.schema-generation.database.action" value="drop-and-create"/>
             <property name="eclipselink.logging.level" value="FINE"/>
@@ -14,6 +15,9 @@
 
     <!--<persistence-unit name="projectJ2eeLocal" transaction-type="RESOURCE_LOCAL">-->
         <!--<provider>org.eclipse.persistence.jpa.PersistenceProvider</provider>-->
+        <!--<class>com.rizomm.ipii.steven.model.Product</class>-->
+        <!--<class>com.rizomm.ipii.steven.model.Category</class>-->
+        <!--<class>com.rizomm.ipii.steven.model.Order</class>-->
         <!--<properties>-->
             <!--<property name="javax.persistence.schema-generation.database.action" value="drop-and-create"/>-->
             <!--<property name="eclipselink.logging.level" value="INFO"/>-->

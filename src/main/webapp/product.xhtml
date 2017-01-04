@@ -17,7 +17,6 @@
     </ui:define>
 
     <ui:define name="content">
-
         <f:metadata>
             <f:viewParam name="id" value="#{productController.product.id}"/>
             <f:viewAction action="#{productController.doFindProduct()}" />
@@ -61,7 +60,7 @@
                             </div>
                             <c:if test="#{product.stock > 0}">
                                 <div class="purchase">
-                                    <a class="cbp-vm-icon cbp-vm-add item_add" href="#">Ajouter au panier</a>
+                                    <h:link outcome="cart?id=${product.id}">Ajouter au panier</h:link>
                                     <div class="clearfix"></div>
                                 </div>
                             </c:if>

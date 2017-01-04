@@ -10,14 +10,15 @@ import java.util.Map;
 /**
  * Created by steven on 17/11/2016.
  */
-@Remote
 public interface IShoppingCartService extends Serializable {
 
-    Map<String, Object> addProductCart(String jsonString, IProductDao PD);
+    String addProductCart(int id, int qty, IProductDao PD);
 
-    Map<String, Object> deleteProductToCart(String jsonString);
+    String deleteProductToCart(int id);
 
     JSONObject getCart(IProductDao PD);
+
+    JSONObject getCartHeader(IProductDao PD);
 
     boolean payer();
 

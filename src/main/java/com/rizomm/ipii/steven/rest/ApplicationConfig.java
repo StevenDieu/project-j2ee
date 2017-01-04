@@ -24,7 +24,6 @@ public class ApplicationConfig extends Application {
   public ApplicationConfig() {
     HashSet<Class<?>> c = new HashSet<>();
     c.add(ProductRest.class);
-    c.add(CartRest.class);
 
     c.add(MOXyJsonProvider.class);
 
