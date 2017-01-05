@@ -5,12 +5,14 @@
                 xmlns:c="http://java.sun.com/jsp/jstl/core"
                 xmlns:h="http://xmlns.jcp.org/jsf/html">
 
+    <ui:define name="css">
+        <h:outputStylesheet library="css" name="cart.css"/>
+    </ui:define>
 
     <ui:define name="js">
         <h:outputScript library="library" name="js/imagezoom.js"/>
         <h:outputScript library="library" name="js/jquery.flexslider.js"/>
     </ui:define>
-
 
     <ui:define name="title">
         Mon panier
@@ -22,26 +24,34 @@
             <f:viewAction action="#{cartController.addProductCart(1)}"/>
         </f:metadata>
 
-        <c:if test="#{not empty cartController.message}">
-            <div class="alert alert-info alert-dismissible center" role="alert">
-                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true"></span></button>
-                <strong>Information ! </strong> ${cartController.message}
-            </div>
-        </c:if>
+        <h:panelGroup layout="block" id="message">
+            <c:if test="#{not empty cartController.message}">
+                <h:panelGroup layout="block" styleClass="alert alert-info alert-dismissible center">
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span
+                            aria-hidden="true"></span></button>
+                    <strong>Information ! </strong> ${cartController.message}
+                </h:panelGroup>
+            </c:if>
+        </h:panelGroup>
 
-
-        <div class="cart-items">
-            <div class="container">
-                <h2>MON PANIER (3)</h2>
+        <h:panelGroup layout="block" styleClass="cart-items">
+            <h:panelGroup layout="block" styleClass="container">
+                <h2>MON PANIER (
+                    <h:panelGroup id="qtyMyCart">
+                        #{cartController.qtyCart}
+                    </h:panelGroup>)</h2>
                 <c:forEach var="shoppingCart" items="#{cartController.getAllProductCart()}">
-                    <c:set var="product" value="#{shoppingCart.getProduct()}" scope="request"/>
+                    <c:set var="product" value="#{shoppingCart.product}"/>
+                    <c:set var="idInfoProductQty" value="infoProductQty#{product.id}"/>
+                    <c:set var="idInfoProductTotalPrice" value="infoProductTotalPrice#{product.id}"/>
+                    <c:set var="renderAjax" value="#{idInfoProductQty} #{idInfoProductTotalPrice} message simpleCart_total simpleCart_quantity qtyMyCart"/>
 
                     <div class="cart-gd">
                         <div class="cart-header">
                             <div class="close1"></div>
                             <div class="cart-sec simpleCart_shelfItem">
                                 <div class="cart-item cyc">
-                                    <img src="images/l1.jpg" class="img-responsive" alt=""/>
+                                    <img src="#{resource['images']}/${product.urlPicture}" class="img-responsive" alt=""/>
                                 </div>
                                 <div class="cart-item-info">
                                     <h3><a href="#">${product.name} </a></h3>
@@ -50,42 +60,41 @@
                                         <li><p>Quantité :
                                             <h:form>
 
-                                                <h:commandButton value="+" action="#{cartController.addProductCart(1,product.id)}">
+                                                <h:commandButton styleClass="updateQuantityProduct" type="submit" value="+" action="#{cartController.addProductCart(1,product.id)}">
+                                                    <f:ajax render="#{renderAjax}"/>
                                                 </h:commandButton>
 
                                             </h:form>
-                                            ${shoppingCart.quantity}
-                                            <h:form>
 
-                                                <h:commandButton value="-" action="#{cartController.addProductCart(-1,product.id)}">
+                                            <h:panelGroup id="#{idInfoProductQty}">
+                                                ${shoppingCart.quantity}
+                                            </h:panelGroup>
+
+                                            <h:form>
+                                                <h:commandButton styleClass="updateQuantityProduct" value="-" action="#{cartController.addProductCart(-1,product.id)}">
+                                                    <f:ajax render="#{renderAjax}" />
                                                 </h:commandButton>
 
                                             </h:form>
                                         </p></li>
                                     </ul>
                                     <div class="delivery">
-                                        <p>Prix total : ${shoppingCart.totalPrice}</p>
-                                        <span>
-
-
-
-
-
-                                        </span>
+                                        <p>Prix total :
+                                            <h:panelGroup id="#{idInfoProductTotalPrice}">
+                                                ${shoppingCart.totalPrice}
+                                            </h:panelGroup>
+                                        </p>
                                         <div class="clearfix"></div>
                                     </div>
                                 </div>
                                 <div class="clearfix"></div>
                             </div>
                         </div>
-
-
                     </div>
 
                 </c:forEach>
-
-            </div>
-        </div>
+            </h:panelGroup>
+        </h:panelGroup>
 
     </ui:define>
 </ui:composition>

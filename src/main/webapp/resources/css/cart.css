@@ -1,0 +1,16 @@
+.updateQuantityProduct{
+    border: none;
+    padding: 7px 13px;
+    margin-top: -7px;
+    background-color: #f2f2f2;
+    border: 1px solid rgba(0, 0, 0, 0.15);
+    margin: -7px 10px 0;
+    color: black;
+}
+
+.alert{
+    position: absolute;
+    left: 0;
+    right: 0;
+    width: 1000px;
+}

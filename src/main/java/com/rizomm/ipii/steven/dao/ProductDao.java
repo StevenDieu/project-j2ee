@@ -24,7 +24,6 @@ import static com.rizomm.ipii.steven.model.Product.*;
  * Created by steven on 17/11/2016.
  */
 @Stateless
-@Remote
 @Named
 public class ProductDao implements IProductDao, Serializable {
 

@@ -2,7 +2,6 @@ package com.rizomm.ipii.steven.Controller;
 
 import com.rizomm.ipii.steven.dao.IProductDao;
 import com.rizomm.ipii.steven.helper.Utils;
-import com.rizomm.ipii.steven.model.Product;
 import com.rizomm.ipii.steven.model.ShoppingCart;
 import com.rizomm.ipii.steven.service.IShoppingCartService;
 
@@ -22,11 +21,11 @@ import java.util.List;
 @RequestScoped
 public class CartController implements Serializable {
 
+    private static final long serialVersionUID = 1L;
+
     @EJB
     private IProductDao PD;
     private int idProduct;
-    private List<Product> products;
-    private static final long serialVersionUID = 1L;
     private String message = "";
 
     public void addProductCart(final int qty) {
@@ -41,6 +40,14 @@ public class CartController implements Serializable {
 
     public List<ShoppingCart> getAllProductCart() {
         return getiShoppingCartService().getListShoppingCart();
+    }
+
+    public String getTotalPriceCart() {
+        return getiShoppingCartService().getTotalPrice();
+    }
+
+    public int getQtyCart() {
+        return getiShoppingCartService().getQuantityCart();
     }
 
 //    public Response deleteProductCart() throws NamingException {
@@ -91,7 +98,4 @@ public class CartController implements Serializable {
         return message;
     }
 
-    public void setMessageText(final String messageText) {
-        this.message = messageText;
-    }
 }

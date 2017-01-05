@@ -4,29 +4,22 @@ import com.rizomm.ipii.steven.dao.IProductDao;
 import com.rizomm.ipii.steven.model.Product;
 import com.rizomm.ipii.steven.model.ShoppingCart;
 
-import javax.ejb.Remote;
 import javax.ejb.Stateful;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
-import static com.rizomm.ipii.steven.helper.Utils.convertDoubleToStringWithDixieme;
-import static com.rizomm.ipii.steven.helper.Utils.isEmpty;
+import static com.rizomm.ipii.steven.helper.Utils.*;
 
 /**
  * Created by steven on 17/11/2016.
  */
 @Stateful
-@Remote
 public class ShoppingCartService implements IShoppingCartService {
 
     private List<ShoppingCart> listShoppingCart = new ArrayList<>();
 
     @Override
     public String addProductCart(final int id, int qty, final IProductDao PD) {
-
-        final Map<String, Object> result = new HashMap();
 
         if (isEmpty(id)) {
             return "L'id du produit est vide !";
@@ -50,12 +43,18 @@ public class ShoppingCartService implements IShoppingCartService {
         for (ShoppingCart shoppingCart : listShoppingCart) {
             if (shoppingCart.getProduct().getId() == product.getId()) {
                 qty = shoppingCart.getQuantity() + qty;
-                if (qty <= 0) {
-                    return deleteProductToCart(id);
-                } else {
+                if (qty > 0 && qty <= product.getStock()) {
                     shoppingCart.setQuantity(qty);
                     shoppingCart.setPriceUnit(convertDoubleToStringWithDixieme(product.getPrice()));
                     shoppingCart.setTotalPrice(convertDoubleToStringWithDixieme(product.getPrice() * shoppingCart.getQuantity()));
+                }else{
+                    if(qty >= product.getStock()){
+                        shoppingCart.setQuantity(product.getStock());
+                        shoppingCart.setPriceUnit(convertDoubleToStringWithDixieme(product.getPrice()));
+                        shoppingCart.setTotalPrice(convertDoubleToStringWithDixieme(product.getPrice() * product.getStock()));
+                        return "Il n'y a plus assez de stock nous avons actualisé votre panier...";
+                    }
+                    return "Pour supprimer un produit veuillez cliquer sur la croix";
                 }
                 existCart = true;
                 break;
@@ -77,7 +76,6 @@ public class ShoppingCartService implements IShoppingCartService {
 
     @Override
     public String deleteProductToCart(final int id) {
-        final Map<String, Object> result = new HashMap();
 
         if (isEmpty(id)) {
             return "L'id du produit est vide !";
@@ -113,6 +111,24 @@ public class ShoppingCartService implements IShoppingCartService {
     public boolean payer() {
 
         return false;
+    }
+
+    @Override
+    public String getTotalPrice() {
+        double totalPriceCart = 0d;
+        for (ShoppingCart shoppingCart : listShoppingCart) {
+            totalPriceCart = totalPriceCart + shoppingCart.getProduct().getPrice() * shoppingCart.getQuantity();
+        }
+        return convertDoubleToStringWithDixieme(totalPriceCart);
+    }
+
+    @Override
+    public int getQuantityCart() {
+        int quantityCart = 0;
+        for (ShoppingCart shoppingCart : listShoppingCart) {
+            quantityCart = quantityCart + shoppingCart.getQuantity();
+        }
+        return quantityCart;
     }
 
 

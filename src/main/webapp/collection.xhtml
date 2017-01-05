@@ -65,29 +65,27 @@
 
                         <ul class="women_pagenation pagination_product">
                             <c:if test='#{nbPage > 0}'>
-                                    <li>Page :</li>
+                                <li>Page :</li>
 
-                                    <c:forEach var="page" begin="1" end="${nbPage}">
+                                <c:forEach var="page" begin="1" end="${nbPage}">
 
-                                        <c:set var="class" value=""/>
-                                        <c:if test='#{page eq 1}'>
-                                            <c:set var="class" value="active"/>
-                                        </c:if>
+                                    <c:set var="class" value=""/>
+                                    <c:if test='#{page eq 1}'>
+                                        <c:set var="class" value="active"/>
+                                    </c:if>
 
-                                        <li class="pagination ${class}"><a href="Javascript:void(0);"
-                                                                           class="change-page pagination-#{page}"
-                                                                           data-id="#{page}">#{page}</a></li>
-                                    </c:forEach>
+                                    <li class="pagination ${class}"><a href="Javascript:void(0);"
+                                                                       class="change-page pagination-#{page}"
+                                                                       data-id="#{page}">#{page}</a></li>
+                                </c:forEach>
                             </c:if>
                         </ul>
                         <div class="clearfix"></div>
                     </div>
                     <div id="cbp-vm" class="cbp-vm-switcher cbp-vm-view-grid">
                         <div class="cbp-vm-options">
-                            <a href="#" class="cbp-vm-icon cbp-vm-grid cbp-vm-selected" data-view="cbp-vm-view-grid"
-                               title="grid">Vue grille</a>
-                            <a href="#" class="cbp-vm-icon cbp-vm-list" data-view="cbp-vm-view-list"
-                               title="list">Vue liste</a>
+                            <a href="#" class="cbp-vm-icon cbp-vm-grid cbp-vm-selected" data-view="cbp-vm-view-grid" title="grid">Vue grille</a>
+                            <a href="#" class="cbp-vm-icon cbp-vm-list" data-view="cbp-vm-view-list" title="list">Vue liste</a>
                         </div>
                         <div class="clearfix"></div>
                         <ul id="listeProduct">
@@ -105,15 +103,13 @@
                                     <c:set var="class" value="active"/>
                                 </c:if>
 
-                                <li class="pagination ${class}"><a href="Javascript:void(0);"
-                                                                   class="change-page pagination-#{page}"
-                                                                   data-id="#{page}">#{page}</a></li>
+                                <li class="pagination ${class}">
+                                    <a href="Javascript:void(0);" class="change-page pagination-#{page}" data-id="#{page}">#{page}</a>
+                                </li>
                             </c:forEach>
                         </ul>
                         <div class="clearfix"></div>
                     </c:if>
-                    <script src="js/cbpViewModeSwitch.js" type="text/javascript"></script>
-                    <script src="js/classie.js" type="text/javascript"></script>
                 </div>
                 <div class="clearfix"></div>
             </div>

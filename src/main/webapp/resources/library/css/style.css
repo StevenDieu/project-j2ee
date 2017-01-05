@@ -356,7 +356,7 @@ ul.multi-column-dropdown h6 {
     text-decoration: none;
     height: 70px;
     width: 40px;
-    background: transparent url("../images/arrows2.png") no-repeat left top;
+    background: url("#{resource['images:arrows2.png']}") no-repeat;
     margin-top: 1%;
 }
 
@@ -569,7 +569,8 @@ ul.multi-column-dropdown h6 {
 a.twitter {
     width: 25px;
     height: 25px;
-    background: url(../images/follow.png) no-repeat 0px 0px;
+    background: url("#{resource['images:follow.png']}") no-repeat 0px 0px;
+
     display: inline-block;
     margin: 0 1em;
     vertical-align: text-bottom;
@@ -582,7 +583,8 @@ a.twitter:hover, a.facebook:hover {
 a.facebook {
     width: 25px;
     height: 25px;
-    background: url(../images/follow.png) no-repeat -25px 0px;
+    background: url("#{resource['images:follow.png']}") no-repeat -25px 0px;
+
     display: inline-block;
     vertical-align: text-bottom;
 }
@@ -696,16 +698,12 @@ a.product_name {
 }
 
 .product p i {
-    background: url(../images/cart.png) no-repeat;
+    background: url("#{resource['images:cart.png']}") no-repeat;
     width: 20px;
     height: 14px;
     display: inline-block;
     margin-right: 4px;
     vertical-align: middle;
-}
-
-.product-left:hover .product p i {
-    background: url(../images/cart-2.png) no-repeat;
 }
 
 /*--end-product--*/
@@ -787,16 +785,6 @@ a.like_name {
     cursor: pointer;
     z-index: 100;
     margin-top: -2em;
-}
-
-.nbs-flexisel-nav-left {
-    left: 0px;
-    background: url(../images/arrows.png) no-repeat -8px -7px;
-}
-
-.nbs-flexisel-nav-right {
-    right: 0px;
-    background: url(../images/arrows.png) no-repeat -61px -7px;
 }
 
 .other-products {
@@ -1022,17 +1010,6 @@ ul.tags_links li a:hover {
     color: #fff;
 }
 
-.link1 {
-    font-size: 0.85em;
-    line-height: 18px;
-    color: #333;
-    font-weight: bold;
-    background: url(../images/tag_arrow.png) right 4px no-repeat;
-    padding-right: 20px;
-    margin-top: 1.5em;
-    display: inline-block;
-}
-
 .link1:hover {
     color: #fb4d01;
     text-decoration: none;
@@ -1111,10 +1088,6 @@ ul.ratings li a {
     color: #000;
     text-decoration: none;
     font-weight: 600;
-}
-
-i.rating-ed {
-    background: url(../images/stars.png) no-repeat -9px;
 }
 
 .price_single {
@@ -1457,17 +1430,6 @@ ul.tags_links li a:hover {
     text-decoration: none;
 }
 
-.link1 {
-    font-size: 0.85em;
-    line-height: 18px;
-    color: #333;
-    font-weight: bold;
-    background: url(../images/tag_arrow.png) right 4px no-repeat;
-    padding-right: 20px;
-    margin-top: 1.5em;
-    display: inline-block;
-}
-
 .link1:hover {
     color: #fb4d01;
     text-decoration: none;
@@ -1522,10 +1484,6 @@ ul.ratings li a {
     color: #000;
     text-decoration: none;
     font-weight: 600;
-}
-
-i.rating-ed {
-    background: url(../images/stars.png) no-repeat -9px;
 }
 
 .price_single {
@@ -2259,7 +2217,7 @@ div#myTabContent {
 }
 
 .close1, .close2, .close3 {
-    background: url('../images/close_1.png') no-repeat 0px 0px;
+    background: url("#{resource['images:close_1.png']}") no-repeat 0px 0px;
     cursor: pointer;
     width: 28px;
     height: 28px;
@@ -2536,7 +2494,7 @@ p.right {
 .social-icons ul li a {
     width: 18px;
     height: 18px;
-    background: url('../images/s-icons.png') no-repeat 0px 0px;
+    background: url("#{resource['images:s-icons.png']}") no-repeat;
     display: inline-block;
     margin: 0 5px;
 }
@@ -3337,14 +3295,14 @@ p.right {
         margin: 0 0.3em;
         width: 20px;
         height: 20px;
-        background: url(../images/follow.png) no-repeat 0px 3px;
+        background: url("#{resource['images:follow.png']}") no-repeat;
         background-size: 35px;
     }
 
     a.facebook {
         width: 20px;
         height: 20px;
-        background: url(../images/follow.png) no-repeat -18px 2px;
+        background: url("#{resource['images:follow.png']}") no-repeat;
         background-size: 35px;
     }
 

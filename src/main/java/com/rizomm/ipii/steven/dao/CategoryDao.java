@@ -25,7 +25,6 @@ import static com.rizomm.ipii.steven.model.Category.FIND_ALL;
  */
 
 @Stateless
-@Remote
 @Named
 public class CategoryDao implements ICategoryDao, Serializable {
 

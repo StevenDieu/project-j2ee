@@ -12,7 +12,6 @@ import static com.rizomm.ipii.steven.model.Order.*;
  * Created by steven on 17/11/2016.
  */
 @Stateless
-@Local
 public class OrderDao implements IOrderDao {
 
     @PersistenceContext(unitName = "projectJ2ee")
