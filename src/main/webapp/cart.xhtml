@@ -6,7 +6,6 @@
                 xmlns:h="http://xmlns.jcp.org/jsf/html">
 
 
-
     <ui:define name="js">
         <h:outputScript library="library" name="js/imagezoom.js"/>
         <h:outputScript library="library" name="js/jquery.flexslider.js"/>
@@ -20,125 +19,71 @@
     <ui:define name="content">
         <f:metadata>
             <f:viewParam name="id" value="#{cartController.idProduct}"/>
-
-            <c:if test="#{not empty cartController.idProduct}">
-                <f:viewAction action="#{cartController.addProductCart(1)}" />
-            </c:if>
+            <f:viewAction action="#{cartController.addProductCart(1)}"/>
         </f:metadata>
 
+        <c:if test="#{not empty cartController.message}">
+            <div class="alert alert-info alert-dismissible center" role="alert">
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true"></span></button>
+                <strong>Information ! </strong> ${cartController.message}
+            </div>
+        </c:if>
 
-        ${cartController.message}
 
         <div class="cart-items">
             <div class="container">
-                <div class="dreamcrub">
-                    <ul class="breadcrumbs">
-                        <li class="home">
-                            <a href="index.html" title="Go to Home Page">Home</a>
-                            <span>&gt;</span>
-                        </li>
-                        <li class="women">
-                            Cart
-                        </li>
-                    </ul>
-                    <ul class="previous">
-                        <li><a href="index.html">Back to Previous Page</a></li>
-                    </ul>
-                    <div class="clearfix"></div>
-                </div>
-                <h2>MY SHOPPING BAG (3)</h2>
-                <div class="cart-gd">
-                    <script>$(document).ready(function(c) {
-                        $('.close1').on('click', function(c){
-                            $('.cart-header').fadeOut('slow', function(c){
-                                $('.cart-header').remove();
-                            });
-                        });
-                    });
-                    </script>
-                    <div class="cart-header">
-                        <div class="close1"> </div>
-                        <div class="cart-sec simpleCart_shelfItem">
-                            <div class="cart-item cyc">
-                                <img src="images/l1.jpg" class="img-responsive" alt=""/>
-                            </div>
-                            <div class="cart-item-info">
-                                <h3><a href="#"> Lorem Ipsum is not simply </a><span>Pickup time:</span></h3>
-                                <ul class="qty">
-                                    <li><p>Min. order value:</p></li>
-                                    <li><p>FREE delivery</p></li>
-                                </ul>
-                                <div class="delivery">
-                                    <p>Service Charges : $10.00</p>
-                                    <span>Delivered in 1-1:30 hours</span>
-                                    <div class="clearfix"></div>
-                                </div>
-                            </div>
-                            <div class="clearfix"></div>
+                <h2>MON PANIER (3)</h2>
+                <c:forEach var="shoppingCart" items="#{cartController.getAllProductCart()}">
+                    <c:set var="product" value="#{shoppingCart.getProduct()}" scope="request"/>
 
-                        </div>
-                    </div>
-                    <script>$(document).ready(function(c) {
-                        $('.close2').on('click', function(c){
-                            $('.cart-header2').fadeOut('slow', function(c){
-                                $('.cart-header2').remove();
-                            });
-                        });
-                    });
-                    </script>
-                    <div class="cart-header2">
-                        <div class="close2"> </div>
-                        <div class="cart-sec simpleCart_shelfItem">
-                            <div class="cart-item cyc">
-                                <img src="images/l2.jpg" class="img-responsive" alt=""/>
-                            </div>
-                            <div class="cart-item-info">
-                                <h3><a href="#"> Lorem Ipsum is not simply </a><span>Pickup time:</span></h3>
-                                <ul class="qty">
-                                    <li><p>Min. order value:</p></li>
-                                    <li><p>FREE delivery</p></li>
-                                </ul>
-                                <div class="delivery">
-                                    <p>Service Charges : $10.00</p>
-                                    <span>Delivered in 3-3:30 hours</span>
-                                    <div class="clearfix"></div>
+                    <div class="cart-gd">
+                        <div class="cart-header">
+                            <div class="close1"></div>
+                            <div class="cart-sec simpleCart_shelfItem">
+                                <div class="cart-item cyc">
+                                    <img src="images/l1.jpg" class="img-responsive" alt=""/>
                                 </div>
-                            </div>
-                            <div class="clearfix"></div>
+                                <div class="cart-item-info">
+                                    <h3><a href="#">${product.name} </a></h3>
+                                    <ul class="qty">
+                                        <li><p>Prix utinaire : ${shoppingCart.priceUnit}</p></li>
+                                        <li><p>Quantité :
+                                            <h:form>
 
-                        </div>
-                    </div>
-                    <script>$(document).ready(function(c) {
-                        $('.close3').on('click', function(c){
-                            $('.cart-header3').fadeOut('slow', function(c){
-                                $('.cart-header3').remove();
-                            });
-                        });
-                    });
-                    </script>
-                    <div class="cart-header3">
-                        <div class="close3"> </div>
-                        <div class="cart-sec simpleCart_shelfItem">
-                            <div class="cart-item cyc">
-                                <img src="images/l3.jpg" class="img-responsive" alt=""/>
-                            </div>
-                            <div class="cart-item-info">
-                                <h3><a href="#"> Lorem Ipsum is not simply </a><span>Pickup time:</span></h3>
-                                <ul class="qty">
-                                    <li><p>Min. order value:</p></li>
-                                    <li><p>FREE delivery</p></li>
-                                </ul>
-                                <div class="delivery">
-                                    <p>Service Charges : $10.00</p>
-                                    <span>Delivered On Tomorrow</span>
-                                    <div class="clearfix"></div>
+                                                <h:commandButton value="+" action="#{cartController.addProductCart(1,product.id)}">
+                                                </h:commandButton>
+
+                                            </h:form>
+                                            ${shoppingCart.quantity}
+                                            <h:form>
+
+                                                <h:commandButton value="-" action="#{cartController.addProductCart(-1,product.id)}">
+                                                </h:commandButton>
+
+                                            </h:form>
+                                        </p></li>
+                                    </ul>
+                                    <div class="delivery">
+                                        <p>Prix total : ${shoppingCart.totalPrice}</p>
+                                        <span>
+
+
+
+
+
+                                        </span>
+                                        <div class="clearfix"></div>
+                                    </div>
                                 </div>
+                                <div class="clearfix"></div>
                             </div>
-                            <div class="clearfix"></div>
-
                         </div>
+
+
                     </div>
-                </div>
+
+                </c:forEach>
+
             </div>
         </div>
 

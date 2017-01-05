@@ -10,10 +10,14 @@ public class ShoppingCart {
 
     private Product product;
     private int quantity;
+    private String priceUnit;
+    private String totalPrice;
 
-    public ShoppingCart(Product product, int quantity) {
+    public ShoppingCart(Product product, int quantity, String priceUnit, String totalPrice) {
         this.product = product;
         this.quantity = quantity;
+        this.priceUnit = priceUnit;
+        this.totalPrice = totalPrice;
     }
 
     public Product getProduct() {
@@ -32,5 +36,19 @@ public class ShoppingCart {
         this.quantity = quantity;
     }
 
+    public String getPriceUnit() {
+        return priceUnit;
+    }
 
+    public void setPriceUnit(String priceUnit) {
+        this.priceUnit = priceUnit;
+    }
+
+    public String getTotalPrice() {
+        return totalPrice;
+    }
+
+    public void setTotalPrice(String totalPrice) {
+        this.totalPrice = totalPrice;
+    }
 }

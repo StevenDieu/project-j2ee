@@ -1,10 +1,12 @@
 package com.rizomm.ipii.steven.service;
 
 import com.rizomm.ipii.steven.dao.IProductDao;
+import com.rizomm.ipii.steven.model.ShoppingCart;
 import org.codehaus.jettison.json.JSONObject;
 
 import javax.ejb.Remote;
 import java.io.Serializable;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -16,10 +18,7 @@ public interface IShoppingCartService extends Serializable {
 
     String deleteProductToCart(int id);
 
-    JSONObject getCart(IProductDao PD);
-
-    JSONObject getCartHeader(IProductDao PD);
+    List<ShoppingCart> getListShoppingCart();
 
     boolean payer();
-
 }

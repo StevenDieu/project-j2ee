@@ -38,8 +38,7 @@ public class ProductController implements Serializable {
     }
 
     public double getCountAllProduct() {
-        int countProduct = PD.countAllProduct();
-        return Math.ceil((double) countProduct / 9) ;
+        return Math.ceil((double) PD.countAllProduct() / 9) ;
     }
 
     public void doFindProduct() {
@@ -53,5 +52,7 @@ public class ProductController implements Serializable {
     public String getPriceDixieme() {
         return Utils.convertDoubleToStringWithDixieme(product.getPrice());
     }
+
+
 
 }

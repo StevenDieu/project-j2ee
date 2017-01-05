@@ -33,10 +33,10 @@ public class ProductDao implements IProductDao, Serializable {
     protected boolean isNotTest = true;
 
     @Override
-    public Product createProduct(Product product) {
+    public Product createProduct(final Product product) {
         if (isNotEmpty(product.getName())) {
             em.persist(product);
-            if(isNotTest){
+            if (isNotTest) {
                 em.flush();
             }
             return product;
@@ -45,14 +45,14 @@ public class ProductDao implements IProductDao, Serializable {
     }
 
     @Override
-    public Product findProductById(int idProduct) {
-        Product findProduct = em.find(Product.class, idProduct);
+    public Product findProductById(final int idProduct) {
+        final Product findProduct = em.find(Product.class, idProduct);
         return findProduct;
     }
 
     @Override
     public List<Product> findAllProduct() {
-        TypedQuery<Product> query = em.createNamedQuery(FIND_ALL, Product.class);
+        final TypedQuery<Product> query = em.createNamedQuery(FIND_ALL, Product.class);
         if (isNotTest) {
             em.joinTransaction();
         }
@@ -60,8 +60,8 @@ public class ProductDao implements IProductDao, Serializable {
     }
 
     @Override
-    public List<Product> findAllProductByPage(int start, int limit) {
-        TypedQuery<Product> query = em.createNamedQuery(FIND_ALL, Product.class)
+    public List<Product> findAllProductByPage(final int start, final int limit) {
+        final TypedQuery<Product> query = em.createNamedQuery(FIND_ALL, Product.class)
                 .setFirstResult(start)
                 .setMaxResults(limit);
         if (isNotTest) {
@@ -71,8 +71,8 @@ public class ProductDao implements IProductDao, Serializable {
     }
 
     @Override
-    public List<Product> findAllProductByPageAndCategory(int start, int limit, int idCategory) {
-        TypedQuery<Product> query = em.createNamedQuery(FIND_ALL_BY_CATEGORY, Product.class)
+    public List<Product> findAllProductByPageAndCategory(final int start, final int limit, final int idCategory) {
+        final TypedQuery<Product> query = em.createNamedQuery(FIND_ALL_BY_CATEGORY, Product.class)
                 .setFirstResult(start)
                 .setMaxResults(limit)
                 .setParameter("idCategory", idCategory);
@@ -85,7 +85,7 @@ public class ProductDao implements IProductDao, Serializable {
 
     @Override
     public int countAllProduct() {
-        TypedQuery<Integer> query = em.createNamedQuery(COUNT_ALL, Integer.class);
+        final TypedQuery<Integer> query = em.createNamedQuery(COUNT_ALL, Integer.class);
         if (isNotTest) {
             em.joinTransaction();
         }
@@ -93,8 +93,8 @@ public class ProductDao implements IProductDao, Serializable {
     }
 
     @Override
-    public int countAllProduct(int idCategory) {
-        TypedQuery<Integer> query = em.createNamedQuery(COUNT_ALL_BY_CATEGORY, Integer.class)
+    public int countAllProduct(final int idCategory) {
+        final TypedQuery<Integer> query = em.createNamedQuery(COUNT_ALL_BY_CATEGORY, Integer.class)
                 .setParameter("idCategory", idCategory);
         if (isNotTest) {
             em.joinTransaction();
@@ -108,8 +108,8 @@ public class ProductDao implements IProductDao, Serializable {
     }
 
     @Override
-    public Boolean deleteProductById(int idProduct) {
-        Product product = em.find(Product.class, idProduct);
+    public Boolean deleteProductById(final int idProduct) {
+        final Product product = em.find(Product.class, idProduct);
         if (isNotEmpty(product)) {
             return deleteProduct(product);
         }
@@ -117,9 +117,9 @@ public class ProductDao implements IProductDao, Serializable {
     }
 
     @Override
-    public Boolean deleteProduct(Product product) {
+    public Boolean deleteProduct(final Product product) {
         em.remove(product);
-        Product findProduct = em.find(Product.class, product.getId());
+        final Product findProduct = em.find(Product.class, product.getId());
         if (isEmpty(findProduct)) {
             return true;
         }
@@ -127,51 +127,51 @@ public class ProductDao implements IProductDao, Serializable {
     }
 
     @Override
-    public Product updateProduct(Product product) {
+    public Product updateProduct(final Product product) {
         return em.merge(product);
     }
 
     @Override
-    public Map<String, Object> convertJsonToProduct(String jsonString, ICategoryDao CD) {
+    public Map<String, Object> convertJsonToProduct(final String jsonString, final ICategoryDao CD) {
 
-        Map<String, Object> result = new HashMap();
-        Product product = new Product();
+        final Map<String, Object> result = new HashMap();
+        final Product product = new Product();
 
         try {
-            JSONObject json = new JSONObject(jsonString);
+            final JSONObject json = new JSONObject(jsonString);
 
 
-            if(isEmpty(json,"stock")){
+            if (isEmpty(json, "stock")) {
                 return generateMessageError400("Le stock est obligatoire !");
-            }else if(!isInt(json.getString("stock"))){
+            } else if (!isInt(json.getString("stock"))) {
                 return generateMessageError400("Le stock doit être un chiffre !");
-            }else if(json.getInt("stock") < 0){
+            } else if (json.getInt("stock") < 0) {
                 return generateMessageError400("Le stock doit être un chiffre positif !");
             }
 
-            if(isEmpty(json,"price")){
+            if (isEmpty(json, "price")) {
                 return generateMessageError400("Le prix est obligatoire !");
-            }else if(!isDouble(json.getString("price"))){
+            } else if (!isDouble(json.getString("price"))) {
                 return generateMessageError400("Le prix doit être un nombre !");
-            }else if(isNotConvertDoubleToDixieme( Double.parseDouble(json.getString("price")))){
+            } else if (isNotConvertDoubleToDixieme(Double.parseDouble(json.getString("price")))) {
                 return generateMessageError400("Le prix est trop grand !");
-            }else if(convertDoubleToDixieme(json.getString("price")) < 0){
+            } else if (convertDoubleToDixieme(json.getString("price")) < 0) {
                 return generateMessageError400("Le prix doit être un chiffre positif !");
             }
 
-            if(isEmpty(json,"name")){
+            if (isEmpty(json, "name")) {
                 return generateMessageError400("Le nom est obligatoire !");
-            }else if(isTooLarge(json,"name",255)){
+            } else if (isTooLarge(json, "name", 255)) {
                 return generateMessageError400("Le nom est trop long !");
             }
 
-            if(isEmpty(json,"urlPicture")){
+            if (isEmpty(json, "urlPicture")) {
                 return generateMessageError400("L'url de l'image est obligatoire !");
-            }else if(isTooLarge(json,"urlPicture",255)){
+            } else if (isTooLarge(json, "urlPicture", 255)) {
                 return generateMessageError400("L'url de l'image est trop longue !");
             }
 
-            if(isEmpty(json,"description")){
+            if (isEmpty(json, "description")) {
                 return generateMessageError400("La description est obligatoire !");
             }
 
@@ -181,8 +181,8 @@ public class ProductDao implements IProductDao, Serializable {
             product.setUrlPicture(json.getString("urlPicture"));
             product.setDescription(json.getString("description"));
 
-            if(isNotEmpty(json,"id")){
-                if(!isInt(json.getString("id"))){
+            if (isNotEmpty(json, "id")) {
+                if (!isInt(json.getString("id"))) {
                     return generateMessageError400("L'id doit être un chiffre !");
                 }
                 product.setId(json.getInt("id"));
@@ -190,35 +190,35 @@ public class ProductDao implements IProductDao, Serializable {
 
 
             if (json.has("category") && !json.isNull("category")) {
-                Map<String, Object> resultCategory = CD.convertJsonToProduct(json.getString("category"));
+                final Map<String, Object> resultCategory = CD.convertJsonToProduct(json.getString("category"));
 
-                if((boolean) resultCategory.get("ERROR")){
+                if ((boolean) resultCategory.get("ERROR")) {
                     return resultCategory;
                 }
 
                 Category category = (Category) resultCategory.get("CATEGORY");
 
-                if(category.getId() == 0){
+                if (category.getId() == 0) {
                     category.setId(CD.createCategory(category).getId());
-                }else{
+                } else {
                     int idCategory = category.getId();
                     category = CD.findCategoryById(idCategory);
-                    if(category == null){
+                    if (category == null) {
                         return generateMessageError400("La catégorie avec l'id : " + idCategory + " n'éxiste pas");
                     }
                 }
 
                 product.setCategory(category);
 
-            }else{
+            } else {
                 return generateMessageError400("Une catégorie est obligatoire !");
             }
 
-            result.put("PRODUCT",product);
-            result.put("ERROR",false);
+            result.put("PRODUCT", product);
+            result.put("ERROR", false);
         } catch (JSONException e) {
             return generateMessageError400("Le format de la requête n'est pas respecté !");
-        }catch (Exception e) {
+        } catch (Exception e) {
             return generateMessageError400("Aie, une erreur est survenue !");
         }
 
@@ -226,26 +226,26 @@ public class ProductDao implements IProductDao, Serializable {
     }
 
     @Override
-    public Map<String, Object> convertJsonToProductForDelete(String jsonString) {
-        Map<String, Object> result = new HashMap();
-        Product product = new Product();
+    public Map<String, Object> convertJsonToProductForDelete(final String jsonString) {
+        final Map<String, Object> result = new HashMap();
+        final Product product = new Product();
 
         try {
             JSONObject json = new JSONObject(jsonString);
 
-            if(isEmpty(json,"id")){
+            if (isEmpty(json, "id")) {
                 return generateMessageError400("L'id est obligatoire !");
-            }else if(!isInt(json.getString("id"))){
+            } else if (!isInt(json.getString("id"))) {
                 return generateMessageError400("L'id doit être un chiffre !");
-            }else if(json.getInt("id") < 0){
+            } else if (json.getInt("id") < 0) {
                 return generateMessageError400("L'id doit être un chiffre positif !");
             }
 
-            result.put("ID",json.getInt("id"));
-            result.put("ERROR",false);
+            result.put("ID", json.getInt("id"));
+            result.put("ERROR", false);
         } catch (JSONException e) {
             return generateMessageError400("Le format de la requête n'est pas respecté !");
-        }catch (Exception e) {
+        } catch (Exception e) {
             return generateMessageError400("Aie, une erreur est survenue !");
         }
 
@@ -253,12 +253,12 @@ public class ProductDao implements IProductDao, Serializable {
     }
 
     @Override
-    public JSONObject convertProductsToJson(List<Product> products) {
-        JSONObject jsonProducts = new JSONObject();
+    public JSONObject convertProductsToJson(final List<Product> products) {
+        final JSONObject jsonProducts = new JSONObject();
 
         try {
-            JSONArray jsonArray = new JSONArray();
-            for(Product product : products){
+            final JSONArray jsonArray = new JSONArray();
+            for (Product product : products) {
                 jsonArray.put(convertProductToJson(product));
             }
             jsonProducts.put("products", jsonArray);
@@ -271,7 +271,7 @@ public class ProductDao implements IProductDao, Serializable {
 
     @Override
     public JSONObject convertProductToJson(Product product) throws JSONException {
-        JSONObject jsonproduct = new JSONObject();
+        final JSONObject jsonproduct = new JSONObject();
         jsonproduct.put("id", product.getId());
         jsonproduct.put("description", product.getShortDescription());
         jsonproduct.put("idCategory", product.getCategory().getId());

@@ -17,7 +17,8 @@ import java.util.List;
 import java.util.Map;
 
 import static com.rizomm.ipii.steven.helper.Utils.*;
-import static com.rizomm.ipii.steven.model.Category.*;
+import static com.rizomm.ipii.steven.model.Category.DELETE_ALL;
+import static com.rizomm.ipii.steven.model.Category.FIND_ALL;
 
 /**
  * Created by steven on 17/11/2016.
@@ -33,10 +34,10 @@ public class CategoryDao implements ICategoryDao, Serializable {
     protected boolean isNotTest = true;
 
     @Override
-    public Category createCategory(Category category) {
+    public Category createCategory(final Category category) {
         if (isNotEmpty(category.getLabel())) {
             em.persist(category);
-            if(isNotTest){
+            if (isNotTest) {
                 em.flush();
             }
             return category;
@@ -45,14 +46,14 @@ public class CategoryDao implements ICategoryDao, Serializable {
     }
 
     @Override
-    public Category findCategoryById(int idCategory) {
-        Category findCategory = em.find(Category.class, idCategory);
+    public Category findCategoryById(final int idCategory) {
+        final Category findCategory = em.find(Category.class, idCategory);
         return findCategory;
     }
 
     @Override
     public List<Category> findAllCategory() {
-        TypedQuery<Category> query = em.createNamedQuery(FIND_ALL, Category.class);
+        final TypedQuery<Category> query = em.createNamedQuery(FIND_ALL, Category.class);
         if (isNotTest) {
             em.joinTransaction();
         }
@@ -65,8 +66,8 @@ public class CategoryDao implements ICategoryDao, Serializable {
     }
 
     @Override
-    public Boolean deleteCategoryById(int idCategory) {
-        Category category = em.find(Category.class, idCategory);
+    public Boolean deleteCategoryById(final int idCategory) {
+        final Category category = em.find(Category.class, idCategory);
         if (isNotEmpty(category)) {
             return deleteCategory(category);
         }
@@ -74,9 +75,9 @@ public class CategoryDao implements ICategoryDao, Serializable {
     }
 
     @Override
-    public Boolean deleteCategory(Category category) {
+    public Boolean deleteCategory(final Category category) {
         em.remove(category);
-        Category findCategory = em.find(Category.class, category.getId());
+        final Category findCategory = em.find(Category.class, category.getId());
         if (isEmpty(findCategory)) {
             return true;
         }
@@ -84,33 +85,38 @@ public class CategoryDao implements ICategoryDao, Serializable {
     }
 
     @Override
-    public Map<String, Object> convertJsonToProduct(String categoryString) {
+    public Category updateCategory(final Category category) {
+        return em.merge(category);
+    }
+
+    @Override
+    public Map<String, Object> convertJsonToProduct(final String categoryString) {
         JSONObject jsonCategory = null;
-        Map<String, Object> result = new HashMap();
-        Category category = new Category();
+        final Map<String, Object> result = new HashMap();
+        final Category category = new Category();
 
         try {
 
             jsonCategory = new JSONObject(categoryString);
 
-            if(isNotEmpty(jsonCategory,"id")){
+            if (isNotEmpty(jsonCategory, "id")) {
 
-                String idString = jsonCategory.getString("id");
+                final String idString = jsonCategory.getString("id");
 
-                if(!isInt(idString)){
+                if (!isInt(idString)) {
                     return generateMessageError400("L'id de la Category doit être un chiffre ! ");
                 }
 
                 category.setId(Integer.parseInt(idString));
 
-            }else if(isNotEmpty(jsonCategory,"label")){
+            } else if (isNotEmpty(jsonCategory, "label")) {
 
-                if(isTooLarge(jsonCategory,"label",255)){
+                if (isTooLarge(jsonCategory, "label", 255)) {
                     return generateMessageError400("Le label de la catégorie est trop long !");
                 }
 
                 category.setLabel(jsonCategory.getString("label"));
-            }else{
+            } else {
                 return generateMessageError400("La category est mal paramétrée ! ");
             }
 
@@ -118,15 +124,10 @@ public class CategoryDao implements ICategoryDao, Serializable {
             return generateMessageError400(e.getMessage());
         }
 
-        result.put("ERROR",false);
-        result.put("CATEGORY",category);
+        result.put("ERROR", false);
+        result.put("CATEGORY", category);
         return result;
 
-    }
-
-    @Override
-    public Category updateCategory(Category category) {
-        return em.merge(category);
     }
 
 }

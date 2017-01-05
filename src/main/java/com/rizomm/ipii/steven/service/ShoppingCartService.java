@@ -3,9 +3,6 @@ package com.rizomm.ipii.steven.service;
 import com.rizomm.ipii.steven.dao.IProductDao;
 import com.rizomm.ipii.steven.model.Product;
 import com.rizomm.ipii.steven.model.ShoppingCart;
-import org.codehaus.jettison.json.JSONArray;
-import org.codehaus.jettison.json.JSONException;
-import org.codehaus.jettison.json.JSONObject;
 
 import javax.ejb.Remote;
 import javax.ejb.Stateful;
@@ -14,7 +11,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import static com.rizomm.ipii.steven.helper.Utils.*;
+import static com.rizomm.ipii.steven.helper.Utils.convertDoubleToStringWithDixieme;
+import static com.rizomm.ipii.steven.helper.Utils.isEmpty;
 
 /**
  * Created by steven on 17/11/2016.
@@ -26,9 +24,9 @@ public class ShoppingCartService implements IShoppingCartService {
     private List<ShoppingCart> listShoppingCart = new ArrayList<>();
 
     @Override
-    public String addProductCart(int id, int qty, IProductDao PD) {
+    public String addProductCart(final int id, int qty, final IProductDao PD) {
 
-        Map<String, Object> result = new HashMap();
+        final Map<String, Object> result = new HashMap();
 
         if (isEmpty(id)) {
             return "L'id du produit est vide !";
@@ -42,7 +40,7 @@ public class ShoppingCartService implements IShoppingCartService {
             return "La quantité doit être +1 ou -1 !";
         }
 
-        Product product = PD.findProductById(id);
+        final Product product = PD.findProductById(id);
 
         if (isEmpty(product)) {
             return "Le produit n'existe pas !";
@@ -56,6 +54,8 @@ public class ShoppingCartService implements IShoppingCartService {
                     return deleteProductToCart(id);
                 } else {
                     shoppingCart.setQuantity(qty);
+                    shoppingCart.setPriceUnit(convertDoubleToStringWithDixieme(product.getPrice()));
+                    shoppingCart.setTotalPrice(convertDoubleToStringWithDixieme(product.getPrice() * shoppingCart.getQuantity()));
                 }
                 existCart = true;
                 break;
@@ -66,7 +66,9 @@ public class ShoppingCartService implements IShoppingCartService {
             if (qty == -1) {
                 return "Vous ne pouvez pas diminuer la quantité d'un produit qui n'est pas dans votre panier";
             }
-            listShoppingCart.add(new ShoppingCart(product, qty));
+
+            final String priceString = convertDoubleToStringWithDixieme(product.getPrice());
+            listShoppingCart.add(new ShoppingCart(product, qty, priceString, priceString));
         }
 
 
@@ -74,8 +76,8 @@ public class ShoppingCartService implements IShoppingCartService {
     }
 
     @Override
-    public String deleteProductToCart(int id) {
-        Map<String, Object> result = new HashMap();
+    public String deleteProductToCart(final int id) {
+        final Map<String, Object> result = new HashMap();
 
         if (isEmpty(id)) {
             return "L'id du produit est vide !";
@@ -103,87 +105,15 @@ public class ShoppingCartService implements IShoppingCartService {
     }
 
     @Override
-    public JSONObject getCart(IProductDao PD) {
-        List<ShoppingCart> listShoppingCartToDelete = new ArrayList<>();
-        JSONObject jsonCart = new JSONObject();
-
-        try {
-            JSONArray arrayProducts = new JSONArray();
-            double totalCart = 0d;
-
-            for (ShoppingCart shoppingCart : listShoppingCart) {
-                Product product = shoppingCart.getProduct();
-                if (isNotEmpty(PD.findProductById(product.getId()))) {
-                    JSONObject jsonProduct = convertShoppingCartToJson(shoppingCart, PD);
-                    arrayProducts.put(jsonProduct);
-                    totalCart = totalCart + jsonProduct.getDouble("totalDouble");
-                } else {
-                    listShoppingCartToDelete.add(shoppingCart);
-                }
-            }
-
-            for (ShoppingCart shoppingCartToDelete : listShoppingCartToDelete) {
-                listShoppingCart.remove(shoppingCartToDelete);
-            }
-
-            jsonCart.put("products", arrayProducts);
-            jsonCart.put("total", convertDoubleToStringWithDixieme(totalCart));
-            jsonCart.put("qty", listShoppingCart.size());
-
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-
-        return jsonCart;
+    public List<ShoppingCart> getListShoppingCart() {
+        return listShoppingCart;
     }
-
-    @Override
-    public JSONObject getCartHeader(IProductDao PD) {
-        List<ShoppingCart> listShoppingCartToDelete = new ArrayList<>();
-        JSONObject jsonCart = new JSONObject();
-
-        try {
-            JSONArray arrayProducts = new JSONArray();
-            double totalCart = 0d;
-
-            for (ShoppingCart shoppingCart : listShoppingCart) {
-                Product product = shoppingCart.getProduct();
-                if (isNotEmpty(PD.findProductById(product.getId()))) {
-                    totalCart = totalCart + shoppingCart.getQuantity() * shoppingCart.getProduct().getPrice();
-                } else {
-                    listShoppingCartToDelete.add(shoppingCart);
-                }
-            }
-
-            for (ShoppingCart shoppingCartToDelete : listShoppingCartToDelete) {
-                listShoppingCart.remove(shoppingCartToDelete);
-            }
-
-            jsonCart.put("total", convertDoubleToStringWithDixieme(totalCart));
-            jsonCart.put("qty", listShoppingCart.size());
-
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-
-        return jsonCart;
-    }
-
-    private JSONObject convertShoppingCartToJson(ShoppingCart shoppingCart, IProductDao PD) throws JSONException {
-        JSONObject jsonproduct = PD.convertProductToJson(shoppingCart.getProduct());
-        double totalProduct = shoppingCart.getQuantity() * shoppingCart.getProduct().getPrice();
-        jsonproduct.put("qty", shoppingCart.getQuantity());
-        jsonproduct.put("total", convertDoubleToStringWithDixieme(totalProduct));
-        jsonproduct.put("totalDouble", totalProduct);
-
-        return jsonproduct;
-
-    }
-
 
     @Override
     public boolean payer() {
 
         return false;
     }
+
+
 }
