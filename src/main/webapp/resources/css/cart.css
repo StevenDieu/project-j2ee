@@ -37,6 +37,11 @@ h3{
     padding: 0 !important;
 }
 
+.inforProductQty{
+    min-width: 25px;
+    text-align: center;
+}
+
 @media (max-width: 1024px) {
     .alert {
         position: relative;

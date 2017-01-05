@@ -64,13 +64,12 @@
                             </h:form>
                             <div class="cart-sec simpleCart_shelfItem">
                                 <div class="cart-item cyc">
-                                    <img src="#{resource['images']}/${product.urlPicture}" class="img-responsive"
-                                         alt=""/>
+                                    <img src="#{resource['images']}/${product.urlPicture}" class="img-responsive" alt=""/>
                                 </div>
                                 <div class="cart-item-info">
                                     <h3><a href="product?id=#{product.id}">${product.name} </a></h3>
                                     <ul class="qty">
-                                        <li><p>Prix utinaire : ${shoppingCart.priceUnit}</p></li>
+                                        <li><p>Prix utinaire : ${shoppingCart.priceUnit} €</p></li>
                                         <li class="qtyCart"><p>Quantité :
                                             <h:form>
 
@@ -81,7 +80,7 @@
 
                                             </h:form>
 
-                                            <h:panelGroup id="#{idInfoProductQty}">
+                                            <h:panelGroup class="inforProductQty" id="#{idInfoProductQty}">
                                                 ${shoppingCart.quantity}
                                             </h:panelGroup>
 
@@ -99,6 +98,7 @@
                                             <h:panelGroup id="#{idInfoProductTotalPrice}">
                                                 ${shoppingCart.totalPrice}
                                             </h:panelGroup>
+                                            €
                                         </p>
                                         <div class="clearfix"></div>
                                     </div>
