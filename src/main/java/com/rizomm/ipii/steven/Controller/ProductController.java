@@ -11,7 +11,10 @@ import org.codehaus.jettison.json.JSONObject;
 
 import javax.ejb.EJB;
 import javax.enterprise.context.RequestScoped;
+import javax.faces.bean.ManagedProperty;
+import javax.faces.context.FacesContext;
 import javax.inject.Named;
+import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
@@ -29,6 +32,9 @@ public class ProductController implements Serializable {
 
     @EJB
     private IProductDao PD;
+
+    @ManagedProperty("#{request.requestURL}")
+    private StringBuffer url;
 
     private Product product = new Product();
     private static final long serialVersionUID = 1L;
@@ -53,6 +59,12 @@ public class ProductController implements Serializable {
         return Utils.convertDoubleToStringWithDixieme(product.getPrice());
     }
 
+
+    public String getUrlBase(){
+        HttpServletRequest req = (HttpServletRequest) FacesContext.getCurrentInstance().getExternalContext().getRequest();
+        String url = req.getRequestURL().toString();
+        return url.substring(0, url.length() - req.getRequestURI().length()) + req.getContextPath() + "/";
+    }
 
 
 }

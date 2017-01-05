@@ -2228,6 +2228,8 @@ div#myTabContent {
     -moz-transition: color 0.2s ease-in-out;
     -o-transition: color 0.2s ease-in-out;
     transition: color 0.2s ease-in-out;
+    border: none;
+    outline: none;
 }
 
 .cart-item-info {

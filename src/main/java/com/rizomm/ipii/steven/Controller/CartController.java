@@ -34,12 +34,16 @@ public class CartController implements Serializable {
         }
     }
 
-    public void addProductCart(final int qty,final int idProduct) {
+    public void addProductCart(final int qty, final int idProduct) {
         message = getiShoppingCartService().addProductCart(idProduct, qty, PD);
     }
 
     public List<ShoppingCart> getAllProductCart() {
         return getiShoppingCartService().getListShoppingCart();
+    }
+
+    public void deleteProductCart(final int idProduct) {
+        message = getiShoppingCartService().deleteProductToCart(idProduct);
     }
 
     public String getTotalPriceCart() {
@@ -49,24 +53,6 @@ public class CartController implements Serializable {
     public int getQtyCart() {
         return getiShoppingCartService().getQuantityCart();
     }
-
-//    public Response deleteProductCart() throws NamingException {
-//        Map<String, Object> result = SCS.deleteProductToCart(productString);
-//
-//        return Response.status((int) result.get("CODE_HTTP")).entity(result.get("MESSAGE_HTTP")).build() ;
-//    }
-//
-//    public Response getCart() throws NamingException {
-//        Map<String, Object> result = Utils.generateMessageSuccess200(SCS.getCart(PD));
-//
-//        return Response.status((int) result.get("CODE_HTTP")).entity(result.get("MESSAGE_HTTP")).build() ;
-//    }
-//
-//    public Response getCartHeader() throws NamingException {
-//        Map<String, Object> result = Utils.generateMessageSuccess200(SCS.getCartHeader(PD));
-//
-//        return Response.status((int) result.get("CODE_HTTP")).entity(result.get("MESSAGE_HTTP")).build() ;
-//    }
 
     private IShoppingCartService getiShoppingCartService() {
         try {

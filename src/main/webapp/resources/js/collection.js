@@ -6,7 +6,7 @@ function getPagination() {
     $(".pagination").remove()
     $(".pagination_product").append('<div class="pagination center"><img class="img-pagination-loader" width="30px" src="' + urlImages + 'loader.gif"/></div>')
     $.ajax({
-        url: "http://localhost:8080/steven-1.0.0-SNAPSHOT/json/product/count/" + category,
+        url: url + "json/product/count/" + category,
         context: document.body
     }).done(function (result) {
         var listPagination = result.COUNT_PAGE;
@@ -26,7 +26,7 @@ function getListProduct() {
     $("#listeProduct").html('<div class="center"><img src="' + urlImages + 'loader.gif" width="200px"/></div>')
     loadProductInProgress = true;
     $.ajax({
-        url: "http://localhost:8080/steven-1.0.0-SNAPSHOT/json/product/" + page + "/page/" + category,
+        url: url + "json/product/" + page + "/page/" + category,
         context: document.body
     }).done(function (result) {
         var listProduct = result.products;
@@ -71,11 +71,12 @@ function showProduct(listProduct) {
             '<div class="cbp-vm-details">' +
             product.description +
             '</div>' +
-            '<a class="cbp-vm-icon cbp-vm-add item_add" href="cart?id=' + product.id + '">Ajouter au panier</a>' +
+            '<a class="cbp-vm-icon cbp-vm-add item_add add_item_to_cart" href="Javascript:void(0);" data-id="' + product.id + '">Ajouter au panier</a>' +
             '</div>' +
             '</div>' +
             '</li>');
     });
+    loadActonChangeAddItemToCart();
 }
 
 function loadActonChangePage() {
@@ -91,6 +92,9 @@ function loadActonChangePage() {
         }
     })
 }
+
+
+
 
 $(function () {
     loadActonChangePage();

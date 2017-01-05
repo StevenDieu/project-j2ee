@@ -9,6 +9,7 @@
     <ui:define name="js">
         <h:outputScript library="library" name="js/imagezoom.js"/>
         <h:outputScript library="library" name="js/jquery.flexslider.js"/>
+        <h:outputScript library="js" name="addProductToCart.js"/>
     </ui:define>
 
 
@@ -21,6 +22,8 @@
             <f:viewParam name="id" value="#{productController.product.id}"/>
             <f:viewAction action="#{productController.doFindProduct()}" />
         </f:metadata>
+
+        <div id="blockPopUpAddToCart"></div>
 
         <c:if test="#{not empty productController.product}">
             <c:set var="product" value="#{productController.product}" scope="request" />
@@ -60,7 +63,7 @@
                             </div>
                             <c:if test="#{product.stock > 0}">
                                 <div class="purchase">
-                                    <h:link outcome="cart?id=${product.id}">Ajouter au panier</h:link>
+                                    <a href="Javascript:void(0);" class="add_item_to_cart" data-id="#{product.id}">Ajouter au panier</a>
                                     <div class="clearfix"></div>
                                 </div>
                             </c:if>

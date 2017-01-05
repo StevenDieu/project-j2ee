@@ -19,10 +19,6 @@
     </ui:define>
 
     <ui:define name="content">
-        <f:metadata>
-            <f:viewParam name="id" value="#{cartController.idProduct}"/>
-            <f:viewAction action="#{cartController.addProductCart(1)}"/>
-        </f:metadata>
 
         <h:panelGroup layout="block" id="message">
             <c:if test="#{not empty cartController.message}">
@@ -35,7 +31,7 @@
         </h:panelGroup>
 
         <h:panelGroup layout="block" styleClass="cart-items">
-            <h:panelGroup layout="block" styleClass="container">
+            <h:panelGroup layout="block" styleClass="container" id="product">
                 <h2>MON PANIER (
                     <h:panelGroup id="qtyMyCart">
                         #{cartController.qtyCart}
@@ -46,9 +42,14 @@
                     <c:set var="idInfoProductTotalPrice" value="infoProductTotalPrice#{product.id}"/>
                     <c:set var="renderAjax" value="#{idInfoProductQty} #{idInfoProductTotalPrice} message simpleCart_total simpleCart_quantity qtyMyCart"/>
 
-                    <div class="cart-gd">
+                    <h:panelGroup layout="block" styleClass="cart-gd" >
                         <div class="cart-header">
-                            <div class="close1"></div>
+                            <h:form>
+                                <h:commandButton styleClass="close1" action="#{cartController.deleteProductCart(product.id)}">
+                                    <f:ajax render="simpleCart_total simpleCart_quantity qtyMyCart product"/>
+                                </h:commandButton>
+
+                            </h:form>
                             <div class="cart-sec simpleCart_shelfItem">
                                 <div class="cart-item cyc">
                                     <img src="#{resource['images']}/${product.urlPicture}" class="img-responsive" alt=""/>
@@ -60,7 +61,7 @@
                                         <li><p>Quantité :
                                             <h:form>
 
-                                                <h:commandButton styleClass="updateQuantityProduct" type="submit" value="+" action="#{cartController.addProductCart(1,product.id)}">
+                                                <h:commandButton styleClass="updateQuantityProduct" value="+" action="#{cartController.addProductCart(1,product.id)}">
                                                     <f:ajax render="#{renderAjax}"/>
                                                 </h:commandButton>
 
@@ -90,7 +91,7 @@
                                 <div class="clearfix"></div>
                             </div>
                         </div>
-                    </div>
+                    </h:panelGroup>
 
                 </c:forEach>
             </h:panelGroup>
