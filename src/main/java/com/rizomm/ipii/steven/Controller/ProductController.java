@@ -5,9 +5,6 @@ import com.rizomm.ipii.steven.dao.IProductDao;
 import com.rizomm.ipii.steven.helper.Utils;
 import com.rizomm.ipii.steven.model.Category;
 import com.rizomm.ipii.steven.model.Product;
-import com.rizomm.ipii.steven.service.IShoppingCartService;
-import org.codehaus.jettison.json.JSONException;
-import org.codehaus.jettison.json.JSONObject;
 
 import javax.ejb.EJB;
 import javax.enterprise.context.RequestScoped;
@@ -15,13 +12,8 @@ import javax.faces.bean.ManagedProperty;
 import javax.faces.context.FacesContext;
 import javax.inject.Named;
 import javax.servlet.http.HttpServletRequest;
-import javax.ws.rs.GET;
-import javax.ws.rs.Path;
-import javax.ws.rs.Produces;
-import javax.ws.rs.core.Response;
 import java.io.Serializable;
 import java.util.List;
-import java.util.Map;
 
 @Named
 @RequestScoped

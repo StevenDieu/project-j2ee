@@ -8,7 +8,8 @@ import javax.ejb.Stateful;
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.rizomm.ipii.steven.helper.Utils.*;
+import static com.rizomm.ipii.steven.helper.Utils.convertDoubleToStringWithDixieme;
+import static com.rizomm.ipii.steven.helper.Utils.isEmpty;
 
 /**
  * Created by steven on 17/11/2016.

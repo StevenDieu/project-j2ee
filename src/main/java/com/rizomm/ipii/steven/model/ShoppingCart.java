@@ -1,8 +1,5 @@
 package com.rizomm.ipii.steven.model;
 
-import java.util.ArrayList;
-import java.util.List;
-
 /**
  * Created by Steven Dieu on 01/01/2017.
  */
