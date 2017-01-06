@@ -60,7 +60,8 @@
                                         Prix
                                     </option>
                                 </select>
-                                <a href="Javascript:void(0);"><img src="#{resource['images:arrow2.gif']}" data-position="asc" class="v-middle changePosition"/></a>
+                                <a href="Javascript:void(0);"><img src="#{resource['images:arrow2.gif']}"
+                                                                   data-position="asc" class="v-middle changePosition"/></a>
                             </div>
                         </div>
 
@@ -77,9 +78,11 @@
                                         <c:set var="class" value="active"/>
                                     </c:if>
 
-                                    <li class="pagination ${class}"><a href="Javascript:void(0);"
-                                                                       class="change-page pagination-#{page}"
-                                                                       data-id="#{page}">#{page}</a></li>
+                                    <li class="pagination ${class}">
+                                        <a href="Javascript:void(0);"
+                                           class="change-page pagination-#{page}"
+                                           data-id="#{page}">#{page}</a>
+                                    </li>
                                 </c:forEach>
                             </c:if>
                         </ul>
@@ -87,8 +90,10 @@
                     </div>
                     <div id="cbp-vm" class="cbp-vm-switcher cbp-vm-view-grid">
                         <div class="cbp-vm-options">
-                            <a href="#" class="cbp-vm-icon cbp-vm-grid cbp-vm-selected" data-view="cbp-vm-view-grid" title="grid">Vue grille</a>
-                            <a href="#" class="cbp-vm-icon cbp-vm-list" data-view="cbp-vm-view-list" title="list">Vue liste</a>
+                            <a href="#" class="cbp-vm-icon cbp-vm-grid cbp-vm-selected" data-view="cbp-vm-view-grid"
+                               title="grid">Vue grille</a>
+                            <a href="#" class="cbp-vm-icon cbp-vm-list" data-view="cbp-vm-view-list"
+                               title="list">Vue liste</a>
                         </div>
                         <div class="clearfix"></div>
                         <ul id="listeProduct">
@@ -107,7 +112,8 @@
                                 </c:if>
 
                                 <li class="pagination ${class}">
-                                    <a href="Javascript:void(0);" class="change-page pagination-#{page}" data-id="#{page}">#{page}</a>
+                                    <a href="Javascript:void(0);" class="change-page pagination-#{page}"
+                                       data-id="#{page}">#{page}</a>
                                 </li>
                             </c:forEach>
                         </ul>

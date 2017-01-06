@@ -65,6 +65,8 @@ public class ShoppingCartService implements IShoppingCartService {
         if (!existCart) {
             if (qty == -1) {
                 return "Vous ne pouvez pas diminuer la quantité d'un produit qui n'est pas dans votre panier";
+            }else if(product.getStock() == 0){
+                return "Il n'y a plus assez de stock nous avons actualisé votre panier...";
             }
 
             final String priceString = convertDoubleToStringWithDixieme(product.getPrice());

@@ -46,6 +46,10 @@ function getListProduct() {
 
 function showProduct(listProduct) {
     $.each(listProduct, function (key, product) {
+        var btnAddProduct = "";
+        if (product.stock > 0) {
+            btnAddProduct = '<a class="cbp-vm-icon cbp-vm-add item_add add_item_to_cart" href="Javascript:void(0);" data-id="' + product.id + '">Ajouter au panier</a>';
+        }
         $("#listeProduct").append(
             '<li>' +
             '<div class="simpleCart_shelfItem">' +
@@ -74,7 +78,7 @@ function showProduct(listProduct) {
             '<div class="cbp-vm-details">' +
             product.description +
             '</div>' +
-            '<a class="cbp-vm-icon cbp-vm-add item_add add_item_to_cart" href="Javascript:void(0);" data-id="' + product.id + '">Ajouter au panier</a>' +
+            btnAddProduct +
             '</div>' +
             '</div>' +
             '</li>');
@@ -95,8 +99,6 @@ function loadActonChangePage() {
         }
     })
 }
-
-
 
 
 $(function () {

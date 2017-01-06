@@ -44,7 +44,6 @@
                         <strong>Attention ! </strong> Votre panier est vide. cliquez <h:link
                             outcome="collection">ICI</h:link> pour revenir à la collection.
                     </h:panelGroup>
-
                 </c:if>
                 <c:forEach var="shoppingCart" items="#{cartController.getAllProductCart()}">
                     <c:set var="product" value="#{shoppingCart.product}"/>
@@ -58,13 +57,14 @@
                             <h:form>
                                 <h:commandButton styleClass="close1"
                                                  action="#{cartController.deleteProductCart(product.id)}">
-                                    <f:ajax render="simpleCart_total simpleCart_quantity qtyMyCart product"/>
+                                    <f:ajax render="message simpleCart_total simpleCart_quantity qtyMyCart product"/>
                                 </h:commandButton>
 
                             </h:form>
                             <div class="cart-sec simpleCart_shelfItem">
                                 <div class="cart-item cyc">
-                                    <img src="#{resource['images']}/${product.urlPicture}" class="img-responsive" alt=""/>
+                                    <img src="#{resource['images']}/${product.urlPicture}" class="img-responsive"
+                                         alt=""/>
                                 </div>
                                 <div class="cart-item-info">
                                     <h3><a href="product?id=#{product.id}">${product.name} </a></h3>
@@ -110,19 +110,19 @@
 
                 </c:forEach>
 
-                <h:panelGroup layout="block" styleClass="totalCart">
-                    Total :
-                    <h:panelGroup id="totalCart">
-                        #{cartController.totalPriceCart}
+                <c:if test="#{cartController.qtyCart != 0}">
+                    <h:panelGroup layout="block" styleClass="totalCart">
+                        Total :
+                        <h:panelGroup id="totalCart">
+                            #{cartController.totalPriceCart}
+                        </h:panelGroup>
+                        €
                     </h:panelGroup>
-                    €
-                </h:panelGroup>
-                <h:panelGroup layout="block" styleClass="validateOrder">
-                    <h:commandButton styleClass="btn btn-success" value="Valider ma commande">
-                    </h:commandButton>
-                </h:panelGroup>
-
-
+                    <h:panelGroup layout="block" styleClass="validateOrder">
+                        <h:commandButton styleClass="btn btn-success" value="Valider ma commande">
+                        </h:commandButton>
+                    </h:panelGroup>
+                </c:if>
             </h:panelGroup>
         </h:panelGroup>
 
