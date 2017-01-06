@@ -6,7 +6,11 @@
 
     <persistence-unit name="projectJ2ee" transaction-type="JTA">
         <jta-data-source>jdbc/__default</jta-data-source>
-
+        <provider>org.eclipse.persistence.jpa.PersistenceProvider</provider>
+        <class>com.rizomm.ipii.steven.model.Product</class>
+        <class>com.rizomm.ipii.steven.model.Category</class>
+        <class>com.rizomm.ipii.steven.model.Order</class>
+        <class>com.rizomm.ipii.steven.model.Newsletter</class>
         <properties>
             <property name="javax.persistence.schema-generation.database.action" value="drop-and-create"/>
             <property name="eclipselink.logging.level" value="FINE"/>
