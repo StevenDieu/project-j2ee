@@ -1,4 +1,4 @@
-package com.rizomm.ipii.steven.Controller;
+package com.rizomm.ipii.steven.controller;
 
 import com.rizomm.ipii.steven.dao.IProductDao;
 import com.rizomm.ipii.steven.helper.Utils;
