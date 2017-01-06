@@ -158,4 +158,23 @@ public class Utils {
     }
 
 
+    public static String isValidateSortByProduct(String sortBy) {
+        switch (sortBy){
+            case "id":
+                return sortBy;
+            case "price":
+                return sortBy;
+            case "name":
+                return sortBy;
+            default:
+                return "id";
+        }
+    }
+
+    public static String isValidatePosition(String position) {
+        if(position.equals("desc")){
+            return position;
+        }
+        return "asc";
+    }
 }

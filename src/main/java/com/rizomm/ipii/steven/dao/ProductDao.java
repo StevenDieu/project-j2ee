@@ -10,6 +10,7 @@ import javax.ejb.Stateless;
 import javax.inject.Named;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 import javax.persistence.TypedQuery;
 import java.io.Serializable;
 import java.util.HashMap;
@@ -59,7 +60,22 @@ public class ProductDao implements IProductDao, Serializable {
 
     @Override
     public List<Product> findAllProductByPage(final int start, final int limit) {
-        final TypedQuery<Product> query = em.createNamedQuery(FIND_ALL, Product.class)
+
+        String request = "SELECT c FROM Product c ORDER BY c.price desc ";
+        final Query query = em.createQuery(request)
+                .setFirstResult(start)
+                .setMaxResults(limit);
+        if (isNotTest) {
+            em.joinTransaction();
+        }
+        return query.getResultList();
+    }
+
+    @Override
+    public List<Product> findAllProductByPageAndSortBy(final int start, final int limit, final String sortBy, final String position) {
+
+        String request = "SELECT c FROM Product c ORDER BY c." + sortBy + " " + position;
+        final Query query = em.createQuery(request)
                 .setFirstResult(start)
                 .setMaxResults(limit);
         if (isNotTest) {
@@ -80,6 +96,18 @@ public class ProductDao implements IProductDao, Serializable {
         return query.getResultList();
     }
 
+    @Override
+    public List<Product> findAllProductByPageAndCategoryAndSortBy(int start, int limit, int idCategory, String sortBy, String position) {
+        String request = "select c from Product c where c.category.id = :idCategory ORDER BY c." + sortBy + " " + position;
+        final Query query = em.createQuery(request)
+                .setFirstResult(start)
+                .setMaxResults(limit)
+                .setParameter("idCategory", idCategory);
+        if (isNotTest) {
+            em.joinTransaction();
+        }
+        return query.getResultList();
+    }
 
     @Override
     public int countAllProduct() {

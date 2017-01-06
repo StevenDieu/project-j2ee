@@ -85,7 +85,7 @@ public class ProductRest {
     @GET
     @Path("/{numberPage : \\d+}/page")
     @Produces("application/json")
-    public Response getAllProductByPage(final String productString, @PathParam("numberPage")final int numberPage) {
+    public Response getAllProductByPage(final String productString, @PathParam("numberPage") final int numberPage) {
         final int start = numberPage * 9;
         final int limit = numberPage + 1 * 9;
         final List<Product> listProduct = PD.findAllProductByPage(start, limit);
@@ -98,14 +98,59 @@ public class ProductRest {
     }
 
     @GET
+    @Path("/{numberPage : \\d+}/page/{sortBy}/{position}/sortBy")
+    @Produces("application/json")
+    public Response getAllProductByPageAndSortBy(final String productString
+            , @PathParam("numberPage") final int numberPage
+            , @PathParam("sortBy") String sortBy
+            , @PathParam("position") String position) {
+        final int start = numberPage * 9;
+        final int limit = numberPage + 1 * 9;
+
+        sortBy = Utils.isValidateSortByProduct(sortBy);
+        position = Utils.isValidatePosition(position);
+
+        final List<Product> listProduct = PD.findAllProductByPageAndSortBy(start, limit, sortBy, position);
+
+        final JSONObject jsonProducts = PD.convertProductsToJson(listProduct);
+
+        final Map<String, Object> result = Utils.generateMessageSuccess200(jsonProducts);
+
+        return Response.status((int) result.get("CODE_HTTP")).entity(result.get("MESSAGE_HTTP")).build();
+    }
+
+    @GET
     @Path("/{numberPage : \\d+}/page/{idCategory : \\d+}/category")
     @Produces("application/json")
     public Response getAllProductByPageAndCategory(final String productString
-            , @PathParam("numberPage")final int numberPage
-            , @PathParam("idCategory")final int idCategory) {
+            , @PathParam("numberPage") final int numberPage
+            , @PathParam("idCategory") final int idCategory) {
         final int start = numberPage * 9;
         final int limit = numberPage + 1 * 9;
         final List<Product> listProduct = PD.findAllProductByPageAndCategory(start, limit, idCategory);
+
+        final JSONObject jsonProducts = PD.convertProductsToJson(listProduct);
+
+        final Map<String, Object> result = Utils.generateMessageSuccess200(jsonProducts);
+
+        return Response.status((int) result.get("CODE_HTTP")).entity(result.get("MESSAGE_HTTP")).build();
+    }
+
+    @GET
+    @Path("/{numberPage : \\d+}/page/{sortBy}/{position}/sortBy/{idCategory : \\d+}/category")
+    @Produces("application/json")
+    public Response getAllProductByPageAndCategoryAndSortBy(final String productString
+            , @PathParam("numberPage") final int numberPage
+            , @PathParam("idCategory") final int idCategory
+            , @PathParam("sortBy") String sortBy
+            , @PathParam("position") String position) {
+        final int start = numberPage * 9;
+        final int limit = numberPage + 1 * 9;
+
+        sortBy = Utils.isValidateSortByProduct(sortBy);
+        position = Utils.isValidatePosition(position);
+
+        final List<Product> listProduct = PD.findAllProductByPageAndCategoryAndSortBy(start, limit, idCategory, sortBy, position);
 
         final JSONObject jsonProducts = PD.convertProductsToJson(listProduct);
 
@@ -135,7 +180,7 @@ public class ProductRest {
     @GET
     @Path("/count/{idCategory : \\d+}/category")
     @Produces("application/json")
-    public Response getCountAllProductByCategory(final String productString, @PathParam("idCategory")final int idCategory) {
+    public Response getCountAllProductByCategory(final String productString, @PathParam("idCategory") final int idCategory) {
         final int countProduct = PD.countAllProduct(idCategory);
 
         final JSONObject jsonCountProducts = new JSONObject();

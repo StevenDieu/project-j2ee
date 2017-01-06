@@ -1,6 +1,8 @@
 var page = 0;
 var category = "";
 var loadProductInProgress = false;
+var position = "asc";
+var sortBy = "id";
 
 function getPagination() {
     $(".pagination").remove()
@@ -11,12 +13,13 @@ function getPagination() {
     }).done(function (result) {
         var listPagination = result.COUNT_PAGE;
         $(".pagination").remove()
-        for (page = 1; page <= listPagination; page++) {
+        var numberPage;
+        for (numberPage = 1; numberPage <= listPagination; numberPage++) {
             var classPagination = "pagination";
-            if (page == 1) {
+            if (numberPage == 1) {
                 classPagination = classPagination + " active";
             }
-            $(".pagination_product").append('<li class="' + classPagination + '"><a href="Javascript:void(0);" class="change-page" data-id="' + page + '">' + page + '</a></li>')
+            $(".pagination_product").append('<li class="' + classPagination + '"><a href="Javascript:void(0);" class="change-page pagination-' + numberPage + '" data-id="' + numberPage + '">' + numberPage + '</a></li>')
         }
         loadActonChangePage();
     });
@@ -26,7 +29,7 @@ function getListProduct() {
     $("#listeProduct").html('<div class="center"><img src="' + urlImages + 'loader.gif" width="200px"/></div>')
     loadProductInProgress = true;
     $.ajax({
-        url: url + "json/product/" + page + "/page/" + category,
+        url: url + "json/product/" + page + "/page/" + sortBy + "/" + position + "/sortBy/" + category,
         context: document.body
     }).done(function (result) {
         var listProduct = result.products;
@@ -116,5 +119,26 @@ $(function () {
             getPagination();
             getListProduct();
         }
-    })
+    });
+
+    $(".changePosition").on("click", function () {
+        if (!loadProductInProgress) {
+            if ($(this).data("position") === "asc") {
+                position = "desc";
+                $(this).addClass("revertPosition")
+            } else {
+                position = "asc";
+                $(this).removeClass("revertPosition")
+            }
+            $(this).data("position", position);
+            getListProduct();
+        }
+    });
+
+    $(".changeSortBy").on("change", function () {
+        if (!loadProductInProgress) {
+            sortBy = $(this).val();
+            getListProduct();
+        }
+    });
 });
