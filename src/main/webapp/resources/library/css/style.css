@@ -3682,3 +3682,6 @@ p.right {
     text-align: center;
 }
 
+.title-header{
+    min-width: 150px;
+}

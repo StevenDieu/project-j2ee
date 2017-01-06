@@ -5042,7 +5042,7 @@ select[multiple].input-group-sm > .input-group-btn > .btn {
     box-shadow: inset 0 1px 0 rgba(255, 255, 255, .1);
 }
 
-@media (min-width: 768px) {
+@media (min-width: 641px) {
     .navbar-collapse {
         width: auto;
         border-top: 0;
@@ -5188,7 +5188,7 @@ select[multiple].input-group-sm > .input-group-btn > .btn {
     margin-top: 4px;
 }
 
-@media (min-width: 768px) {
+@media (min-width: 641px) {
     .navbar-toggle {
         display: none;
     }
@@ -5231,7 +5231,7 @@ select[multiple].input-group-sm > .input-group-btn > .btn {
     }
 }
 
-@media (min-width: 768px) {
+@media (min-width: 641px) {
     .navbar-nav {
         float: left;
         margin: 0;
