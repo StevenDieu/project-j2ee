@@ -1,4 +1,4 @@
-package com.rizomm.ipii.steven.controller;
+package com.rizomm.ipii.steven.Controller;
 
 import com.rizomm.ipii.steven.dao.ICategoryDao;
 import com.rizomm.ipii.steven.dao.IProductDao;
@@ -50,7 +50,6 @@ public class ProductController implements Serializable {
     public String getPriceDixieme() {
         return Utils.convertDoubleToStringWithDixieme(product.getPrice());
     }
-
 
     public String getUrlBase(){
         HttpServletRequest req = (HttpServletRequest) FacesContext.getCurrentInstance().getExternalContext().getRequest();

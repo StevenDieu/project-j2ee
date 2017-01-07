@@ -6,7 +6,6 @@
 
     <persistence-unit name="projectJ2ee" transaction-type="JTA">
         <jta-data-source>jdbc/__default</jta-data-source>
-        <provider>org.eclipse.persistence.jpa.PersistenceProvider</provider>
         <class>com.rizomm.ipii.steven.model.Product</class>
         <class>com.rizomm.ipii.steven.model.Category</class>
         <class>com.rizomm.ipii.steven.model.Order</class>

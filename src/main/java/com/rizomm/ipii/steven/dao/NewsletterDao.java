@@ -1,25 +1,14 @@
 package com.rizomm.ipii.steven.dao;
 
-import com.rizomm.ipii.steven.model.Category;
 import com.rizomm.ipii.steven.model.Newsletter;
-import com.rizomm.ipii.steven.model.Product;
-import org.codehaus.jettison.json.JSONArray;
-import org.codehaus.jettison.json.JSONException;
-import org.codehaus.jettison.json.JSONObject;
 
 import javax.ejb.Stateless;
 import javax.inject.Named;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import javax.persistence.Query;
-import javax.persistence.TypedQuery;
-import java.io.Serializable;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 
-import static com.rizomm.ipii.steven.helper.Utils.*;
-import static com.rizomm.ipii.steven.model.Product.*;
+import static com.rizomm.ipii.steven.helper.Utils.isEmpty;
+import static com.rizomm.ipii.steven.helper.Utils.isNotEmpty;
 
 /**
  * Created by steven on 17/11/2016.
