@@ -33,7 +33,7 @@ public class ProductRest {
     @POST
     @Produces("application/json")
     public Response addProduct(final String productString) {
-        Map<String, Object> result = PD.convertJsonToProduct(productString, CD);
+        Map<String, Object> result = PD.convertJsonToProductForCreate(productString, CD);
 
         if (!((boolean) result.get("ERROR"))) {
             Product productResult = (Product) result.get("PRODUCT");
@@ -51,7 +51,7 @@ public class ProductRest {
     @PUT
     @Produces("application/json")
     public Response updateProduct(final String productString) {
-        Map<String, Object> result = PD.convertJsonToProduct(productString, CD);
+        Map<String, Object> result = PD.convertJsonToProductForUpdate(productString, CD);
 
         if (!((boolean) result.get("ERROR"))) {
             final Product productResult = (Product) result.get("PRODUCT");

@@ -4,6 +4,7 @@ import javax.persistence.*;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
+import java.util.List;
 
 import static com.rizomm.ipii.steven.model.Product.*;
 
@@ -47,6 +48,8 @@ public class Product implements Serializable {
     private String description;
     @NotNull(message = "The urlPicture can't be empty")
     private String urlPicture;
+    @ManyToMany(mappedBy = "products")
+    private List<OrderHeader> orders;
 
     public Product() {
     }
@@ -136,10 +139,10 @@ public class Product implements Serializable {
     }
 
     public String getShortDescription() {
-       if(this.description.length() <= 103){
-           return description;
-       }else{
-           return description.substring(0,100) + "...";
-       }
+        if (this.description.length() <= 103) {
+            return description;
+        } else {
+            return description.substring(0, 100) + "...";
+        }
     }
 }

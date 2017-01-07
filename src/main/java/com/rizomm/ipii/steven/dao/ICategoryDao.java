@@ -26,5 +26,5 @@ public interface ICategoryDao {
 
     Boolean deleteCategory(Category category);
 
-    Map<String, Object> convertJsonToProduct(String category);
+    Map<String, Object> convertJsonToCategory(String category);
 }

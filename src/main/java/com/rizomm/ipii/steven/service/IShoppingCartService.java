@@ -1,6 +1,8 @@
 package com.rizomm.ipii.steven.service;
 
 import com.rizomm.ipii.steven.dao.IProductDao;
+import com.rizomm.ipii.steven.dao.ProductDao;
+import com.rizomm.ipii.steven.model.Product;
 import com.rizomm.ipii.steven.model.ShoppingCart;
 
 import javax.ejb.Remote;
@@ -17,11 +19,15 @@ public interface IShoppingCartService extends Serializable {
 
     String deleteProductToCart(int id);
 
-    List<ShoppingCart> getListShoppingCart();
+    List<Product> getListProductForOrder(IProductDao PD);
 
-    boolean payer();
+    String getTotalPriceString();
 
-    String getTotalPrice();
+    Double getTotalPrice();
 
     int getQuantityCart();
+
+    List<ShoppingCart> getListShoppingCart();
+
+    void setListShoppingCart(List<ShoppingCart> listShoppingCart);
 }

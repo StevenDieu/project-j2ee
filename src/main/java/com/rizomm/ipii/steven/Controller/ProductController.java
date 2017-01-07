@@ -25,9 +25,6 @@ public class ProductController implements Serializable {
     @EJB
     private IProductDao PD;
 
-    @ManagedProperty("#{request.requestURL}")
-    private StringBuffer url;
-
     private Product product = new Product();
     private static final long serialVersionUID = 1L;
 

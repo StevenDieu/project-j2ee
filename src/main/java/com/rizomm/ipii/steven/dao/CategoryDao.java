@@ -88,7 +88,7 @@ public class CategoryDao implements ICategoryDao, Serializable {
     }
 
     @Override
-    public Map<String, Object> convertJsonToProduct(final String categoryString) {
+    public Map<String, Object> convertJsonToCategory(final String categoryString) {
         JSONObject jsonCategory = null;
         final Map<String, Object> result = new HashMap();
         final Category category = new Category();
@@ -111,6 +111,8 @@ public class CategoryDao implements ICategoryDao, Serializable {
 
                 if (isTooLarge(jsonCategory, "label", 255)) {
                     return generateMessageError400("Le label de la catégorie est trop long !");
+                }else if(jsonCategory.getString("label").length() == 0){
+                    return generateMessageError400("La label de la catégorie ne peut pas être vide !");
                 }
 
                 category.setLabel(jsonCategory.getString("label"));

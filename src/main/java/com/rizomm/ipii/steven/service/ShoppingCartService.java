@@ -48,8 +48,8 @@ public class ShoppingCartService implements IShoppingCartService {
                     shoppingCart.setQuantity(qty);
                     shoppingCart.setPriceUnit(convertDoubleToStringWithDixieme(product.getPrice()));
                     shoppingCart.setTotalPrice(convertDoubleToStringWithDixieme(product.getPrice() * shoppingCart.getQuantity()));
-                }else{
-                    if(qty >= product.getStock()){
+                } else {
+                    if (qty >= product.getStock()) {
                         shoppingCart.setQuantity(product.getStock());
                         shoppingCart.setPriceUnit(convertDoubleToStringWithDixieme(product.getPrice()));
                         shoppingCart.setTotalPrice(convertDoubleToStringWithDixieme(product.getPrice() * product.getStock()));
@@ -65,7 +65,7 @@ public class ShoppingCartService implements IShoppingCartService {
         if (!existCart) {
             if (qty == -1) {
                 return "Vous ne pouvez pas diminuer la quantité d'un produit qui n'est pas dans votre panier";
-            }else if(product.getStock() == 0){
+            } else if (product.getStock() == 0) {
                 return "Il n'y a plus assez de stock nous avons actualisé votre panier...";
             }
 
@@ -106,23 +106,35 @@ public class ShoppingCartService implements IShoppingCartService {
     }
 
     @Override
-    public List<ShoppingCart> getListShoppingCart() {
-        return listShoppingCart;
+    public List<Product> getListProductForOrder(IProductDao PD) {
+        List<Product> products = new ArrayList<>();
+        if (!isChangeOnShoppingCart(PD)) {
+            for (ShoppingCart shoppingCart : listShoppingCart) {
+                Product product = shoppingCart.getProduct();
+                product.setStock(product.getStock() - shoppingCart.getQuantity());
+                PD.updateProduct(product);
+                products.add(product);
+            }
+        }
+        return products;
     }
 
     @Override
-    public boolean payer() {
-
-        return false;
-    }
-
-    @Override
-    public String getTotalPrice() {
+    public String getTotalPriceString() {
         double totalPriceCart = 0d;
         for (ShoppingCart shoppingCart : listShoppingCart) {
             totalPriceCart = totalPriceCart + shoppingCart.getProduct().getPrice() * shoppingCart.getQuantity();
         }
         return convertDoubleToStringWithDixieme(totalPriceCart);
+    }
+
+    @Override
+    public Double getTotalPrice() {
+        double totalPriceCart = 0d;
+        for (ShoppingCart shoppingCart : listShoppingCart) {
+            totalPriceCart = totalPriceCart + shoppingCart.getProduct().getPrice() * shoppingCart.getQuantity();
+        }
+        return totalPriceCart;
     }
 
     @Override
@@ -134,5 +146,32 @@ public class ShoppingCartService implements IShoppingCartService {
         return quantityCart;
     }
 
+    @Override
+    public void setListShoppingCart(List<ShoppingCart> listShoppingCart) {
+        this.listShoppingCart = listShoppingCart;
+    }
+
+    @Override
+    public List<ShoppingCart> getListShoppingCart() {
+        return listShoppingCart;
+    }
+
+
+    private boolean isChangeOnShoppingCart(IProductDao PD) {
+        Boolean isChange = false;
+
+        for (ShoppingCart shoppingCart : listShoppingCart) {
+            final Product product = PD.findProductById(shoppingCart.getProduct().getId());
+            if (isEmpty(product)) {
+                isChange = true;
+                listShoppingCart.remove(shoppingCart);
+            } else if (product.getStock() < shoppingCart.getQuantity()) {
+                isChange = true;
+                shoppingCart.setQuantity(product.getStock());
+            }
+        }
+
+        return isChange;
+    }
 
 }

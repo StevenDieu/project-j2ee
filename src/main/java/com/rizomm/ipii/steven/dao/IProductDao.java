@@ -32,7 +32,7 @@ public interface IProductDao {
 
     Product updateProduct(Product product);
 
-    Map<String, Object> convertJsonToProduct(String jsonString, ICategoryDao CD);
+    Map<String, Object> convertJsonToProductForCreate(String jsonString, ICategoryDao CD);
 
     JSONObject convertProductsToJson(List<Product> products);
 
@@ -47,4 +47,6 @@ public interface IProductDao {
     List<Product> findAllProductByPageAndCategory(int start, int limit, int idCategory);
 
     List<Product> findAllProductByPageAndCategoryAndSortBy(int start, int limit, int idCategory, String sortBy, String position);
+
+    Map<String,Object> convertJsonToProductForUpdate(String productString, ICategoryDao cd);
 }

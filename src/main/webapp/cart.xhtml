@@ -30,7 +30,7 @@
             </c:if>
         </h:panelGroup>
 
-        <h:panelGroup layout="block" styleClass="cart-items">
+        <h:panelGroup id="allCart" layout="block" styleClass="cart-items">
             <h:panelGroup layout="block" styleClass="container" id="product">
                 <h2>MON PANIER (
                     <h:panelGroup id="qtyMyCart">
@@ -110,19 +110,25 @@
 
                 </c:forEach>
 
-                <c:if test="#{cartController.qtyCart != 0}">
-                    <h:panelGroup layout="block" styleClass="totalCart">
-                        Total :
-                        <h:panelGroup id="totalCart">
-                            #{cartController.totalPriceCart}
+                <h:panelGroup id="finalisationOrder" layout="block" >
+                    <c:if test="#{cartController.qtyCart != 0}">
+                        <h:panelGroup layout="block" styleClass="totalCart">
+                            Total :
+                            <h:panelGroup id="totalCart">
+                                #{cartController.totalPriceCart}
+                            </h:panelGroup>
+                            €
                         </h:panelGroup>
-                        €
-                    </h:panelGroup>
-                    <h:panelGroup layout="block" styleClass="validateOrder">
-                        <h:commandButton styleClass="btn btn-success" value="Valider ma commande">
-                        </h:commandButton>
-                    </h:panelGroup>
-                </c:if>
+                        <h:form>
+                            <h:panelGroup layout="block" styleClass="validateOrder">
+                                <h:commandButton styleClass="btn btn-success" value="Valider ma commande" action="#{cartController.createOrder()}">
+                                    <f:ajax render="message simpleCart_total simpleCart_quantity qtyMyCart finalisationOrder allCart"/>
+                                </h:commandButton>
+                            </h:panelGroup>
+                        </h:form>
+
+                    </c:if>
+                </h:panelGroup>
             </h:panelGroup>
         </h:panelGroup>
 

@@ -1,7 +1,10 @@
 package com.rizomm.ipii.steven.Controller;
 
+import com.rizomm.ipii.steven.dao.IOrderHeaderDao;
 import com.rizomm.ipii.steven.dao.IProductDao;
 import com.rizomm.ipii.steven.helper.Utils;
+import com.rizomm.ipii.steven.model.OrderHeader;
+import com.rizomm.ipii.steven.model.Product;
 import com.rizomm.ipii.steven.model.ShoppingCart;
 import com.rizomm.ipii.steven.service.IShoppingCartService;
 
@@ -14,6 +17,7 @@ import javax.naming.InitialContext;
 import javax.naming.NamingException;
 import javax.rmi.PortableRemoteObject;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 @Named
@@ -25,36 +29,53 @@ public class CartController implements Serializable {
 
     @EJB
     private IProductDao PD;
+    @EJB
+    private IOrderHeaderDao OHD;
     private int idProduct;
     private String message = "";
 
     public void addProductCart(final int qty) {
         if (idProduct != 0) {
-            message = getiShoppingCartService().addProductCart(idProduct, qty, PD);
+            message = getShoppingCartService().addProductCart(idProduct, qty, PD);
         }
     }
 
     public void addProductCart(final int qty, final int idProduct) {
-        message = getiShoppingCartService().addProductCart(idProduct, qty, PD);
+        message = getShoppingCartService().addProductCart(idProduct, qty, PD);
     }
 
     public List<ShoppingCart> getAllProductCart() {
-        return getiShoppingCartService().getListShoppingCart();
+        return getShoppingCartService().getListShoppingCart();
     }
 
     public void deleteProductCart(final int idProduct) {
-        message = getiShoppingCartService().deleteProductToCart(idProduct);
+        message = getShoppingCartService().deleteProductToCart(idProduct);
     }
 
     public String getTotalPriceCart() {
-        return getiShoppingCartService().getTotalPrice();
+        return getShoppingCartService().getTotalPriceString();
     }
 
     public int getQtyCart() {
-        return getiShoppingCartService().getQuantityCart();
+        return getShoppingCartService().getQuantityCart();
     }
 
-    private IShoppingCartService getiShoppingCartService() {
+
+    public void createOrder() {
+        List<Product> listShoppingCart = getShoppingCartService().getListProductForOrder(PD);
+        Double totalPrice = getShoppingCartService().getTotalPrice();
+        if(listShoppingCart.size() > 0){
+            OrderHeader orderHeader = new OrderHeader(listShoppingCart,totalPrice);
+            orderHeader = OHD.createOrder(orderHeader);
+            getShoppingCartService().setListShoppingCart(new ArrayList<ShoppingCart>());
+            message = "Votre numéros de commande est : " + orderHeader.getId();
+
+        }else{
+            message = "Votre panier est vide ou à été modifié";
+        }
+    }
+
+    private IShoppingCartService getShoppingCartService() {
         try {
             final FacesContext context = FacesContext.getCurrentInstance();
             IShoppingCartService scs = (IShoppingCartService) context.getExternalContext().getSessionMap().get("cart");

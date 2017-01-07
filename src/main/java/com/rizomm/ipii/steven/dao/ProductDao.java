@@ -1,5 +1,6 @@
 package com.rizomm.ipii.steven.dao;
 
+import com.rizomm.ipii.steven.helper.Utils;
 import com.rizomm.ipii.steven.model.Category;
 import com.rizomm.ipii.steven.model.Product;
 import org.codehaus.jettison.json.JSONArray;
@@ -158,7 +159,7 @@ public class ProductDao implements IProductDao, Serializable {
     }
 
     @Override
-    public Map<String, Object> convertJsonToProduct(final String jsonString, final ICategoryDao CD) {
+    public Map<String, Object> convertJsonToProductForCreate(final String jsonString, final ICategoryDao CD) {
 
         final Map<String, Object> result = new HashMap();
         final Product product = new Product();
@@ -189,16 +190,22 @@ public class ProductDao implements IProductDao, Serializable {
                 return generateMessageError400("Le nom est obligatoire !");
             } else if (isTooLarge(json, "name", 255)) {
                 return generateMessageError400("Le nom est trop long !");
+            } else if(json.getString("name").length() == 0){
+                return generateMessageError400("Le nom est ne peut pas être vide !");
             }
 
             if (isEmpty(json, "urlPicture")) {
                 return generateMessageError400("L'url de l'image est obligatoire !");
             } else if (isTooLarge(json, "urlPicture", 255)) {
                 return generateMessageError400("L'url de l'image est trop longue !");
+            }else if(json.getString("urlPicture").length() == 0){
+                return generateMessageError400("L'url de l'image ne peut pas être vide !");
             }
 
             if (isEmpty(json, "description")) {
                 return generateMessageError400("La description est obligatoire !");
+            }else if(json.getString("description").length() == 0){
+                return generateMessageError400("La description ne peut pas être vide !");
             }
 
             product.setStock(json.getInt("stock"));
@@ -216,26 +223,8 @@ public class ProductDao implements IProductDao, Serializable {
 
 
             if (json.has("category") && !json.isNull("category")) {
-                final Map<String, Object> resultCategory = CD.convertJsonToProduct(json.getString("category"));
-
-                if ((boolean) resultCategory.get("ERROR")) {
-                    return resultCategory;
-                }
-
-                Category category = (Category) resultCategory.get("CATEGORY");
-
-                if (category.getId() == 0) {
-                    category.setId(CD.createCategory(category).getId());
-                } else {
-                    int idCategory = category.getId();
-                    category = CD.findCategoryById(idCategory);
-                    if (category == null) {
-                        return generateMessageError400("La catégorie avec l'id : " + idCategory + " n'éxiste pas");
-                    }
-                }
-
-                product.setCategory(category);
-
+                final Map<String, Object> resultCategory = getCategoryOfJsonProduct(CD, json, product);
+                if (resultCategory != null) return resultCategory;
             } else {
                 return generateMessageError400("Une catégorie est obligatoire !");
             }
@@ -251,10 +240,114 @@ public class ProductDao implements IProductDao, Serializable {
         return result;
     }
 
+
+
+    @Override
+    public Map<String, Object> convertJsonToProductForUpdate(final String jsonString, final ICategoryDao CD) {
+
+        final Map<String, Object> result = new HashMap();
+
+        try {
+            final JSONObject json = new JSONObject(jsonString);
+
+            if (isEmpty(json, "id")) {
+                return generateMessageError400("L'id est obligatoire pour la modification !");
+            }else if (!isInt(json.getString("id"))) {
+                return generateMessageError400("L'id doit être un chiffre !");
+            }
+
+            final Product product = findProductById(json.getInt("id"));
+            if (Utils.isEmpty(product)) {
+                return Utils.generateMessageError400("Le produit n'existe pas, utiliser la méthode POST pour l'ajouter.");
+            }
+
+            if (isNotEmpty(json, "stock")) {
+                if (!isInt(json.getString("stock"))) {
+                    return generateMessageError400("Le stock doit être un chiffre !");
+                } else if (json.getInt("stock") < 0) {
+                    return generateMessageError400("Le stock doit être un chiffre positif !");
+                }
+                product.setStock(json.getInt("stock"));
+            }
+
+            if (isNotEmpty(json, "price")) {
+                if (!isDouble(json.getString("price"))) {
+                    return generateMessageError400("Le prix doit être un nombre !");
+                } else if (isNotConvertDoubleToDixieme(Double.parseDouble(json.getString("price")))) {
+                    return generateMessageError400("Le prix est trop grand !");
+                } else if (convertDoubleToDixieme(json.getString("price")) < 0) {
+                    return generateMessageError400("Le prix doit être un chiffre positif !");
+                }
+                product.setPrice(convertDoubleToDixieme(json.getString("price")));
+            }
+
+            if (isNotEmpty(json, "name")) {
+                if (isTooLarge(json, "name", 255)) {
+                    return generateMessageError400("Le nom est trop long !");
+                }else if(json.getString("name").length() == 0){
+                    return generateMessageError400("Le nom ne peut pas être vide !");
+                }
+                product.setName(json.getString("name"));
+            }
+
+            if (isNotEmpty(json, "urlPicture")) {
+                if (isTooLarge(json, "urlPicture", 255)) {
+                    return generateMessageError400("L'url de l'image est trop longue !");
+                }else if(json.getString("urlPicture").length() == 0){
+                    return generateMessageError400("L'url de l'image ne peut pas être vide !");
+                }
+                product.setUrlPicture(json.getString("urlPicture"));
+            }
+
+            if (isNotEmpty(json, "description")) {
+                if(json.getString("description").length() == 0){
+                    return generateMessageError400("La description ne peut pas être vide !");
+                }
+                product.setDescription(json.getString("description"));
+            }
+
+            if (json.has("category") && !json.isNull("category")) {
+                final Map<String, Object> resultCategory = getCategoryOfJsonProduct(CD, json, product);
+                if (resultCategory != null) return resultCategory;
+            }
+
+            result.put("PRODUCT", product);
+            result.put("ERROR", false);
+        } catch (JSONException e) {
+            return generateMessageError400("Le format de la requête n'est pas respecté !");
+        } catch (Exception e) {
+            return generateMessageError400("Aie, une erreur est survenue !");
+        }
+
+        return result;
+    }
+
+    private Map<String, Object> getCategoryOfJsonProduct(ICategoryDao CD, JSONObject json, Product product) throws JSONException {
+        final Map<String, Object> resultCategory = CD.convertJsonToCategory(json.getString("category"));
+
+        if ((boolean) resultCategory.get("ERROR")) {
+            return resultCategory;
+        }
+
+        Category category = (Category) resultCategory.get("CATEGORY");
+
+        if (category.getId() == 0) {
+            category.setId(CD.createCategory(category).getId());
+        } else {
+            int idCategory = category.getId();
+            category = CD.findCategoryById(idCategory);
+            if (category == null) {
+                return generateMessageError400("La catégorie avec l'id : " + idCategory + " n'éxiste pas");
+            }
+        }
+
+        product.setCategory(category);
+        return null;
+    }
+
     @Override
     public Map<String, Object> convertJsonToProductForDelete(final String jsonString) {
         final Map<String, Object> result = new HashMap();
-        final Product product = new Product();
 
         try {
             JSONObject json = new JSONObject(jsonString);
