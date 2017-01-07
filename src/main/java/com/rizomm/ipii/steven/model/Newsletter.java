@@ -4,12 +4,13 @@ import com.rizomm.ipii.steven.model.beanValidation.Email;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import java.io.Serializable;
 
 /**
  * Created by Steven Dieu on 06/01/2017.
  */
 @Entity
-public class Newsletter {
+public class Newsletter implements Serializable {
 
     @Id
     @Email

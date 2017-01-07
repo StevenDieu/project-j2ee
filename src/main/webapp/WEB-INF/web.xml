@@ -11,20 +11,16 @@
         <param-value>Development</param-value>
     </context-param>
 
+    <context-param>
+        <param-name>org.omnifaces.FACES_VIEWS_SCAN_PATHS</param-name>
+        <param-value>/*.xhtml</param-value>
+    </context-param>
+
     <servlet>
         <servlet-name>Faces Servlet</servlet-name>
         <servlet-class>javax.faces.webapp.FacesServlet</servlet-class>
         <load-on-startup>1</load-on-startup>
     </servlet>
-
-    <glassfish-web-app>
-        <context-root>/</context-root>
-    </glassfish-web-app>
-
-    <context-param>
-        <param-name>org.omnifaces.FACES_VIEWS_SCAN_PATHS</param-name>
-        <param-value>/*.xhtml</param-value>
-    </context-param>
 
     <servlet-mapping>
         <servlet-name>Faces Servlet</servlet-name>
@@ -59,4 +55,5 @@
         <extension>svg</extension>
         <mime-type>image/svg+xml</mime-type>
     </mime-mapping>
+
 </web-app>

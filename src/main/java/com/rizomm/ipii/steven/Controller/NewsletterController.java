@@ -1,6 +1,7 @@
 package com.rizomm.ipii.steven.Controller;
 
 import com.rizomm.ipii.steven.dao.INewsletterDao;
+import com.rizomm.ipii.steven.helper.Utils;
 import com.rizomm.ipii.steven.model.Newsletter;
 
 import javax.ejb.EJB;
@@ -19,15 +20,32 @@ public class NewsletterController implements Serializable {
     @EJB
     private INewsletterDao NR;
 
-    private Newsletter newsletter;
+    private String email;
     private String messageNewsletter = "";
+    private String styleClassMessage = "alert-danger";
 
     public void addNewsletter() {
-
+        if(Utils.isEmpty(NR.findNewsletterByEmail(email))){
+            final Newsletter newsletter = new Newsletter(email);
+            NR.createNewsletter(newsletter);
+            styleClassMessage = "alert-success";
+            messageNewsletter = "Vous êtes désormais inscrit à la Newslettter";
+        }else{
+            styleClassMessage = "alert-danger";
+            messageNewsletter = "Cette adresse mail est déja utilisé pour la newsletter.";
+        }
     }
 
-    public Newsletter getNewsletter() {
-        return newsletter;
+    public String getStyleClassMessage() {
+        return styleClassMessage;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
     }
 
     public String getMessageNewsletter() {

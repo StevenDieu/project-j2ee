@@ -7,22 +7,21 @@
 
     <div class="news-letter">
         <div class="container">
-            <h:panelGroup id="messageNewsletter">
+            <h:message id="messageEmail" for="email" styleClass="alert-danger" />
+            <h:panelGroup styleClass="#{newsletterController.styleClassMessage}" id="messageNewsletter">
                 ${newsletterController.messageNewsletter}
             </h:panelGroup>
             <div class="join">
                 <h6>NEWSLETTER</h6>
                 <div class="sub-left-right">
                     <h:form>
-                        <h:inputText value="#{newsletterController.newsletter.email}"
-                                     a:placeholder="Entrer votre adresse email">
+                        <h:inputText id="email" required="true" validatorMessage="L'email est obligatoire pour valider la Newsletter" label="Email " value="#{newsletterController.email}" a:placeholder="Entrer votre adresse email">
+                            <f:validator validatorId="IsMailValidator" />
                         </h:inputText>
 
-                        <h:commandButton type="submit" value="VALIDER"
-                                         action="#{newsletterController.addNewsletter()}">
-                            <f:ajax render="messageNewsletter"/>
+                        <h:commandButton type="submit" value="VALIDER" action="#{newsletterController.addNewsletter()}">
+                            <f:ajax execute="email" render="messageNewsletter messageEmail"/>
                         </h:commandButton>
-
                     </h:form>
                 </div>
                 <div class="clearfix"></div>
