@@ -2,7 +2,7 @@
                 xmlns="http://www.w3.org/1999/xhtml"
                 xmlns:h="http://java.sun.com/jsf/html"
                 xmlns:c="http://java.sun.com/jstl/core"
-                xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+                xmlns:ui="http://xmlns.jcp.org/jsf/facelets" xmlns:f="http://xmlns.jcp.org/jsf/core">
 
     <ui:define name="css">
         <h:outputStylesheet library="library" name="css/component.css"/>
@@ -17,111 +17,109 @@
     </ui:define>
 
     <ui:define name="title">
-        La collection
+        <h:outputText value="La collection"/>
     </ui:define>
 
 
     <ui:define name="content">
-        <div id="blockPopUpAddToCart"></div>
-        <div class="container">
-            <div class="products-page">
-                <div class="products">
-                    <div class="product-listy">
-                        <h2>Les catégories</h2>
+        <h:panelGroup id="blockPopUpAddToCart" layout="block"/>
+
+        <h:panelGroup layout="block" styleClass="container">
+            <h:panelGroup layout="block" styleClass="products-page">
+
+                <h:panelGroup layout="block" styleClass="products">
+                    <h:panelGroup layout="block" styleClass="product-listy">
+                        <h2><h:outputText value="Les catégories"/></h2>
                         <ul class="product-list">
                             <c:forEach var="category" items="#{productController.findAllCategory()}">
-                                <li><a href="Javascript:void(0);" data-id="#{category.id}" class="change-category"
-                                       data-idcategory="#{category.id}"><h:outputText value="#{category.label}"/></a>
+                                <li>
+                                    <a href="Javascript:void(0);" data-id="#{category.id}" class="change-category" data-idcategory="#{category.id}"><h:outputText value="#{category.label}"/></a>
                                 </li>
                             </c:forEach>
                         </ul>
-                    </div>
-                </div>
-                <div class="new-product">
-                    <div class="new-product-top">
-                        <ul class="product-top-list">
-                            <li><a href="index">Accueil</a><h:outputText value="&#160;"/><span>&gt;</span></li>
-                            <li><a href="collection">La collection</a><h:outputText value="&#160;"/></li>
-                        </ul>
-                        <div class="clearfix"></div>
-                    </div>
-                    <div class="mens-toolbar">
-                        <div class="sort">
-                            <div class="sort-by">
-                                <label>Trier par : </label>
-                                <select class="changeSortBy">
-                                    <option value="id">
-                                        Position
-                                    </option>
-                                    <option value="name">
-                                        Nom
-                                    </option>
-                                    <option value="price">
-                                        Prix
-                                    </option>
-                                </select>
-                                <a href="Javascript:void(0);"><img src="#{resource['images:arrow2.gif']}"
-                                                                   data-position="asc" class="v-middle changePosition"/></a>
-                            </div>
-                        </div>
+                    </h:panelGroup>
+                </h:panelGroup>
 
+                <h:panelGroup layout="block" styleClass="new-product">
+
+                    <h:panelGroup layout="block" styleClass="new-product-top">
+                        <ul class="product-top-list">
+                            <li><h:link outcome="index" value="Accueil"/><h:outputText value="&#160;"/><h:panelGroup><h:outputText value="&gt;"/></h:panelGroup></li>
+                            <li><h:link outcome="collection" value="La collection"/><h:outputText value="&#160;"/></li>
+                        </ul>
+                        <h:panelGroup layout="block" styleClass="clearfix"/>
+                    </h:panelGroup>
+
+                    <h:panelGroup layout="block" styleClass="mens-toolbar">
+                        <h:panelGroup layout="block" styleClass="sort">
+                            <h:panelGroup layout="block" styleClass="sort-by">
+                                <h:outputLabel>Trier par : </h:outputLabel>
+                                <h:selectOneMenu styleClass="changeSortBy">
+                                    <f:selectItem itemValue="id" itemLabel="Position"/>
+                                    <f:selectItem itemValue="name" itemLabel="Nom"/>
+                                    <f:selectItem itemValue="price" itemLabel="Prix"/>
+                                </h:selectOneMenu>
+                                <img src="#{resource['images:arrow2.gif']}" data-position="asc" class="v-middle changePosition"/>
+                            </h:panelGroup>
+                        </h:panelGroup>
                         <c:set var="nbPage" value="#{productController.getCountAllProduct()}"/>
 
                         <ul class="women_pagenation pagination_product">
                             <c:if test='#{nbPage > 0}'>
-                                <li>Page :</li>
+                                <li><h:outputText value="Page : "/></li>
 
-                                <c:forEach var="page" begin="1" end="${nbPage}">
+                                <c:forEach var="page" begin="1" end="#{nbPage}">
 
                                     <c:set var="class" value=""/>
                                     <c:if test='#{page eq 1}'>
                                         <c:set var="class" value="active"/>
                                     </c:if>
 
-                                    <li class="pagination ${class}">
-                                        <a href="Javascript:void(0);"
-                                           class="change-page pagination-#{page}"
-                                           data-id="#{page}">#{page}</a>
+                                    <li class="pagination #{class}">
+                                        <a href="Javascript:void(0);" class="change-page pagination-#{page}" data-id="#{page}"><h:outputText value="#{page}"/></a>
                                     </li>
                                 </c:forEach>
                             </c:if>
                         </ul>
-                        <div class="clearfix"></div>
-                    </div>
-                    <div id="cbp-vm" class="cbp-vm-switcher cbp-vm-view-grid">
-                        <div class="cbp-vm-options">
-                            <a href="#" class="cbp-vm-icon cbp-vm-grid cbp-vm-selected" data-view="cbp-vm-view-grid"
-                               title="grid">Vue grille</a>
-                            <a href="#" class="cbp-vm-icon cbp-vm-list" data-view="cbp-vm-view-list"
-                               title="list">Vue liste</a>
-                        </div>
-                        <div class="clearfix"></div>
-                        <ul id="listeProduct">
+                        <h:panelGroup layout="block" styleClass="clearfix"/>
+                    </h:panelGroup>
 
-                        </ul>
-                    </div>
+                    <h:panelGroup layout="block" id="cbp-vm" styleClass="cbp-vm-switcher cbp-vm-view-grid">
+
+                        <h:panelGroup layout="block" styleClass="cbp-vm-options">
+                            <a href="#" class="cbp-vm-icon cbp-vm-grid cbp-vm-selected" data-view="cbp-vm-view-grid" title="grid"><h:outputText value="Vue grille"/></a>
+                            <a href="#" class="cbp-vm-icon cbp-vm-list" data-view="cbp-vm-view-list" title="list"><h:outputText value="Vue liste"/></a>
+                        </h:panelGroup>
+
+                        <h:panelGroup layout="block" styleClass="clearfix"/>
+
+                        <ul id="listeProduct"></ul>
+
+                    </h:panelGroup>
+
                     <c:if test='#{nbPage > 0}'>
                         <ul class="women_pagenation pagination_product">
-                            <li>Page :</li>
+                            <li><h:outputText value="Page : "/></li>
 
-                            <c:forEach var="page" begin="1" end="${nbPage}">
+                            <c:forEach var="page" begin="1" end="#{nbPage}">
 
                                 <c:set var="class" value=""/>
                                 <c:if test='#{page eq 1}'>
                                     <c:set var="class" value="active"/>
                                 </c:if>
 
-                                <li class="pagination ${class}">
-                                    <a href="Javascript:void(0);" class="change-page pagination-#{page}"
-                                       data-id="#{page}">#{page}</a>
+                                <li class="pagination #{class}">
+                                    <a href="Javascript:void(0);" class="change-page pagination-#{page}" data-id="#{page}"><h:outputText value="#{page}"/></a>
                                 </li>
                             </c:forEach>
                         </ul>
-                        <div class="clearfix"></div>
+                        <h:panelGroup layout="block" styleClass="clearfix"/>
                     </c:if>
-                </div>
-                <div class="clearfix"></div>
-            </div>
-        </div>
+                </h:panelGroup>
+
+                <h:panelGroup layout="block" styleClass="clearfix">
+                </h:panelGroup>
+            </h:panelGroup>
+        </h:panelGroup>
     </ui:define>
 </ui:composition>

@@ -1,7 +1,7 @@
 var page = 0;
 var category = "";
 var loadProductInProgress = false;
-var position = "asc";
+var position = "desc";
 var sortBy = "id";
 
 function getPagination() {
@@ -126,11 +126,11 @@ $(function () {
     $(".changePosition").on("click", function () {
         if (!loadProductInProgress) {
             if ($(this).data("position") === "asc") {
-                position = "desc";
-                $(this).addClass("revertPosition")
-            } else {
                 position = "asc";
                 $(this).removeClass("revertPosition")
+            } else {
+                position = "desc";
+                $(this).addClass("revertPosition")
             }
             $(this).data("position", position);
             getListProduct();

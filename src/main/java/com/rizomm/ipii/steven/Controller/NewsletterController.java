@@ -30,6 +30,7 @@ public class NewsletterController implements Serializable {
             NR.createNewsletter(newsletter);
             styleClassMessage = "alert-success";
             messageNewsletter = "Vous êtes désormais inscrit à la Newslettter";
+            email = "";
         } else {
             styleClassMessage = "alert-danger";
             messageNewsletter = "Cette adresse mail est déja utilisé pour la newsletter.";

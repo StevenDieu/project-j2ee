@@ -3,11 +3,11 @@
  */
 var loadProductInProgress = false;
 
-function addItemToCart(id){
+function addItemToCart(id) {
     $.ajax({
         method: "POST",
         url: url + "addCart",
-        data: {id : id}
+        data: {id: id}
     }).done(function (result) {
         $("#blockPopUpAddToCart").html(result);
         $("#modalAddCart").modal('show')
@@ -25,4 +25,11 @@ function loadActonChangeAddItemToCart() {
 
 $(function () {
     loadActonChangeAddItemToCart();
+});
+
+$(window).load(function () {
+    $('.flexslider').flexslider({
+        animation: "slide",
+        controlNav: "thumbnails"
+    });
 });

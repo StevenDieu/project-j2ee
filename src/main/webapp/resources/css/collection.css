@@ -16,7 +16,7 @@
     width: 79px;
 }
 
-.revertPosition{
+.revertPosition {
     transform: rotate(180deg);
     -ms-transform: rotate(180deg);
     -moz-transform: rotate(180deg);
@@ -24,11 +24,12 @@
     -o-transform: rotate(180deg);
 }
 
-.changePosition{
+.changePosition {
     margin: 6px;
     margin-top: 4px;
+    cursor: pointer;
 }
 
-.sort-by{
+.sort-by {
     min-width: 170px;
 }

@@ -4,7 +4,7 @@
                 xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
 
     <ui:define name="title">
-        Page d'accueil
+        <h:outputText value="Page d'accueil"/>
     </ui:define>
 
     <ui:define name="content">
@@ -12,39 +12,39 @@
             <h:panelGroup layout="block" styleClass="container">
                 <h:panelGroup layout="block" styleClass="banner-bottom">
                     <h:panelGroup layout="block" styleClass="banner-bottom-left">
-                        <h2><h:outputText value=" &lt;br/&gt; &lt;br/&gt; &lt;br/&gt;" escape="false" /></h2>
+                        <h2><h:outputText value=" &lt;br/&gt; &lt;br/&gt; &lt;br/&gt;" escape="false"/></h2>
                     </h:panelGroup>
                     <h:panelGroup layout="block" styleClass="banner-bottom-right">
                         <h:panelGroup layout="block" styleClass="callbacks_container">
                             <ul class="rslides" id="slider4">
                                 <li>
                                     <div class="banner-info">
-                                        <h3>Des tableaux incroyables</h3>
-                                        <p>Clique sur "VOIR LA COLLECTION"</p>
+                                        <h3><h:outputText value="Des tableaux incroyables"/></h3>
+                                        <p><h:outputText value='Clique sur "VOIR LA COLLECTION"'/></p>
                                     </div>
                                 </li>
                                 <li>
                                     <div class="banner-info">
-                                        <h3>Du 100 % Steven</h3>
-                                        <p>Clique sur "VOIR LA COLLECTION"</p>
+                                        <h3><h:outputText value="Du 100 % Steven"/></h3>
+                                        <p><h:outputText value='Clique sur "VOIR LA COLLECTION"'/></p>
                                     </div>
                                 </li>
                                 <li>
                                     <div class="banner-info">
-                                        <h3>Achat en ligne seulement</h3>
-                                        <p>Clique sur "VOIR LA COLLECTION"</p>
+                                        <h3><h:outputText value="Achat en ligne seulement"/></h3>
+                                        <p><h:outputText value='Clique sur "VOIR LA COLLECTION"'/></p>
                                     </div>
                                 </li>
                             </ul>
                         </h:panelGroup>
-                        <h:outputScript library="library" name="js/responsiveslides.min.js" />
-                        <h:outputScript library="library" name="js/responsiveSlidesHome.js" />
+                        <h:outputScript library="library" name="js/responsiveslides.min.js"/>
+                        <h:outputScript library="library" name="js/responsiveSlidesHome.js"/>
                     </h:panelGroup>
 
                     <h:panelGroup layout="block" styleClass="clearfix"></h:panelGroup>
                 </h:panelGroup>
                 <h:panelGroup layout="block" styleClass="shop">
-                    <h:link outcome="collection">VOIR LA COLLECTION</h:link>
+                    <h:link outcome="collection"><h:outputText value="VOIR LA COLLECTION"/></h:link>
                 </h:panelGroup>
             </h:panelGroup>
         </h:panelGroup>

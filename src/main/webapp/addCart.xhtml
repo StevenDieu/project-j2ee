@@ -2,6 +2,7 @@
         xmlns="http://www.w3.org/1999/xhtml"
         xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
         xmlns:f="http://xmlns.jcp.org/jsf/core"
+        xmlns:h="http://xmlns.jcp.org/jsf/html"
 >
 
     <f:metadata>
@@ -11,29 +12,26 @@
 
     <script type="application/javascript">
         $("#simpleCart_total").html("#{cartController.getTotalPriceCart()} €");
-        $("#simpleCart_quantity").html( #{cartController.qtyCart});
+        $("#simpleCart_quantity").html("#{cartController.qtyCart}");
     </script>
 
-    <div class="modal fade" id="modalAddCart" tabindex="-1" role="dialog">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
-                            aria-hidden="true"></span></button>
-                    <h4 class="modal-title">Ajout produit au panier</h4>
-                </div>
-                <div class="modal-body">
+    <h:panelGroup layout="block" styleClass="modal fade" id="modalAddCart">
+        <h:panelGroup layout="block" styleClass="modal-dialog">
+            <h:panelGroup layout="block" styleClass="modal-content">
+                <h:panelGroup layout="block" styleClass="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true"></span></button>
+                    <h4 class="modal-title"><h:outputText value="Ajout produit au panier"/></h4>
+                </h:panelGroup>
 
-                    ${cartController.message}
+                <h:panelGroup layout="block" styleClass="modal-body">
+                    <h:outputText value="#{cartController.message}"/>
+                </h:panelGroup>
 
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-default" data-dismiss="modal">Continuer mes achats</button>
-                    <a type="button" class="btn btn-primary" href="cart">Mon panier</a>
-                </div>
-            </div>
-        </div>
-    </div>
-
-
+                <h:panelGroup layout="block" styleClass="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal"><h:outputText value="Continuer mes achats"/></button>
+                    <h:link value="Mon panier" styleClass="btn btn-primary" outcome="cart"/>
+                </h:panelGroup>
+            </h:panelGroup>
+        </h:panelGroup>
+    </h:panelGroup>
 </ui:composition>
