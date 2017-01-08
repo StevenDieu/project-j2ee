@@ -322,7 +322,7 @@ public class ProductDao implements IProductDao, Serializable {
     }
 
     private Map<String, Object> getCategoryOfJsonProduct(ICategoryDao CD, JSONObject json, Product product) throws JSONException {
-        final Map<String, Object> resultCategory = CD.convertJsonToCategory(json.getString("category"));
+        final Map<String, Object> resultCategory = CD.convertJsonToCategoryToCreate(json.getString("category"), false);
 
         if ((boolean) resultCategory.get("ERROR")) {
             return resultCategory;

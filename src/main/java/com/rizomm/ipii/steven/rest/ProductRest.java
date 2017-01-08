@@ -54,13 +54,8 @@ public class ProductRest {
         Map<String, Object> result = PD.convertJsonToProductForUpdate(productString, CD);
 
         if (!((boolean) result.get("ERROR"))) {
-            final Product productResult = (Product) result.get("PRODUCT");
-            if (Utils.isNotEmpty(productResult.getId()) && Utils.isNotEmpty(PD.findProductById(productResult.getId()))) {
-                PD.updateProduct(productResult);
-                result = Utils.generateMessageSuccess200("Produit modifié avec succés");
-            } else {
-                result = Utils.generateMessageError400("Le produit n'existe pas, utiliser la méthode POST pour l'ajouter.");
-            }
+            PD.updateProduct((Product) result.get("PRODUCT"));
+            result = Utils.generateMessageSuccess200("Produit modifié avec succés");
         }
 
         return Response.status((int) result.get("CODE_HTTP")).entity(result.get("MESSAGE_HTTP")).build();

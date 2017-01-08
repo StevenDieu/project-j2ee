@@ -28,10 +28,11 @@ public interface ICategoryDao {
 
     Boolean deleteCategory(Category category);
 
-    Map<String, Object> convertJsonToCategory(String category);
+    Map<String, Object> convertJsonToCategoryToCreate(String categoryString, boolean forCreateRest);
 
     JSONObject convertCategorysToJson(List<Category> listCategory);
 
     JSONObject convertCategoryToJson(Category category) throws JSONException;
 
+    Map<String,Object> convertJsonToCategoryToUpdate(String categoryString);
 }

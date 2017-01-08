@@ -1,7 +1,9 @@
 package com.rizomm.ipii.steven.dao;
 
 
+import com.rizomm.ipii.steven.helper.Utils;
 import com.rizomm.ipii.steven.model.Category;
+import com.rizomm.ipii.steven.model.Product;
 import org.codehaus.jettison.json.JSONArray;
 import org.codehaus.jettison.json.JSONException;
 import org.codehaus.jettison.json.JSONObject;
@@ -89,14 +91,13 @@ public class CategoryDao implements ICategoryDao, Serializable {
     }
 
     @Override
-    public Map<String, Object> convertJsonToCategory(final String categoryString) {
-        JSONObject jsonCategory = null;
+    public Map<String, Object> convertJsonToCategoryToCreate(final String categoryString, boolean forCreateRest) {
         final Map<String, Object> result = new HashMap();
         final Category category = new Category();
 
         try {
 
-            jsonCategory = new JSONObject(categoryString);
+            final JSONObject jsonCategory = new JSONObject(categoryString);
 
             if (isNotEmpty(jsonCategory, "id")) {
 
@@ -106,7 +107,19 @@ public class CategoryDao implements ICategoryDao, Serializable {
                     return generateMessageError400("L'id de la Category doit être un chiffre ! ");
                 }
 
+                if(forCreateRest){
+                    if (isEmpty(jsonCategory, "label")) {
+                        return generateMessageError400("Le label de la catégorie est obligatoire !");
+                    }else if (isTooLarge(jsonCategory, "label", 255)) {
+                        return generateMessageError400("Le label de la catégorie est trop long !");
+                    } else if (jsonCategory.getString("label").length() == 0) {
+                        return generateMessageError400("La label de la catégorie ne peut pas être vide !");
+                    }
+                    category.setLabel(jsonCategory.getString("label"));
+                }
+
                 category.setId(Integer.parseInt(idString));
+
 
             } else if (isNotEmpty(jsonCategory, "label")) {
 
@@ -121,14 +134,54 @@ public class CategoryDao implements ICategoryDao, Serializable {
                 return generateMessageError400("La category est mal paramétrée ! ");
             }
 
+            result.put("ERROR", false);
+            result.put("CATEGORY", category);
         } catch (JSONException e) {
             return generateMessageError400(e.getMessage());
         }
 
-        result.put("ERROR", false);
-        result.put("CATEGORY", category);
+
         return result;
 
+    }
+
+    @Override
+    public Map<String, Object> convertJsonToCategoryToUpdate(String categoryString) {
+        final Map<String, Object> result = new HashMap();
+
+        try {
+
+            final JSONObject jsonCategory = new JSONObject(categoryString);
+
+            if (isEmpty(jsonCategory, "id")) {
+                return generateMessageError400("L'id est obligatoire pour la modification !");
+            } else if (!isInt(jsonCategory.getString("id"))) {
+                return generateMessageError400("L'id doit être un chiffre !");
+            }
+
+            final Category category = findCategoryById(jsonCategory.getInt("id"));
+            if (Utils.isEmpty(category)) {
+                return Utils.generateMessageError400("La category n'existe pas, utiliser la méthode POST pour l'ajouter.");
+            }
+
+            if (isNotEmpty(jsonCategory, "label")) {
+
+                if (isTooLarge(jsonCategory, "label", 255)) {
+                    return generateMessageError400("Le label de la catégorie est trop long !");
+                } else if (jsonCategory.getString("label").length() == 0) {
+                    return generateMessageError400("La label de la catégorie ne peut pas être vide !");
+                }
+
+                category.setLabel(jsonCategory.getString("label"));
+            }
+
+            result.put("ERROR", false);
+            result.put("CATEGORY", category);
+        } catch (JSONException e) {
+            return generateMessageError400(e.getMessage());
+        }
+
+        return result;
     }
 
     @Override
@@ -147,7 +200,6 @@ public class CategoryDao implements ICategoryDao, Serializable {
 
         return jsonProducts;
     }
-
 
     @Override
     public JSONObject convertCategoryToJson(Category category) throws JSONException {

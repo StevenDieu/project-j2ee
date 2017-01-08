@@ -8,9 +8,7 @@ import org.codehaus.jettison.json.JSONObject;
 import javax.ejb.EJB;
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Named;
-import javax.ws.rs.GET;
-import javax.ws.rs.Path;
-import javax.ws.rs.Produces;
+import javax.ws.rs.*;
 import javax.ws.rs.core.Response;
 import java.util.List;
 import java.util.Map;
@@ -26,6 +24,38 @@ public class CategoryRest {
 
     @EJB
     private ICategoryDao CD;
+
+
+    @POST
+    @Produces("application/json")
+    public Response addProductCategory(final String categoryString) {
+        Map<String, Object> result = CD.convertJsonToCategoryToCreate(categoryString, true);
+
+        if (!((boolean) result.get("ERROR"))) {
+            Category categoryResult = (Category) result.get("CATEGORY");
+            if (Utils.isNotEmpty(categoryResult.getId()) && Utils.isNotEmpty(CD.findCategoryById(categoryResult.getId()))) {
+                result = Utils.generateMessageError400("La categorie existe déja, utiliser la methode PUT pour le modifier.");
+            } else {
+                Category category = CD.createCategory(categoryResult);
+                result = Utils.generateMessageSuccess201("Category créé avec l'id : " + category.getId());
+            }
+        }
+
+        return Response.status((int) result.get("CODE_HTTP")).entity(result.get("MESSAGE_HTTP")).build();
+    }
+
+    @PUT
+    @Produces("application/json")
+    public Response updateProductCategory(final String categoryString) {
+        Map<String, Object> result = CD.convertJsonToCategoryToUpdate(categoryString);
+
+        if (!((boolean) result.get("ERROR"))) {
+            CD.updateCategory((Category) result.get("CATEGORY"));
+            result = Utils.generateMessageSuccess200("Categorie modifié avec succés");
+        }
+
+        return Response.status((int) result.get("CODE_HTTP")).entity(result.get("MESSAGE_HTTP")).build();
+    }
 
     @GET
     @Produces("application/json")
