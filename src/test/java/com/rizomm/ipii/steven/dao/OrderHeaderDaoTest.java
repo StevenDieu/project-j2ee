@@ -50,7 +50,7 @@ public class OrderHeaderDaoTest extends AbstractPersistentTest {
         OrderHeader order = new OrderHeader(2,createListProduct(),10d);
         assertNull("Order should not be found", em.find(OrderHeader.class, order.getId()));
 
-        OrderHeader isCreate = OD.createOrder(order);
+        order = OD.createOrder(order);
         assertNotNull("Order should not be found", em.find(OrderHeader.class, order.getId()));
         deleteAllProduct();
     }

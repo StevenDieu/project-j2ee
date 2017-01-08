@@ -1,14 +1,17 @@
 package com.rizomm.ipii.steven.model;
 
+import javax.validation.constraints.*;
+
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.Date;
 import java.util.List;
 
 /**
  * Created by steven on 17/11/2016.
  */
 @Entity
-public class OrderHeader implements Serializable {
+public class OrderHeader extends AbstractTimestampEntity implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "ORDER_HEADER_SEQ")
     @SequenceGenerator(name = "ORDER_HEADER_SEQ", sequenceName = "order_header_seq", allocationSize = 1)
@@ -54,4 +57,5 @@ public class OrderHeader implements Serializable {
     public void setTotal(double total) {
         this.total = total;
     }
+
 }
