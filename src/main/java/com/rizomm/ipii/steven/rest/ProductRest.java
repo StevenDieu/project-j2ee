@@ -61,20 +61,19 @@ public class ProductRest {
         return Response.status((int) result.get("CODE_HTTP")).entity(result.get("MESSAGE_HTTP")).build();
     }
 
-    @DELETE
-    @Produces("application/json")
-    public Response deleteProduct(final String jsonProduct) {
-        Map<String, Object> result = PD.convertJsonToProductForDelete(jsonProduct);
 
-        if (!((boolean) result.get("ERROR"))) {
-            if (PD.deleteProductById((int) result.get("idProduct"))) {
-                result = Utils.generateMessageSuccess200("Produit supprimé avec succés.");
-            } else {
-                result = Utils.generateMessageError400("Le produit n'existe pas.");
-            }
+    @DELETE
+    @Path("/{idProduct : \\d+}")
+    @Produces("application/json")
+    public Response deleteProduct(@PathParam("idProduct") int idProduct) {
+        Map<String, Object> result;
+        if(PD.deleteProductById(idProduct)){
+            result = Utils.generateMessageSuccess200("Produit supprimé avec succés.");
+        }else{
+            result = Utils.generateMessageError400("Le produit n'existe pas.");
         }
 
-        return Response.status((int) result.get("CODE_HTTP")).entity(result.get("MESSAGE_HTTP")).build();
+        return Response.status((int) result.get("CODE_HTTP")).entity(result.get("MESSAGE_HTTP")).build() ;
     }
 
     @GET

@@ -82,6 +82,7 @@ public class CategoryDao implements ICategoryDao, Serializable {
         if (isEmpty(findCategory)) {
             return true;
         }
+
         return false;
     }
 
@@ -105,12 +106,14 @@ public class CategoryDao implements ICategoryDao, Serializable {
 
                 if (!isInt(idString)) {
                     return generateMessageError400("L'id de la Category doit être un chiffre ! ");
+                } else if (jsonCategory.getInt("id") < 0) {
+                    return generateMessageError400("L'id doit être un chiffre positif !");
                 }
 
-                if(forCreateRest){
+                if (forCreateRest) {
                     if (isEmpty(jsonCategory, "label")) {
                         return generateMessageError400("Le label de la catégorie est obligatoire !");
-                    }else if (isTooLarge(jsonCategory, "label", 255)) {
+                    } else if (isTooLarge(jsonCategory, "label", 255)) {
                         return generateMessageError400("Le label de la catégorie est trop long !");
                     } else if (jsonCategory.getString("label").length() == 0) {
                         return generateMessageError400("La label de la catégorie ne peut pas être vide !");
@@ -142,7 +145,6 @@ public class CategoryDao implements ICategoryDao, Serializable {
 
 
         return result;
-
     }
 
     @Override
@@ -157,6 +159,8 @@ public class CategoryDao implements ICategoryDao, Serializable {
                 return generateMessageError400("L'id est obligatoire pour la modification !");
             } else if (!isInt(jsonCategory.getString("id"))) {
                 return generateMessageError400("L'id doit être un chiffre !");
+            } else if (jsonCategory.getInt("id") < 0) {
+                return generateMessageError400("L'id doit être un chiffre positif !");
             }
 
             final Category category = findCategoryById(jsonCategory.getInt("id"));
@@ -206,6 +210,7 @@ public class CategoryDao implements ICategoryDao, Serializable {
         final JSONObject jsonproduct = new JSONObject();
         jsonproduct.put("id", category.getId());
         jsonproduct.put("label", category.getLabel());
+
         return jsonproduct;
     }
 }
