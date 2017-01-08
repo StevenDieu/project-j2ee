@@ -11,32 +11,33 @@ import java.util.Set;
 @ApplicationPath("json")
 public class ApplicationConfig extends Application {
 
-  // ======================================
-  // =             Attributes             =
-  // ======================================
+    // ======================================
+    // =             Attributes             =
+    // ======================================
 
-  private final Set<Class<?>> classes;
+    private final Set<Class<?>> classes;
 
-  // ======================================
-  // =            Constructors            =
-  // ======================================
+    // ======================================
+    // =            Constructors            =
+    // ======================================
 
-  public ApplicationConfig() {
-    HashSet<Class<?>> c = new HashSet<>();
-    c.add(ProductRest.class);
+    public ApplicationConfig() {
+        HashSet<Class<?>> c = new HashSet<>();
+        c.add(ProductRest.class);
+        c.add(CategoryRest.class);
 
-    c.add(MOXyJsonProvider.class);
+        c.add(MOXyJsonProvider.class);
 
-    classes = Collections.unmodifiableSet(c);
-  }
+        classes = Collections.unmodifiableSet(c);
+    }
 
-  // ======================================
-  // =          Getters & Setters         =
-  // ======================================
+    // ======================================
+    // =          Getters & Setters         =
+    // ======================================
 
-  @Override
-  public Set<Class<?>> getClasses() {
-    return classes;
-  }
+    @Override
+    public Set<Class<?>> getClasses() {
+        return classes;
+    }
 
 }

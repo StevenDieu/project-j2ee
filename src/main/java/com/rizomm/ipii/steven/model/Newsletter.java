@@ -16,7 +16,8 @@ public class Newsletter implements Serializable {
     @Email
     private String email;
 
-    public Newsletter() {}
+    public Newsletter() {
+    }
 
     public Newsletter(String email) {
         this.email = email;

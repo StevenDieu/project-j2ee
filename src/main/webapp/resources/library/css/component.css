@@ -141,7 +141,7 @@ a.cbp-vm-icon.cbp-vm-grid.cbp-vm-selected {
 
 .cbp-vm-view-grid .cbp-vm-details {
     max-width: 300px;
-    min-height: 25px;
+    min-height: 51px;
     margin: 0 auto;
     color: #999;
     font-size: 0.9em;

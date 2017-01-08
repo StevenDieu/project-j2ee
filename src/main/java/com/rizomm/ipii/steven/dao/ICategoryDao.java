@@ -1,6 +1,8 @@
 package com.rizomm.ipii.steven.dao;
 
 import com.rizomm.ipii.steven.model.Category;
+import org.codehaus.jettison.json.JSONException;
+import org.codehaus.jettison.json.JSONObject;
 
 import javax.ejb.Remote;
 import java.util.List;
@@ -27,4 +29,9 @@ public interface ICategoryDao {
     Boolean deleteCategory(Category category);
 
     Map<String, Object> convertJsonToCategory(String category);
+
+    JSONObject convertCategorysToJson(List<Category> listCategory);
+
+    JSONObject convertCategoryToJson(Category category) throws JSONException;
+
 }

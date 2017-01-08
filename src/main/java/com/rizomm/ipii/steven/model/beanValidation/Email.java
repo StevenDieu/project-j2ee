@@ -30,9 +30,9 @@ import static java.lang.annotation.ElementType.*;
 @Retention(RetentionPolicy.RUNTIME)
 public @interface Email {
 
-  String message() default "Ceci n'est pas une adresse email valide";
+    String message() default "Ceci n'est pas une adresse email valide";
 
-  Class<?>[] groups() default {};
+    Class<?>[] groups() default {};
 
-  Class<? extends Payload>[] payload() default {};
+    Class<? extends Payload>[] payload() default {};
 }

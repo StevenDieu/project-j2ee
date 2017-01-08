@@ -1,7 +1,6 @@
 package com.rizomm.ipii.steven.service;
 
 import com.rizomm.ipii.steven.dao.IProductDao;
-import com.rizomm.ipii.steven.dao.ProductDao;
 import com.rizomm.ipii.steven.model.Product;
 import com.rizomm.ipii.steven.model.ShoppingCart;
 

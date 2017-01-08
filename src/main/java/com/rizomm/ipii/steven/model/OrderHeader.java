@@ -10,12 +10,11 @@ import java.util.List;
 @Entity
 public class OrderHeader implements Serializable {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "ORDER_HEADER_SEQ")
+    @SequenceGenerator(name = "ORDER_HEADER_SEQ", sequenceName = "order_header_seq", allocationSize = 1)
     private int id;
     @ManyToMany
-    @JoinTable(name = "jnd_order_product",
-            joinColumns = @JoinColumn(name = "order_fk"),
-            inverseJoinColumns = @JoinColumn(name = "product_fk"))
+    @JoinTable(name = "jnd_order_product", joinColumns = @JoinColumn(name = "order_fk"), inverseJoinColumns = @JoinColumn(name = "product_fk"))
     private List<Product> products;
     private double total;
 

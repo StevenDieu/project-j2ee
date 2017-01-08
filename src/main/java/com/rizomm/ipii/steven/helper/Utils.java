@@ -159,7 +159,7 @@ public class Utils {
 
 
     public static String isValidateSortByProduct(String sortBy) {
-        switch (sortBy){
+        switch (sortBy) {
             case "id":
                 return sortBy;
             case "price":
@@ -172,7 +172,7 @@ public class Utils {
     }
 
     public static String isValidatePosition(String position) {
-        if(position.equals("desc")){
+        if (position.equals("desc")) {
             return position;
         }
         return "asc";

@@ -15,7 +15,7 @@
                 <h6>NEWSLETTER</h6>
                 <div class="sub-left-right">
                     <h:form>
-                        <h:inputText id="email" required="true" validatorMessage="L'email est obligatoire pour valider la Newsletter" label="Email " value="#{newsletterController.email}" a:placeholder="Entrer votre adresse email">
+                        <h:inputText id="email" required="true" label="Email " value="#{newsletterController.email}" a:placeholder="Entrer votre adresse email">
                             <f:validator validatorId="IsMailValidator" />
                         </h:inputText>
 

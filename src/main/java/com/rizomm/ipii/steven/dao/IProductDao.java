@@ -38,7 +38,7 @@ public interface IProductDao {
 
     JSONObject convertProductToJson(Product product) throws JSONException;
 
-    Map<String,Object> convertJsonToProductForDelete(String jsonProduct);
+    Map<String, Object> convertJsonToProductForDelete(String jsonProduct);
 
     List<Product> findAllProductByPage(int start, int limit);
 
@@ -48,5 +48,5 @@ public interface IProductDao {
 
     List<Product> findAllProductByPageAndCategoryAndSortBy(int start, int limit, int idCategory, String sortBy, String position);
 
-    Map<String,Object> convertJsonToProductForUpdate(String productString, ICategoryDao cd);
+    Map<String, Object> convertJsonToProductForUpdate(String productString, ICategoryDao cd);
 }

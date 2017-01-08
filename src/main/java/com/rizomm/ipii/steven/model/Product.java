@@ -29,7 +29,8 @@ public class Product implements Serializable {
     public static final String FIND_ALL_BY_CATEGORY = "Product.findAllProductByCategory";
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "PRODUCT_SEQ")
+    @SequenceGenerator(name = "PRODUCT_SEQ", sequenceName = "product_seq", allocationSize = 1, initialValue = 10)
     private int id;
     @ManyToOne
     @JoinColumn(name = "category_fk", nullable = false)

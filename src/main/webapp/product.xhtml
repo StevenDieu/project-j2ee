@@ -44,7 +44,7 @@
                                 <h3>${product.name}</h3>
                                 <span>${productController.priceDixieme} €</span>
                                 <div class="clearfix"></div>
-                                <p>${product.description}</p>
+                                <p><h:outputText value="#{product.description}" escape="false" /></p>
                             </div>
                             <div class="span span1">
                                 <p class="left">STOCK</p>

@@ -25,12 +25,12 @@ public class NewsletterController implements Serializable {
     private String styleClassMessage = "alert-danger";
 
     public void addNewsletter() {
-        if(Utils.isEmpty(NR.findNewsletterByEmail(email))){
+        if (Utils.isEmpty(NR.findNewsletterByEmail(email))) {
             final Newsletter newsletter = new Newsletter(email);
             NR.createNewsletter(newsletter);
             styleClassMessage = "alert-success";
             messageNewsletter = "Vous êtes désormais inscrit à la Newslettter";
-        }else{
+        } else {
             styleClassMessage = "alert-danger";
             messageNewsletter = "Cette adresse mail est déja utilisé pour la newsletter.";
         }

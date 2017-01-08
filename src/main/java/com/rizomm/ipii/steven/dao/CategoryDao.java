@@ -2,6 +2,7 @@ package com.rizomm.ipii.steven.dao;
 
 
 import com.rizomm.ipii.steven.model.Category;
+import org.codehaus.jettison.json.JSONArray;
 import org.codehaus.jettison.json.JSONException;
 import org.codehaus.jettison.json.JSONObject;
 
@@ -111,7 +112,7 @@ public class CategoryDao implements ICategoryDao, Serializable {
 
                 if (isTooLarge(jsonCategory, "label", 255)) {
                     return generateMessageError400("Le label de la catégorie est trop long !");
-                }else if(jsonCategory.getString("label").length() == 0){
+                } else if (jsonCategory.getString("label").length() == 0) {
                     return generateMessageError400("La label de la catégorie ne peut pas être vide !");
                 }
 
@@ -130,4 +131,29 @@ public class CategoryDao implements ICategoryDao, Serializable {
 
     }
 
+    @Override
+    public JSONObject convertCategorysToJson(List<Category> listCategory) {
+        final JSONObject jsonProducts = new JSONObject();
+
+        try {
+            final JSONArray jsonArray = new JSONArray();
+            for (Category category : listCategory) {
+                jsonArray.put(convertCategoryToJson(category));
+            }
+            jsonProducts.put("products", jsonArray);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        return jsonProducts;
+    }
+
+
+    @Override
+    public JSONObject convertCategoryToJson(Category category) throws JSONException {
+        final JSONObject jsonproduct = new JSONObject();
+        jsonproduct.put("id", category.getId());
+        jsonproduct.put("label", category.getLabel());
+        return jsonproduct;
+    }
 }

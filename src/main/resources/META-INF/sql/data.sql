@@ -1,0 +1,9 @@
+INSERT INTO CATEGORY (ID, LABEL) VALUES (1, 'Membres')
+INSERT INTO CATEGORY (ID, LABEL) VALUES (2, 'Corps')
+INSERT INTO CATEGORY (ID, LABEL) VALUES (3, 'Visage')
+
+INSERT INTO PRODUCT (ID, DESCRIPTION, NAME, PRICE, STOCK, URLPICTURE, category_fk) VALUES (1, 'Attention mesdames et messieurs, vous ne revez pas !!! Oui ceci est le bras droit de Steven Dieu, née en 1992 sous un claire de lune, mi-vampire, mi-dragon, il déchaina son bonheur sur la terre entière, SMILE !', 'Bras droit', 3699.99, 100, 'product/bras_droit.jpg', 1)
+INSERT INTO PRODUCT (ID, DESCRIPTION, NAME, PRICE, STOCK, URLPICTURE, category_fk) VALUES (2, 'Le légendaire bras de gauche de Steven Dieu à une longue histoire à raconter, nous parlons ici d''un bras qui codé des millions de ligne depuis des années, un bras si long qu''on peut en attraper des cacahuètes... Et oui ces bonnes vielles cacahuètes !', 'Bras gauche', 3699.99, 100, 'product/bras_gauche.jpg', 1)
+INSERT INTO PRODUCT (ID, DESCRIPTION, NAME, PRICE, STOCK, URLPICTURE, category_fk) VALUES (3, 'Y a la fesse droite qui dit à la fesse gauche ça pue dans le couloir ! <br> Ces l''histoire d''une fesse qui dit a l''autre fesse :- Hey ta tu vu la belle p''tite brune passé ? ', 'Les fesses', 7999.99, 80, 'product/les_fesses.jpg', 2)
+INSERT INTO PRODUCT (ID, DESCRIPTION, NAME, PRICE, STOCK, URLPICTURE, category_fk) VALUES (4, 'Aie aie aie ... Même superman est jaloux !!!', 'Le torse', 6999.99, 80, 'product/le_torse.jpg', 2)
+INSERT INTO PRODUCT (ID, DESCRIPTION, NAME, PRICE, STOCK, URLPICTURE, category_fk) VALUES (5, 'Cte tête HEIN ! Vous avez vue cte tête de brin, comme disais chgrand père "Quaind l''glènne ale cante pu heut qu''ech co, in li rabat toudis sin caquet." ', 'Le visage', 8999.99, 20, 'product/la_tete.jpg', 3)

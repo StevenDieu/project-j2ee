@@ -190,7 +190,7 @@ public class ProductDao implements IProductDao, Serializable {
                 return generateMessageError400("Le nom est obligatoire !");
             } else if (isTooLarge(json, "name", 255)) {
                 return generateMessageError400("Le nom est trop long !");
-            } else if(json.getString("name").length() == 0){
+            } else if (json.getString("name").length() == 0) {
                 return generateMessageError400("Le nom est ne peut pas être vide !");
             }
 
@@ -198,20 +198,20 @@ public class ProductDao implements IProductDao, Serializable {
                 return generateMessageError400("L'url de l'image est obligatoire !");
             } else if (isTooLarge(json, "urlPicture", 255)) {
                 return generateMessageError400("L'url de l'image est trop longue !");
-            }else if(json.getString("urlPicture").length() == 0){
+            } else if (json.getString("urlPicture").length() == 0) {
                 return generateMessageError400("L'url de l'image ne peut pas être vide !");
             }
 
             if (isEmpty(json, "description")) {
                 return generateMessageError400("La description est obligatoire !");
-            }else if(json.getString("description").length() == 0){
+            } else if (json.getString("description").length() == 0) {
                 return generateMessageError400("La description ne peut pas être vide !");
             }
 
             product.setStock(json.getInt("stock"));
             product.setPrice(convertDoubleToDixieme(json.getString("price")));
             product.setName(json.getString("name"));
-            product.setUrlPicture(json.getString("urlPicture"));
+            product.setUrlPicture("product/" + json.getString("urlPicture"));
             product.setDescription(json.getString("description"));
 
             if (isNotEmpty(json, "id")) {
@@ -241,7 +241,6 @@ public class ProductDao implements IProductDao, Serializable {
     }
 
 
-
     @Override
     public Map<String, Object> convertJsonToProductForUpdate(final String jsonString, final ICategoryDao CD) {
 
@@ -252,7 +251,7 @@ public class ProductDao implements IProductDao, Serializable {
 
             if (isEmpty(json, "id")) {
                 return generateMessageError400("L'id est obligatoire pour la modification !");
-            }else if (!isInt(json.getString("id"))) {
+            } else if (!isInt(json.getString("id"))) {
                 return generateMessageError400("L'id doit être un chiffre !");
             }
 
@@ -284,7 +283,7 @@ public class ProductDao implements IProductDao, Serializable {
             if (isNotEmpty(json, "name")) {
                 if (isTooLarge(json, "name", 255)) {
                     return generateMessageError400("Le nom est trop long !");
-                }else if(json.getString("name").length() == 0){
+                } else if (json.getString("name").length() == 0) {
                     return generateMessageError400("Le nom ne peut pas être vide !");
                 }
                 product.setName(json.getString("name"));
@@ -293,14 +292,14 @@ public class ProductDao implements IProductDao, Serializable {
             if (isNotEmpty(json, "urlPicture")) {
                 if (isTooLarge(json, "urlPicture", 255)) {
                     return generateMessageError400("L'url de l'image est trop longue !");
-                }else if(json.getString("urlPicture").length() == 0){
+                } else if (json.getString("urlPicture").length() == 0) {
                     return generateMessageError400("L'url de l'image ne peut pas être vide !");
                 }
-                product.setUrlPicture(json.getString("urlPicture"));
+                product.setUrlPicture("product/" + json.getString("urlPicture"));
             }
 
             if (isNotEmpty(json, "description")) {
-                if(json.getString("description").length() == 0){
+                if (json.getString("description").length() == 0) {
                     return generateMessageError400("La description ne peut pas être vide !");
                 }
                 product.setDescription(json.getString("description"));

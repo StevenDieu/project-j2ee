@@ -8,7 +8,6 @@ import com.rizomm.ipii.steven.model.Product;
 
 import javax.ejb.EJB;
 import javax.enterprise.context.RequestScoped;
-import javax.faces.bean.ManagedProperty;
 import javax.faces.context.FacesContext;
 import javax.inject.Named;
 import javax.servlet.http.HttpServletRequest;
@@ -28,12 +27,12 @@ public class ProductController implements Serializable {
     private Product product = new Product();
     private static final long serialVersionUID = 1L;
 
-    public List<Category> findAllCategory(){
+    public List<Category> findAllCategory() {
         return CD.findAllCategory();
     }
 
     public double getCountAllProduct() {
-        return Math.ceil((double) PD.countAllProduct() / 9) ;
+        return Math.ceil((double) PD.countAllProduct() / 9);
     }
 
     public void doFindProduct() {
@@ -48,7 +47,7 @@ public class ProductController implements Serializable {
         return Utils.convertDoubleToStringWithDixieme(product.getPrice());
     }
 
-    public String getUrlBase(){
+    public String getUrlBase() {
         HttpServletRequest req = (HttpServletRequest) FacesContext.getCurrentInstance().getExternalContext().getRequest();
         String url = req.getRequestURL().toString();
         return url.substring(0, url.length() - req.getRequestURI().length()) + req.getContextPath() + "/";

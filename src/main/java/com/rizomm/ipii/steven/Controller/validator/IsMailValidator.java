@@ -27,7 +27,7 @@ public class IsMailValidator implements Validator {
         pattern = Pattern.compile(EMAIL_PATTERN);
         matcher = pattern.matcher(componentValue);
 
-        if(!matcher.find()){
+        if (!matcher.find()) {
             String message = MessageFormat.format("{0} n'est pas un email valide", componentValue);
             FacesMessage facesMessage = new FacesMessage(FacesMessage.SEVERITY_ERROR, message, message);
             throw new ValidatorException(facesMessage);

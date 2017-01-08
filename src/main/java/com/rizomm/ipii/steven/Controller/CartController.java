@@ -64,13 +64,13 @@ public class CartController implements Serializable {
     public void createOrder() {
         List<Product> listShoppingCart = getShoppingCartService().getListProductForOrder(PD);
         Double totalPrice = getShoppingCartService().getTotalPrice();
-        if(listShoppingCart.size() > 0){
-            OrderHeader orderHeader = new OrderHeader(listShoppingCart,totalPrice);
+        if (listShoppingCart.size() > 0) {
+            OrderHeader orderHeader = new OrderHeader(listShoppingCart, totalPrice);
             orderHeader = OHD.createOrder(orderHeader);
             getShoppingCartService().setListShoppingCart(new ArrayList<ShoppingCart>());
             message = "Votre numéros de commande est : " + orderHeader.getId();
 
-        }else{
+        } else {
             message = "Votre panier est vide ou à été modifié";
         }
     }
