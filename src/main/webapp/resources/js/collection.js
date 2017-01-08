@@ -126,11 +126,11 @@ $(function () {
     $(".changePosition").on("click", function () {
         if (!loadProductInProgress) {
             if ($(this).data("position") === "asc") {
-                position = "asc";
-                $(this).removeClass("revertPosition")
-            } else {
                 position = "desc";
                 $(this).addClass("revertPosition")
+            } else {
+                position = "asc";
+                $(this).removeClass("revertPosition")
             }
             $(this).data("position", position);
             getListProduct();

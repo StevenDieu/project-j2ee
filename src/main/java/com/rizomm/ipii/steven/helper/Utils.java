@@ -13,6 +13,12 @@ import java.util.Map;
  */
 public class Utils {
 
+    /**
+     * Method isEmpty ...
+     *
+     * @param s of type String
+     * @return boolean
+     */
     public static boolean isEmpty(String s) {
         if (s == null || s.isEmpty()) {
             return true;
@@ -20,10 +26,22 @@ public class Utils {
         return false;
     }
 
+    /**
+     * Method isNotEmpty ...
+     *
+     * @param s of type String
+     * @return boolean
+     */
     public static boolean isNotEmpty(String s) {
         return !Utils.isEmpty(s);
     }
 
+    /**
+     * Method isEmpty ...
+     *
+     * @param i of type int
+     * @return boolean
+     */
     public static boolean isEmpty(int i) {
         if (i == 0) {
             return true;
@@ -31,10 +49,23 @@ public class Utils {
         return false;
     }
 
+    /**
+     * Method isNotEmpty ...
+     *
+     * @param i of type int
+     * @return boolean
+     */
     public static boolean isNotEmpty(int i) {
         return !Utils.isEmpty(i);
     }
 
+    /**
+     * Method isEmpty ...
+     *
+     * @param json  of type JSONObject
+     * @param value of type String
+     * @return boolean
+     */
     public static boolean isEmpty(JSONObject json, String value) {
         if (!json.has(value) && json.isNull(value)) {
             return true;
@@ -42,10 +73,23 @@ public class Utils {
         return false;
     }
 
+    /**
+     * Method isNotEmpty ...
+     *
+     * @param json  of type JSONObject
+     * @param value of type String
+     * @return boolean
+     */
     public static boolean isNotEmpty(JSONObject json, String value) {
         return !Utils.isEmpty(json, value);
     }
 
+    /**
+     * Method isEmpty ...
+     *
+     * @param o of type Object
+     * @return boolean
+     */
     public static boolean isEmpty(Object o) {
         if (o == null) {
             return true;
@@ -53,6 +97,15 @@ public class Utils {
         return false;
     }
 
+    /**
+     * Method isTooLarge ...
+     *
+     * @param json    of type JSONObject
+     * @param value   of type String
+     * @param sizeMax of type int
+     * @return boolean
+     * @throws JSONException when
+     */
     public static boolean isTooLarge(JSONObject json, String value, int sizeMax) throws JSONException {
         if (json.getString(value).length() > sizeMax) {
             return true;
@@ -60,26 +113,64 @@ public class Utils {
         return false;
     }
 
+    /**
+     * Method isNotEmpty ...
+     *
+     * @param i of type Object
+     * @return boolean
+     */
     public static boolean isNotEmpty(Object i) {
         return !Utils.isEmpty(i);
     }
 
+    /**
+     * Method generateMessageSuccess201 ...
+     *
+     * @param message of type String
+     * @return Map<String, Object>
+     */
     public static Map<String, Object> generateMessageSuccess201(String message) {
         return generateMessage(message, 201, false);
     }
 
+    /**
+     * Method generateMessageSuccess200 ...
+     *
+     * @param message of type String
+     * @return Map<String, Object>
+     */
     public static Map<String, Object> generateMessageSuccess200(String message) {
         return generateMessage(message, 200, false);
     }
 
+    /**
+     * Method generateMessageError400 ...
+     *
+     * @param message of type String
+     * @return Map<String, Object>
+     */
     public static Map<String, Object> generateMessageError400(String message) {
         return generateMessage(message, 400, true);
     }
 
+    /**
+     * Method generateMessageSuccess200 ...
+     *
+     * @param message of type JSONObject
+     * @return Map<String, Object>
+     */
     public static Map<String, Object> generateMessageSuccess200(JSONObject message) {
         return generateMessage(message, 200, false);
     }
 
+    /**
+     * Method generateMessage ...
+     *
+     * @param message  of type JSONObject
+     * @param codeHttp of type int
+     * @param error    of type boolean
+     * @return Map<String, Object>
+     */
     private static Map<String, Object> generateMessage(JSONObject message, int codeHttp, boolean error) {
         Map<String, Object> result = new HashMap();
         result.put("CODE_HTTP", codeHttp);
@@ -88,6 +179,14 @@ public class Utils {
         return result;
     }
 
+    /**
+     * Method generateMessage ...
+     *
+     * @param message  of type String
+     * @param codeHttp of type int
+     * @param error    of type boolean
+     * @return Map<String, Object>
+     */
     private static Map<String, Object> generateMessage(String message, int codeHttp, boolean error) {
         Map<String, Object> result = new HashMap();
         result.put("CODE_HTTP", codeHttp);
@@ -104,6 +203,12 @@ public class Utils {
         return result;
     }
 
+    /**
+     * Method isInt ...
+     *
+     * @param string of type String
+     * @return boolean
+     */
     public static boolean isInt(String string) {
         try {
             Integer.parseInt(string);
@@ -115,6 +220,12 @@ public class Utils {
     }
 
 
+    /**
+     * Method isDouble ...
+     *
+     * @param string of type String
+     * @return boolean
+     */
     public static boolean isDouble(String string) {
         try {
             Double.parseDouble(string);
@@ -125,6 +236,12 @@ public class Utils {
         return true;
     }
 
+    /**
+     * Method convertDoubleToDixieme ...
+     *
+     * @param string of type String
+     * @return double
+     */
     public static double convertDoubleToDixieme(String string) {
         if (isDouble(string)) {
             Double d = Double.parseDouble(string);
@@ -133,6 +250,12 @@ public class Utils {
         return 0d;
     }
 
+    /**
+     * Method convertDoubleToDixieme ...
+     *
+     * @param d of type Double
+     * @return double
+     */
     public static double convertDoubleToDixieme(Double d) {
         BigDecimal bd = new BigDecimal(d);
         bd = bd.setScale(2, BigDecimal.ROUND_HALF_UP);
@@ -140,6 +263,12 @@ public class Utils {
         return d;
     }
 
+    /**
+     * Method isNotConvertDoubleToDixieme ...
+     *
+     * @param d of type Double
+     * @return boolean
+     */
     public static boolean isNotConvertDoubleToDixieme(Double d) {
         try {
             BigDecimal bd = new BigDecimal(d);
@@ -151,6 +280,12 @@ public class Utils {
         return false;
     }
 
+    /**
+     * Method convertDoubleToStringWithDixieme ...
+     *
+     * @param d of type double
+     * @return String
+     */
     public static String convertDoubleToStringWithDixieme(double d) {
         NumberFormat format = NumberFormat.getInstance();
         format.setMinimumFractionDigits(2);
@@ -158,6 +293,12 @@ public class Utils {
     }
 
 
+    /**
+     * Method isValidateSortByProduct ...
+     *
+     * @param sortBy of type String
+     * @return String
+     */
     public static String isValidateSortByProduct(String sortBy) {
         switch (sortBy) {
             case "id":
@@ -171,6 +312,12 @@ public class Utils {
         }
     }
 
+    /**
+     * Method isValidatePosition ...
+     *
+     * @param position of type String
+     * @return String
+     */
     public static String isValidatePosition(String position) {
         if (position.equals("desc")) {
             return position;

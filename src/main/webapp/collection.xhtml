@@ -59,7 +59,7 @@
                                     <f:selectItem itemValue="name" itemLabel="Nom"/>
                                     <f:selectItem itemValue="price" itemLabel="Prix"/>
                                 </h:selectOneMenu>
-                                <img src="#{resource['images:arrow2.gif']}" data-position="asc" class="v-middle changePosition"/>
+                                <img src="#{resource['images:arrow2.gif']}" data-position="desc" class="v-middle changePosition revertPosition"/>
                             </h:panelGroup>
                         </h:panelGroup>
                         <c:set var="nbPage" value="#{productController.getCountAllProduct()}"/>

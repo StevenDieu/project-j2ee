@@ -30,30 +30,64 @@ public class Category implements Serializable {
     @Size(min = 1, max = 50, message = "Label should be between 4 and 50")
     private String label;
 
+    /**
+     * Constructor Category creates a new Category instance.
+     */
     public Category() {
     }
 
+    /**
+     * Constructor Category creates a new Category instance.
+     *
+     * @param label of type String
+     */
     public Category(String label) {
         this.label = label;
     }
 
+    /**
+     * Constructor Category creates a new Category instance.
+     *
+     * @param id    of type int
+     * @param label of type String
+     */
     public Category(int id, String label) {
         this.id = id;
         this.label = label;
     }
 
+    /**
+     * Method getId returns the id of this Category object.
+     *
+     * @return the id (type int) of this Category object.
+     */
     public int getId() {
         return id;
     }
 
+    /**
+     * Method setId sets the id of this Category object.
+     *
+     * @param id the id of this Category object.
+     */
     public void setId(int id) {
         this.id = id;
     }
 
+    /**
+     * Method getLabel returns the label of this Category object.
+     *
+     * @return the label (type String) of this Category object.
+     */
     public String getLabel() {
         return label;
     }
 
+    /**
+     * Method setLabel sets the label of this Category object.
+     *
+     * @param label the label of this Category object.
+     */
     public void setLabel(String label) {
         this.label = label;
     }

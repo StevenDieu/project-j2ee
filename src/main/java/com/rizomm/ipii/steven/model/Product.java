@@ -52,9 +52,23 @@ public class Product implements Serializable {
     @ManyToMany(mappedBy = "products")
     private List<OrderHeader> orders;
 
+    /**
+     * Constructor Product creates a new Product instance.
+     */
     public Product() {
     }
 
+    /**
+     * Constructor Product creates a new Product instance.
+     *
+     * @param id of type int
+     * @param category of type Category
+     * @param stock of type int
+     * @param price of type float
+     * @param name of type String
+     * @param description of type String
+     * @param urlPicture of type String
+     */
     public Product(int id, Category category, int stock, float price, String name, String description, String urlPicture) {
         this.id = id;
         this.category = category;
@@ -65,6 +79,16 @@ public class Product implements Serializable {
         this.urlPicture = urlPicture;
     }
 
+    /**
+     * Constructor Product creates a new Product instance.
+     *
+     * @param category of type Category
+     * @param stock of type int
+     * @param price of type float
+     * @param name of type String
+     * @param description of type String
+     * @param urlPicture of type String
+     */
     public Product(Category category, int stock, float price, String name, String description, String urlPicture) {
         this.category = category;
         this.stock = stock;
@@ -74,6 +98,15 @@ public class Product implements Serializable {
         this.urlPicture = urlPicture;
     }
 
+    /**
+     * Constructor Product creates a new Product instance.
+     *
+     * @param category of type Category
+     * @param stock of type int
+     * @param price of type float
+     * @param name of type String
+     * @param urlPicture of type String
+     */
     public Product(Category category, int stock, float price, String name, String urlPicture) {
         this.category = category;
         this.stock = stock;
@@ -83,62 +116,174 @@ public class Product implements Serializable {
         this.urlPicture = urlPicture;
     }
 
+    /**
+     * Method getId returns the id of this Product object.
+     *
+     *
+     *
+     * @return the id (type int) of this Product object.
+     */
     public int getId() {
         return id;
     }
 
+    /**
+     * Method setId sets the id of this Product object.
+     *
+     *
+     *
+     * @param id the id of this Product object.
+     *
+     */
     public void setId(int id) {
         this.id = id;
     }
 
+    /**
+     * Method getCategory returns the category of this Product object.
+     *
+     *
+     *
+     * @return the category (type Category) of this Product object.
+     */
     public Category getCategory() {
         return category;
     }
 
+    /**
+     * Method setCategory sets the category of this Product object.
+     *
+     *
+     *
+     * @param idCategory the category of this Product object.
+     *
+     */
     public void setCategory(Category idCategory) {
         this.category = idCategory;
     }
 
+    /**
+     * Method getStock returns the stock of this Product object.
+     *
+     *
+     *
+     * @return the stock (type int) of this Product object.
+     */
     public int getStock() {
         return stock;
     }
 
+    /**
+     * Method setStock sets the stock of this Product object.
+     *
+     *
+     *
+     * @param stock the stock of this Product object.
+     *
+     */
     public void setStock(int stock) {
         this.stock = stock;
     }
 
+    /**
+     * Method getPrice returns the price of this Product object.
+     *
+     *
+     *
+     * @return the price (type double) of this Product object.
+     */
     public double getPrice() {
         return price;
     }
 
+    /**
+     * Method setPrice sets the price of this Product object.
+     *
+     *
+     *
+     * @param price the price of this Product object.
+     *
+     */
     public void setPrice(double price) {
         this.price = price;
     }
 
+    /**
+     * Method getName returns the name of this Product object.
+     *
+     *
+     *
+     * @return the name (type String) of this Product object.
+     */
     public String getName() {
         return name;
     }
 
+    /**
+     * Method setName sets the name of this Product object.
+     *
+     *
+     *
+     * @param name the name of this Product object.
+     *
+     */
     public void setName(String name) {
         this.name = name;
     }
 
+    /**
+     * Method getDescription returns the description of this Product object.
+     *
+     *
+     *
+     * @return the description (type String) of this Product object.
+     */
     public String getDescription() {
         return description;
     }
 
+    /**
+     * Method setDescription sets the description of this Product object.
+     *
+     *
+     *
+     * @param description the description of this Product object.
+     *
+     */
     public void setDescription(String description) {
         this.description = description;
     }
 
+    /**
+     * Method getUrlPicture returns the urlPicture of this Product object.
+     *
+     *
+     *
+     * @return the urlPicture (type String) of this Product object.
+     */
     public String getUrlPicture() {
         return urlPicture;
     }
 
+    /**
+     * Method setUrlPicture sets the urlPicture of this Product object.
+     *
+     *
+     *
+     * @param urlPicture the urlPicture of this Product object.
+     *
+     */
     public void setUrlPicture(String urlPicture) {
         this.urlPicture = urlPicture;
     }
 
+    /**
+     * Method getShortDescription returns the shortDescription of this Product object.
+     *
+     *
+     *
+     * @return the shortDescription (type String) of this Product object.
+     */
     public String getShortDescription() {
         if (this.description.length() <= 103) {
             return description;

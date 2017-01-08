@@ -16,17 +16,35 @@ public class Newsletter implements Serializable {
     @Email
     private String email;
 
+    /**
+     * Constructor Newsletter creates a new Newsletter instance.
+     */
     public Newsletter() {
     }
 
+    /**
+     * Constructor Newsletter creates a new Newsletter instance.
+     *
+     * @param email of type String
+     */
     public Newsletter(String email) {
         this.email = email;
     }
 
+    /**
+     * Method getEmail returns the email of this Newsletter object.
+     *
+     * @return the email (type String) of this Newsletter object.
+     */
     public String getEmail() {
         return email;
     }
 
+    /**
+     * Method setEmail sets the email of this Newsletter object.
+     *
+     * @param email the email of this Newsletter object.
+     */
     public void setEmail(String email) {
         this.email = email;
     }

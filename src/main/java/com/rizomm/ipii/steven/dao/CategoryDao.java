@@ -34,8 +34,15 @@ public class CategoryDao implements ICategoryDao, Serializable {
     protected EntityManager em;
     protected boolean isNotTest = true;
 
+
+    /**
+     * Create a category with model categeory
+     *
+     * @param category
+     * @return
+     */
     @Override
-    public Category createCategory(final Category category) {
+    public Category createCategory(Category category) {
         if (isNotEmpty(category.getLabel())) {
             em.persist(category);
             if (isNotTest) {
@@ -46,12 +53,24 @@ public class CategoryDao implements ICategoryDao, Serializable {
         return null;
     }
 
+
+    /**
+     * Find one category by id
+     *
+     * @param idCategory
+     * @return
+     */
     @Override
     public Category findCategoryById(final int idCategory) {
         final Category findCategory = em.find(Category.class, idCategory);
         return findCategory;
     }
 
+    /**
+     * Find all category
+     *
+     * @return
+     */
     @Override
     public List<Category> findAllCategory() {
         final TypedQuery<Category> query = em.createNamedQuery(FIND_ALL, Category.class);
@@ -61,11 +80,20 @@ public class CategoryDao implements ICategoryDao, Serializable {
         return query.getResultList();
     }
 
+    /**
+     * Delete all category (using for test)
+     */
     @Override
     public void deleteAllCategory() {
         em.createNamedQuery(DELETE_ALL, Category.class).executeUpdate();
     }
 
+    /**
+     * Delete one category by id
+     *
+     * @param idCategory
+     * @return
+     */
     @Override
     public Boolean deleteCategoryById(final int idCategory) {
         final Category category = em.find(Category.class, idCategory);
@@ -75,6 +103,12 @@ public class CategoryDao implements ICategoryDao, Serializable {
         return false;
     }
 
+    /**
+     * Delete one category by category
+     *
+     * @param category
+     * @return
+     */
     @Override
     public Boolean deleteCategory(final Category category) {
         em.remove(category);
@@ -86,11 +120,24 @@ public class CategoryDao implements ICategoryDao, Serializable {
         return false;
     }
 
+    /**
+     * Update category by a model category
+     *
+     * @param category
+     * @return
+     */
     @Override
     public Category updateCategory(final Category category) {
         return em.merge(category);
     }
 
+    /**
+     * Convert the json of method rest to category to create a new category
+     *
+     * @param categoryString
+     * @param forCreateRest
+     * @return
+     */
     @Override
     public Map<String, Object> convertJsonToCategoryToCreate(final String categoryString, boolean forCreateRest) {
         final Map<String, Object> result = new HashMap();
@@ -147,6 +194,12 @@ public class CategoryDao implements ICategoryDao, Serializable {
         return result;
     }
 
+    /**
+     * Convert the json of method rest to category to update a new category
+     *
+     * @param categoryString
+     * @return
+     */
     @Override
     public Map<String, Object> convertJsonToCategoryToUpdate(String categoryString) {
         final Map<String, Object> result = new HashMap();
@@ -188,6 +241,12 @@ public class CategoryDao implements ICategoryDao, Serializable {
         return result;
     }
 
+    /**
+     * Convert multiple category to the json
+     *
+     * @param listCategory
+     * @return
+     */
     @Override
     public JSONObject convertCategorysToJson(List<Category> listCategory) {
         final JSONObject jsonProducts = new JSONObject();
@@ -205,6 +264,14 @@ public class CategoryDao implements ICategoryDao, Serializable {
         return jsonProducts;
     }
 
+
+    /**
+     * Convert one category to the json
+     *
+     * @param category
+     * @return
+     * @throws JSONException
+     */
     @Override
     public JSONObject convertCategoryToJson(Category category) throws JSONException {
         final JSONObject jsonproduct = new JSONObject();
