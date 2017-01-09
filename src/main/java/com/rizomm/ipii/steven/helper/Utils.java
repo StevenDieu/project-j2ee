@@ -14,7 +14,7 @@ import java.util.Map;
 public class Utils {
 
     /**
-     * Method isEmpty ...
+     * Method isEmpty to test is string is empty
      *
      * @param s of type String
      * @return boolean
@@ -27,7 +27,7 @@ public class Utils {
     }
 
     /**
-     * Method isNotEmpty ...
+     * Method isNotEmpty to test is string is not empty
      *
      * @param s of type String
      * @return boolean
@@ -37,7 +37,7 @@ public class Utils {
     }
 
     /**
-     * Method isEmpty ...
+     * Method isEmpty to test is int is empty
      *
      * @param i of type int
      * @return boolean
@@ -50,7 +50,7 @@ public class Utils {
     }
 
     /**
-     * Method isNotEmpty ...
+     * Method isNotEmpty to test is string is not empty
      *
      * @param i of type int
      * @return boolean
@@ -60,7 +60,7 @@ public class Utils {
     }
 
     /**
-     * Method isEmpty ...
+     * Method isEmpty to test is json is empty
      *
      * @param json  of type JSONObject
      * @param value of type String
@@ -74,7 +74,7 @@ public class Utils {
     }
 
     /**
-     * Method isNotEmpty ...
+     * Method isNotEmpty to test is json is not empty
      *
      * @param json  of type JSONObject
      * @param value of type String
@@ -85,7 +85,7 @@ public class Utils {
     }
 
     /**
-     * Method isEmpty ...
+     * Method isEmpty to test is Object is empty
      *
      * @param o of type Object
      * @return boolean
@@ -98,7 +98,7 @@ public class Utils {
     }
 
     /**
-     * Method isTooLarge ...
+     * Method isTooLarge is string is too large with size max
      *
      * @param json    of type JSONObject
      * @param value   of type String
@@ -114,7 +114,7 @@ public class Utils {
     }
 
     /**
-     * Method isNotEmpty ...
+     * Method isNotEmpty to test is Object is not empty
      *
      * @param i of type Object
      * @return boolean
@@ -124,7 +124,7 @@ public class Utils {
     }
 
     /**
-     * Method generateMessageSuccess201 ...
+     * Method generateMessageSuccess201 for generate a code http 201 with message
      *
      * @param message of type String
      * @return Map<String, Object>
@@ -134,7 +134,7 @@ public class Utils {
     }
 
     /**
-     * Method generateMessageSuccess200 ...
+     * Method generateMessageSuccess200 for generate a code http 200 with message
      *
      * @param message of type String
      * @return Map<String, Object>
@@ -144,7 +144,7 @@ public class Utils {
     }
 
     /**
-     * Method generateMessageError400 ...
+     * Method generateMessageError400 for generate a code http 400 with message
      *
      * @param message of type String
      * @return Map<String, Object>
@@ -154,7 +154,7 @@ public class Utils {
     }
 
     /**
-     * Method generateMessageSuccess200 ...
+     * Method generateMessageSuccess200 for generate a code http 200 with message by json
      *
      * @param message of type JSONObject
      * @return Map<String, Object>
@@ -164,7 +164,7 @@ public class Utils {
     }
 
     /**
-     * Method generateMessage ...
+     * Method generateMessage for generate message of response with json
      *
      * @param message  of type JSONObject
      * @param codeHttp of type int
@@ -180,7 +180,7 @@ public class Utils {
     }
 
     /**
-     * Method generateMessage ...
+     * Method generateMessage for generate message of response with string
      *
      * @param message  of type String
      * @param codeHttp of type int
@@ -204,7 +204,7 @@ public class Utils {
     }
 
     /**
-     * Method isInt ...
+     * Method isInt test if string is a int
      *
      * @param string of type String
      * @return boolean
@@ -221,7 +221,7 @@ public class Utils {
 
 
     /**
-     * Method isDouble ...
+     * Method isDouble test if string is a double
      *
      * @param string of type String
      * @return boolean
@@ -237,7 +237,7 @@ public class Utils {
     }
 
     /**
-     * Method convertDoubleToDixieme ...
+     * Method convertDoubleToDixieme to convert string double to string dixieme
      *
      * @param string of type String
      * @return double
@@ -251,7 +251,7 @@ public class Utils {
     }
 
     /**
-     * Method convertDoubleToDixieme ...
+     * Method convertDoubleToDixieme to convert double to string dixieme
      *
      * @param d of type Double
      * @return double
@@ -264,7 +264,7 @@ public class Utils {
     }
 
     /**
-     * Method isNotConvertDoubleToDixieme ...
+     * Method isNotConvertDoubleToDixieme is not converting to string dixieme
      *
      * @param d of type Double
      * @return boolean
@@ -281,7 +281,7 @@ public class Utils {
     }
 
     /**
-     * Method convertDoubleToStringWithDixieme ...
+     * Method convertDoubleToStringWithDixieme
      *
      * @param d of type double
      * @return String
@@ -294,7 +294,7 @@ public class Utils {
 
 
     /**
-     * Method isValidateSortByProduct ...
+     * Method isValidateSortByProduct check is a validate sort by to product
      *
      * @param sortBy of type String
      * @return String
@@ -313,7 +313,7 @@ public class Utils {
     }
 
     /**
-     * Method isValidatePosition ...
+     * Method isValidatePosition check if is asc or desc to sort by
      *
      * @param position of type String
      * @return String

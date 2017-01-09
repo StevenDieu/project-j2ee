@@ -20,6 +20,12 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Class CartController
+ *
+ * @author steven
+ *         Created on 09/01/2017
+ */
 @Named
 @ManagedBean
 @RequestScoped
@@ -34,33 +40,40 @@ public class CartController implements Serializable {
     private int idProduct;
     private String message = "";
 
+    /**
+     * Method addProductCart to adding one product to cart with quantity in parameters
+     *
+     * @param qty of type int
+     */
     public void addProductCart(final int qty) {
         if (idProduct != 0) {
             message = getShoppingCartService().addProductCart(idProduct, qty, PD);
         }
     }
 
+    /**
+     * Method addProductCart to adding on product to cart with quantity and id product in parameters
+     *
+     * @param qty       of type int
+     * @param idProduct of type int
+     */
     public void addProductCart(final int qty, final int idProduct) {
         message = getShoppingCartService().addProductCart(idProduct, qty, PD);
     }
 
-    public List<ShoppingCart> getAllProductCart() {
-        return getShoppingCartService().getListShoppingCart();
-    }
-
+    /**
+     * Method deleteProductCart to delete product in cart
+     *
+     * @param idProduct of type int
+     */
     public void deleteProductCart(final int idProduct) {
         message = getShoppingCartService().deleteProductToCart(idProduct);
     }
 
-    public String getTotalPriceCart() {
-        return getShoppingCartService().getTotalPriceString();
-    }
 
-    public int getQtyCart() {
-        return getShoppingCartService().getQuantityCart();
-    }
-
-
+    /**
+     * Method createOrder to create an order with current cart
+     */
     public void createOrder() {
         List<Product> listShoppingCart = getShoppingCartService().getListProductForOrder(PD);
         Double totalPrice = getShoppingCartService().getTotalPrice();
@@ -75,6 +88,38 @@ public class CartController implements Serializable {
         }
     }
 
+    /**
+     * Method getAllProductCart returns the allProductCart of this CartController object.
+     *
+     * @return the allProductCart (type List<ShoppingCart>) of this CartController object.
+     */
+    public List<ShoppingCart> getAllProductCart() {
+        return getShoppingCartService().getListShoppingCart();
+    }
+
+    /**
+     * Method getTotalPriceCart returns the totalPriceCart of this CartController object.
+     *
+     * @return the totalPriceCart (type String) of this CartController object.
+     */
+    public String getTotalPriceCart() {
+        return getShoppingCartService().getTotalPriceString();
+    }
+
+    /**
+     * Method getQtyCart returns the qtyCart of this CartController object.
+     *
+     * @return the qtyCart (type int) of this CartController object.
+     */
+    public int getQtyCart() {
+        return getShoppingCartService().getQuantityCart();
+    }
+
+    /**
+     * Method getShoppingCartService returns the shoppingCartService of this CartController object.
+     *
+     * @return the shoppingCartService (type IShoppingCartService) of this CartController object.
+     */
     private IShoppingCartService getShoppingCartService() {
         try {
             final FacesContext context = FacesContext.getCurrentInstance();
@@ -93,14 +138,29 @@ public class CartController implements Serializable {
         return null;
     }
 
+    /**
+     * Method getIdProduct returns the idProduct of this CartController object.
+     *
+     * @return the idProduct (type int) of this CartController object.
+     */
     public int getIdProduct() {
         return idProduct;
     }
 
+    /**
+     * Method setIdProduct sets the idProduct of this CartController object.
+     *
+     * @param idProduct the idProduct of this CartController object.
+     */
     public void setIdProduct(final int idProduct) {
         this.idProduct = idProduct;
     }
 
+    /**
+     * Method getMessage returns the message of this CartController object.
+     *
+     * @return the message (type String) of this CartController object.
+     */
     public String getMessage() {
         return message;
     }

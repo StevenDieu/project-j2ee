@@ -20,6 +20,12 @@ public class OrderHeaderDao implements IOrderHeaderDao {
     protected boolean isNotTest = true;
 
 
+    /**
+     * Create an order
+     *
+     * @param order
+     * @return
+     */
     @Override
     public OrderHeader createOrder(final OrderHeader order) {
         if (isNotEmpty(order.getProducts())) {
@@ -32,12 +38,24 @@ public class OrderHeaderDao implements IOrderHeaderDao {
         return null;
     }
 
+    /**
+     * Find one order by a id
+     *
+     * @param id
+     * @return
+     */
     @Override
     public OrderHeader findOrderById(final int id) {
         final OrderHeader findOrder = em.find(OrderHeader.class, id);
         return findOrder;
     }
 
+    /**
+     * Delete order by model order
+     *
+     * @param order
+     * @return
+     */
     @Override
     public Boolean deleteOrder(final OrderHeader order) {
         em.remove(order);

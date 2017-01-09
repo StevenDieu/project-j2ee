@@ -12,12 +12,12 @@ import java.lang.annotation.Target;
 
 import static java.lang.annotation.ElementType.*;
 
+
 /**
- * @author Antonio Goncalves
- *         APress Book - Beginning Java EE 7 with Glassfish 4
- *         http://www.apress.com/
- *         http://www.antoniogoncalves.org
- *         --
+ * Interface Email for test if email is correct
+ *
+ * @author steven
+ * Created on 09/01/2017
  */
 @NotNull
 @Size(min = 7)
@@ -30,9 +30,23 @@ import static java.lang.annotation.ElementType.*;
 @Retention(RetentionPolicy.RUNTIME)
 public @interface Email {
 
+    /**
+     * Method message is the email is not correct
+     *
+     * @return String
+     */
     String message() default "Ceci n'est pas une adresse email valide";
 
+    /**
+     * Method groups
+     *
+     * @return Class<?>[]
+     */
     Class<?>[] groups() default {};
 
+    /**
+     * Method payload
+     * @return Class<? extends Payload>[]
+     */
     Class<? extends Payload>[] payload() default {};
 }

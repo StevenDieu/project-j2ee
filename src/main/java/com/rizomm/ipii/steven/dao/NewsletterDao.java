@@ -21,6 +21,12 @@ public class NewsletterDao implements INewsletterDao {
     protected EntityManager em;
     protected boolean isNotTest = true;
 
+    /**
+     * Create a newsletter
+     *
+     * @param newsletter
+     * @return
+     */
     @Override
     public Newsletter createNewsletter(final Newsletter newsletter) {
         if (isNotEmpty(newsletter.getEmail())) {
@@ -33,12 +39,24 @@ public class NewsletterDao implements INewsletterDao {
         return null;
     }
 
+    /**
+     * Find a newsletter by email
+     *
+     * @param email
+     * @return
+     */
     @Override
     public Newsletter findNewsletterByEmail(final String email) {
         final Newsletter findNewsletter = em.find(Newsletter.class, email);
         return findNewsletter;
     }
 
+    /**
+     * Delete newsletter by a model newsletter
+     *
+     * @param newsletter
+     * @return
+     */
     @Override
     public Boolean deleteNewsletter(final Newsletter newsletter) {
         em.remove(newsletter);

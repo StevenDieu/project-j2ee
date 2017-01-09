@@ -32,6 +32,12 @@ public class ProductDao implements IProductDao, Serializable {
     protected EntityManager em;
     protected boolean isNotTest = true;
 
+    /**
+     * Method createProduct to create one product
+     *
+     * @param product of type Product
+     * @return Product
+     */
     @Override
     public Product createProduct(final Product product) {
         if (isNotEmpty(product.getName())) {
@@ -44,12 +50,23 @@ public class ProductDao implements IProductDao, Serializable {
         return null;
     }
 
+    /**
+     * Method findProductById to find one product by product id
+     *
+     * @param idProduct of type int
+     * @return Product
+     */
     @Override
     public Product findProductById(final int idProduct) {
         final Product findProduct = em.find(Product.class, idProduct);
         return findProduct;
     }
 
+    /**
+     * Method findAllProduct all product (using for test)
+     *
+     * @return List<Product>
+     */
     @Override
     public List<Product> findAllProduct() {
         final TypedQuery<Product> query = em.createNamedQuery(FIND_ALL, Product.class);
@@ -59,6 +76,13 @@ public class ProductDao implements IProductDao, Serializable {
         return query.getResultList();
     }
 
+    /**
+     * Method findAllProductByPage finde all product by page
+     *
+     * @param start of type int
+     * @param limit of type int
+     * @return List<Product>
+     */
     @Override
     public List<Product> findAllProductByPage(final int start, final int limit) {
 
@@ -72,6 +96,15 @@ public class ProductDao implements IProductDao, Serializable {
         return query.getResultList();
     }
 
+    /**
+     * Method findAllProductByPageAndSortBy find all product by page and by sort by
+     *
+     * @param start    of type int
+     * @param limit    of type int
+     * @param sortBy   of type String
+     * @param position of type String
+     * @return List<Product>
+     */
     @Override
     public List<Product> findAllProductByPageAndSortBy(final int start, final int limit, final String sortBy, final String position) {
 
@@ -85,6 +118,14 @@ public class ProductDao implements IProductDao, Serializable {
         return query.getResultList();
     }
 
+    /**
+     * Method findAllProductByPageAndCategory find all product by page and id category
+     *
+     * @param start      of type int
+     * @param limit      of type int
+     * @param idCategory of type int
+     * @return List<Product>
+     */
     @Override
     public List<Product> findAllProductByPageAndCategory(final int start, final int limit, final int idCategory) {
         final TypedQuery<Product> query = em.createNamedQuery(FIND_ALL_BY_CATEGORY, Product.class)
@@ -97,6 +138,16 @@ public class ProductDao implements IProductDao, Serializable {
         return query.getResultList();
     }
 
+    /**
+     * Method findAllProductByPageAndCategoryAndSortBy find all product by page and id catogy and sort by
+     *
+     * @param start      of type int
+     * @param limit      of type int
+     * @param idCategory of type int
+     * @param sortBy     of type String
+     * @param position   of type String
+     * @return List<Product>
+     */
     @Override
     public List<Product> findAllProductByPageAndCategoryAndSortBy(int start, int limit, int idCategory, String sortBy, String position) {
         String request = "select c from Product c where c.category.id = :idCategory ORDER BY c." + sortBy + " " + position;
@@ -110,6 +161,11 @@ public class ProductDao implements IProductDao, Serializable {
         return query.getResultList();
     }
 
+    /**
+     * Method countAllProduct get count of all product
+     *
+     * @return int
+     */
     @Override
     public int countAllProduct() {
         final TypedQuery<Integer> query = em.createNamedQuery(COUNT_ALL, Integer.class);
@@ -119,8 +175,14 @@ public class ProductDao implements IProductDao, Serializable {
         return ((Number) query.getSingleResult()).intValue();
     }
 
+    /**
+     * Method countAllProductByCategory get count all product by category
+     *
+     * @param idCategory of type int
+     * @return int
+     */
     @Override
-    public int countAllProduct(final int idCategory) {
+    public int countAllProductByCategory(final int idCategory) {
         final TypedQuery<Integer> query = em.createNamedQuery(COUNT_ALL_BY_CATEGORY, Integer.class)
                 .setParameter("idCategory", idCategory);
         if (isNotTest) {
@@ -129,11 +191,20 @@ public class ProductDao implements IProductDao, Serializable {
         return ((Number) query.getSingleResult()).intValue();
     }
 
+    /**
+     * Method deleteAllProduct to delete all product (using for test)
+     */
     @Override
     public void deleteAllProduct() {
         em.createNamedQuery(DELETE_ALL, Product.class).executeUpdate();
     }
 
+    /**
+     * Method deleteProductById to delete one product by id product
+     *
+     * @param idProduct of type int
+     * @return Boolean
+     */
     @Override
     public Boolean deleteProductById(final int idProduct) {
         final Product product = em.find(Product.class, idProduct);
@@ -143,6 +214,12 @@ public class ProductDao implements IProductDao, Serializable {
         return false;
     }
 
+    /**
+     * Method deleteProduct to delete one product by model product
+     *
+     * @param product of type Product
+     * @return Boolean
+     */
     @Override
     public Boolean deleteProduct(final Product product) {
         em.remove(product);
@@ -153,13 +230,26 @@ public class ProductDao implements IProductDao, Serializable {
         return false;
     }
 
+    /**
+     * Method updateProduct update one product by model product
+     *
+     * @param product of type Product
+     * @return Product
+     */
     @Override
     public Product updateProduct(final Product product) {
         return em.merge(product);
     }
 
+    /**
+     * Method convertJsonToProductToCreate convert json of requeste rest to product to create a new product
+     *
+     * @param jsonString of type String
+     * @param CD         of type ICategoryDao
+     * @return Map<String, Object>
+     */
     @Override
-    public Map<String, Object> convertJsonToProductForCreate(final String jsonString, final ICategoryDao CD) {
+    public Map<String, Object> convertJsonToProductToCreate(final String jsonString, final ICategoryDao CD) {
 
         final Map<String, Object> result = new HashMap();
         final Product product = new Product();
@@ -241,13 +331,20 @@ public class ProductDao implements IProductDao, Serializable {
     }
 
 
+    /**
+     * Method convertJsonToProductForUpdate
+     *
+     * @param productString of type String
+     * @param CD            of type ICategoryDao
+     * @return Map<String, Object>
+     */
     @Override
-    public Map<String, Object> convertJsonToProductForUpdate(final String jsonString, final ICategoryDao CD) {
+    public Map<String, Object> convertJsonToProductForUpdate(final String productString, final ICategoryDao CD) {
 
         final Map<String, Object> result = new HashMap();
 
         try {
-            final JSONObject json = new JSONObject(jsonString);
+            final JSONObject json = new JSONObject(productString);
 
             if (isEmpty(json, "id")) {
                 return generateMessageError400("L'id est obligatoire pour la modification !");
@@ -321,6 +418,15 @@ public class ProductDao implements IProductDao, Serializable {
         return result;
     }
 
+    /**
+     * Method getCategoryOfJsonProduct ...
+     *
+     * @param CD      of type ICategoryDao
+     * @param json    of type JSONObject
+     * @param product of type Product
+     * @return Map<String, Object>
+     * @throws JSONException when
+     */
     private Map<String, Object> getCategoryOfJsonProduct(ICategoryDao CD, JSONObject json, Product product) throws JSONException {
         final Map<String, Object> resultCategory = CD.convertJsonToCategoryToCreate(json.getString("category"), false);
 
@@ -344,12 +450,18 @@ public class ProductDao implements IProductDao, Serializable {
         return null;
     }
 
+    /**
+     * Method convertJsonToProductToDelete json of request rest to product to delete this
+     *
+     * @param jsonProduct of type String
+     * @return Map<String, Object>
+     */
     @Override
-    public Map<String, Object> convertJsonToProductForDelete(final String jsonString) {
+    public Map<String, Object> convertJsonToProductToDelete(final String jsonProduct) {
         final Map<String, Object> result = new HashMap();
 
         try {
-            JSONObject json = new JSONObject(jsonString);
+            JSONObject json = new JSONObject(jsonProduct);
 
             if (isEmpty(json, "id")) {
                 return generateMessageError400("L'id est obligatoire !");
@@ -370,6 +482,12 @@ public class ProductDao implements IProductDao, Serializable {
         return result;
     }
 
+    /**
+     * Method convertProductsToJson convert multiple product to json
+     *
+     * @param products of type List<Product>
+     * @return JSONObject
+     */
     @Override
     public JSONObject convertProductsToJson(final List<Product> products) {
         final JSONObject jsonProducts = new JSONObject();
@@ -387,6 +505,13 @@ public class ProductDao implements IProductDao, Serializable {
         return jsonProducts;
     }
 
+    /**
+     * Method convertProductToJson one product to json
+     *
+     * @param product of type Product
+     * @return JSONObject
+     * @throws JSONException when
+     */
     @Override
     public JSONObject convertProductToJson(Product product) throws JSONException {
         final JSONObject jsonproduct = new JSONObject();

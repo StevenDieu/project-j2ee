@@ -31,6 +31,12 @@ public class CategoryRest {
     @EJB
     private IProductDao PD;
 
+    /**
+     * Method addCategory to add a category by json string category
+     *
+     * @param categoryString of type String
+     * @return Response
+     */
     @POST
     @Produces("application/json")
     public Response addCategory(final String categoryString) {
@@ -49,6 +55,12 @@ public class CategoryRest {
         return Response.status((int) result.get("CODE_HTTP")).entity(result.get("MESSAGE_HTTP")).build();
     }
 
+    /**
+     * Method updateCategory  to update a category by json string category
+     *
+     * @param categoryString of type String
+     * @return Response
+     */
     @PUT
     @Produces("application/json")
     public Response updateCategory(final String categoryString) {
@@ -62,6 +74,11 @@ public class CategoryRest {
         return Response.status((int) result.get("CODE_HTTP")).entity(result.get("MESSAGE_HTTP")).build();
     }
 
+    /**
+     * Method getAllCategory returns the allCategory of this CategoryRest object.
+     *
+     * @return the allCategory (type Response) of this CategoryRest object.
+     */
     @GET
     @Produces("application/json")
     public Response getAllCategory() {
@@ -76,6 +93,12 @@ public class CategoryRest {
         return Response.status((int) result.get("CODE_HTTP")).entity(result.get("MESSAGE_HTTP")).build();
     }
 
+    /**
+     * Method deleteProduct to delete a category by id category
+     *
+     * @param idCategory of type int
+     * @return Response
+     */
     @DELETE
     @Path("/{idCategory : \\d+}")
     @Produces("application/json")

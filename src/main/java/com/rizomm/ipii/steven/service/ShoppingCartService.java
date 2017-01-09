@@ -19,6 +19,14 @@ public class ShoppingCartService implements IShoppingCartService {
 
     private List<ShoppingCart> listShoppingCart = new ArrayList<>();
 
+    /**
+     * Method addProductCart to add a product in cart with quantity
+     *
+     * @param id  of type int
+     * @param qty of type int
+     * @param PD  of type IProductDao
+     * @return String
+     */
     @Override
     public String addProductCart(final int id, int qty, final IProductDao PD) {
 
@@ -77,6 +85,12 @@ public class ShoppingCartService implements IShoppingCartService {
         return "Produit ajouté au panier avec succés. Il y a " + qty + " quantité de ce produit dans votre panier";
     }
 
+    /**
+     * Method deleteProductToCart to delete a product in cart
+     *
+     * @param id of type int
+     * @return String
+     */
     @Override
     public String deleteProductToCart(final int id) {
 
@@ -105,6 +119,12 @@ public class ShoppingCartService implements IShoppingCartService {
         return "Produit supprimé avec succés.";
     }
 
+    /**
+     * Method getListProductForOrder  to get liste product for create order
+     *
+     * @param PD of type IProductDao
+     * @return List<Product>
+     */
     @Override
     public List<Product> getListProductForOrder(IProductDao PD) {
         List<Product> products = new ArrayList<>();
@@ -119,6 +139,11 @@ public class ShoppingCartService implements IShoppingCartService {
         return products;
     }
 
+    /**
+     * Method getTotalPriceString returns the totalPriceString of this IShoppingCartService object.
+     *
+     * @return the totalPriceString (type String) of this IShoppingCartService object.
+     */
     @Override
     public String getTotalPriceString() {
         double totalPriceCart = 0d;
@@ -128,6 +153,11 @@ public class ShoppingCartService implements IShoppingCartService {
         return convertDoubleToStringWithDixieme(totalPriceCart);
     }
 
+    /**
+     * Method getTotalPrice returns the totalPrice of this IShoppingCartService object.
+     *
+     * @return the totalPrice (type Double) of this IShoppingCartService object.
+     */
     @Override
     public Double getTotalPrice() {
         double totalPriceCart = 0d;
@@ -137,6 +167,11 @@ public class ShoppingCartService implements IShoppingCartService {
         return totalPriceCart;
     }
 
+    /**
+     * Method getQuantityCart returns the quantityCart of this IShoppingCartService object.
+     *
+     * @return the quantityCart (type int) of this IShoppingCartService object.
+     */
     @Override
     public int getQuantityCart() {
         int quantityCart = 0;
@@ -146,17 +181,32 @@ public class ShoppingCartService implements IShoppingCartService {
         return quantityCart;
     }
 
-    @Override
-    public void setListShoppingCart(List<ShoppingCart> listShoppingCart) {
-        this.listShoppingCart = listShoppingCart;
-    }
-
+    /**
+     * Method getListShoppingCart returns the listShoppingCart of this IShoppingCartService object.
+     *
+     * @return the listShoppingCart (type List<ShoppingCart>) of this IShoppingCartService object.
+     */
     @Override
     public List<ShoppingCart> getListShoppingCart() {
         return listShoppingCart;
     }
 
+    /**
+     * Method setListShoppingCart sets the listShoppingCart of this IShoppingCartService object.
+     *
+     * @param listShoppingCart the listShoppingCart of this IShoppingCartService object.
+     */
+    @Override
+    public void setListShoppingCart(List<ShoppingCart> listShoppingCart) {
+        this.listShoppingCart = listShoppingCart;
+    }
 
+    /**
+     * Method isChangeOnShoppingCart ...
+     *
+     * @param PD of type IProductDao
+     * @return boolean
+     */
     private boolean isChangeOnShoppingCart(IProductDao PD) {
         Boolean isChange = false;
 

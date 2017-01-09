@@ -4,7 +4,7 @@ import javax.persistence.*;
 import java.util.Date;
 
 /**
- * Class AbstractTimestampEntity ...
+ * Class AbstractTimestampEntity
  *
  * @author Steven Dieu
  * Created on 08/01/2017

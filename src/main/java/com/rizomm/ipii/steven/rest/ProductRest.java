@@ -30,10 +30,16 @@ public class ProductRest {
     @EJB
     private ICategoryDao CD;
 
+    /**
+     * Method addProduct to create a product by product json string
+     *
+     * @param productString of type String
+     * @return Response
+     */
     @POST
     @Produces("application/json")
     public Response addProduct(final String productString) {
-        Map<String, Object> result = PD.convertJsonToProductForCreate(productString, CD);
+        Map<String, Object> result = PD.convertJsonToProductToCreate(productString, CD);
 
         if (!((boolean) result.get("ERROR"))) {
             Product productResult = (Product) result.get("PRODUCT");
@@ -48,6 +54,12 @@ public class ProductRest {
         return Response.status((int) result.get("CODE_HTTP")).entity(result.get("MESSAGE_HTTP")).build();
     }
 
+    /**
+     * Method updateProduct to update a product by product json string
+     *
+     * @param productString of type String
+     * @return Response
+     */
     @PUT
     @Produces("application/json")
     public Response updateProduct(final String productString) {
@@ -62,6 +74,12 @@ public class ProductRest {
     }
 
 
+    /**
+     * Method deleteProduct to delete a product by id product
+     *
+     * @param idProduct of type int
+     * @return Response
+     */
     @DELETE
     @Path("/{idProduct : \\d+}")
     @Produces("application/json")
@@ -76,6 +94,13 @@ public class ProductRest {
         return Response.status((int) result.get("CODE_HTTP")).entity(result.get("MESSAGE_HTTP")).build() ;
     }
 
+    /**
+     * Method getAllProductByPage to get all product by product json string and number page
+     *
+     * @param productString of type String
+     * @param numberPage    of type int
+     * @return Response
+     */
     @GET
     @Path("/{numberPage : \\d+}/page")
     @Produces("application/json")
@@ -91,6 +116,15 @@ public class ProductRest {
         return Response.status((int) result.get("CODE_HTTP")).entity(result.get("MESSAGE_HTTP")).build();
     }
 
+    /**
+     * Method getAllProductByPageAndSortBy to get all product by product json string and number page and sort by
+     *
+     * @param productString of type String
+     * @param numberPage    of type int
+     * @param sortBy        of type String
+     * @param position      of type String
+     * @return Response
+     */
     @GET
     @Path("/{numberPage : \\d+}/page/{sortBy}/{position}/sortBy")
     @Produces("application/json")
@@ -113,6 +147,14 @@ public class ProductRest {
         return Response.status((int) result.get("CODE_HTTP")).entity(result.get("MESSAGE_HTTP")).build();
     }
 
+    /**
+     * Method getAllProductByPageAndCategory to get all product by product json string and number page and id category
+     *
+     * @param productString of type String
+     * @param numberPage    of type int
+     * @param idCategory    of type int
+     * @return Response
+     */
     @GET
     @Path("/{numberPage : \\d+}/page/{idCategory : \\d+}/category")
     @Produces("application/json")
@@ -130,6 +172,16 @@ public class ProductRest {
         return Response.status((int) result.get("CODE_HTTP")).entity(result.get("MESSAGE_HTTP")).build();
     }
 
+    /**
+     * Method getAllProductByPageAndCategoryAndSortBy to get all product by product json string and number page and sort by and id category
+     *
+     * @param productString of type String
+     * @param numberPage    of type int
+     * @param idCategory    of type int
+     * @param sortBy        of type String
+     * @param position      of type String
+     * @return Response
+     */
     @GET
     @Path("/{numberPage : \\d+}/page/{sortBy}/{position}/sortBy/{idCategory : \\d+}/category")
     @Produces("application/json")
@@ -153,6 +205,12 @@ public class ProductRest {
         return Response.status((int) result.get("CODE_HTTP")).entity(result.get("MESSAGE_HTTP")).build();
     }
 
+    /**
+     * Method getCountAllProduct to count all product by product json string
+     *
+     * @param productString of type String
+     * @return Response
+     */
     @GET
     @Path("/count")
     @Produces("application/json")
@@ -171,11 +229,18 @@ public class ProductRest {
         return Response.status((int) result.get("CODE_HTTP")).entity(result.get("MESSAGE_HTTP")).build();
     }
 
+    /**
+     * Method getCountAllProductByCategory to count all product by product json string and id category
+     *
+     * @param productString of type String
+     * @param idCategory of type int
+     * @return Response
+     */
     @GET
     @Path("/count/{idCategory : \\d+}/category")
     @Produces("application/json")
     public Response getCountAllProductByCategory(final String productString, @PathParam("idCategory") final int idCategory) {
-        final int countProduct = PD.countAllProduct(idCategory);
+        final int countProduct = PD.countAllProductByCategory(idCategory);
 
         final JSONObject jsonCountProducts = new JSONObject();
         try {

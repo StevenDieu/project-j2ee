@@ -81,7 +81,7 @@ public interface ICategoryDao {
      * @param categoryString
      * @return
      */
-    Map<String,Object> convertJsonToCategoryToUpdate(String categoryString);
+    Map<String, Object> convertJsonToCategoryToUpdate(String categoryString);
 
     /**
      * Convert multiple category to the json

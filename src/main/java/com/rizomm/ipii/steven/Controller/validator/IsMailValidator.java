@@ -20,6 +20,14 @@ public class IsMailValidator implements Validator {
     private Pattern pattern;
     private Matcher matcher;
 
+    /**
+     * Method validate for validate if string is a correct email
+     *
+     * @param facesContext of type FacesContext
+     * @param uiComponent  of type UIComponent
+     * @param value        of type Object
+     * @throws ValidatorException when
+     */
     @Override
     public void validate(FacesContext facesContext, UIComponent uiComponent, Object value) throws ValidatorException {
         String componentValue = value.toString();

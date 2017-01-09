@@ -8,19 +8,20 @@ import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
 
+/**
+ * Class ApplicationConfig ...
+ *
+ * @author steven
+ *         Created on 09/01/2017
+ */
 @ApplicationPath("json")
 public class ApplicationConfig extends Application {
 
-    // ======================================
-    // =             Attributes             =
-    // ======================================
-
     private final Set<Class<?>> classes;
 
-    // ======================================
-    // =            Constructors            =
-    // ======================================
-
+    /**
+     * Constructor ApplicationConfig creates a new ApplicationConfig instance.
+     */
     public ApplicationConfig() {
         HashSet<Class<?>> c = new HashSet<>();
         c.add(ProductRest.class);
@@ -31,10 +32,11 @@ public class ApplicationConfig extends Application {
         classes = Collections.unmodifiableSet(c);
     }
 
-    // ======================================
-    // =          Getters & Setters         =
-    // ======================================
-
+    /**
+     * Method getClasses returns the classes of this ApplicationConfig object.
+     *
+     * @return the classes (type Set<Class<?>>) of this ApplicationConfig object.
+     */
     @Override
     public Set<Class<?>> getClasses() {
         return classes;
