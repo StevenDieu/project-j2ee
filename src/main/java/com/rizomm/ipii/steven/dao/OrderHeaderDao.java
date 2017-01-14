@@ -6,6 +6,8 @@ import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
+import java.util.List;
+
 import static com.rizomm.ipii.steven.helper.Utils.isEmpty;
 import static com.rizomm.ipii.steven.helper.Utils.isNotEmpty;
 
@@ -64,6 +66,16 @@ public class OrderHeaderDao implements IOrderHeaderDao {
             return true;
         }
         return false;
+    }
+
+    /**
+     * Method findAllOrder get all orders
+     *
+     * @return List<OrderHeader>
+     */
+    @Override
+    public List<OrderHeader> findAllOrder() {
+        return null;
     }
 
 }
