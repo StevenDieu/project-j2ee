@@ -5,13 +5,19 @@ import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 
+import static com.rizomm.ipii.steven.model.ShoppingCart.DELETE_ALL;
+
 
 /**
  * Created by Steven Dieu on 01/01/2017.
  */
 @Entity
+@NamedQueries({
+        @NamedQuery(name = DELETE_ALL, query = " delete from ShoppingCart"),
+})
 public class ShoppingCart implements Serializable {
 
+    public static final String DELETE_ALL = "Product.deleteAllShoppingCart";
 
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "SHOPPING_CART_SEQ")
