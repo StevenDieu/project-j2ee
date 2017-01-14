@@ -5,11 +5,13 @@ import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 
+
 /**
  * Created by Steven Dieu on 01/01/2017.
  */
 @Entity
 public class ShoppingCart implements Serializable {
+
 
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "SHOPPING_CART_SEQ")
@@ -17,6 +19,7 @@ public class ShoppingCart implements Serializable {
     private int id;
 
     @ManyToOne
+    @JoinColumn(name = "product_fk", nullable = false)
     private Product product;
 
     @NotNull(message = "The quantity can't be empty")
@@ -36,9 +39,9 @@ public class ShoppingCart implements Serializable {
     /**
      * Constructor ShoppingCart creates a new ShoppingCart instance.
      *
-     * @param product    of type Product
-     * @param quantity   of type int
-    $     * @param totalPrice of type Double
+     * @param product  of type Product
+     * @param quantity of type int
+     *                 $     * @param totalPrice of type Double
      */
     public ShoppingCart(Product product, int quantity, Double totalPrice) {
         this.product = product;

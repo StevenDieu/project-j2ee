@@ -1,6 +1,8 @@
 package com.rizomm.ipii.steven.dao;
 
 import com.rizomm.ipii.steven.model.OrderHeader;
+import org.codehaus.jettison.json.JSONException;
+import org.codehaus.jettison.json.JSONObject;
 
 import javax.ejb.Remote;
 import java.util.List;
@@ -41,4 +43,21 @@ public interface IOrderHeaderDao {
      * @return List<OrderHeader>
      */
     List<OrderHeader> findAllOrder();
+
+    /**
+     * Method convertOrdersToJson convert all order for json
+     *
+     * @param listOrder of type List<OrderHeader>
+     * @return JSONObject
+     */
+    JSONObject convertOrdersToJson(List<OrderHeader> listOrder, IProductDao PD);
+
+    /**
+     * Method convertOrderToJson convert one order to json
+     *
+     * @param orderHeader of type OrderHeader
+     * @param PD
+     * @return JSONObject
+     */
+    JSONObject convertOrderToJson(OrderHeader orderHeader, IProductDao PD) throws JSONException;
 }

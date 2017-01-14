@@ -6,17 +6,25 @@ import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.util.List;
 
+import static com.rizomm.ipii.steven.model.OrderHeader.*;
+
 /**
  * Created by steven on 17/11/2016.
  */
 @Entity
+@NamedQueries({
+        @NamedQuery(name = FIND_ALL, query = "select c from OrderHeader c order by c.id asc"),
+})
 public class OrderHeader extends AbstractTimestampEntity implements Serializable {
+
+    public static final String FIND_ALL = "Product.findAllorder";
+
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "ORDER_HEADER_SEQ")
     @SequenceGenerator(name = "ORDER_HEADER_SEQ", sequenceName = "order_header_seq", allocationSize = 1)
     private int id;
 
-    @OneToMany(cascade = CascadeType.PERSIST)
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinColumn(name = "shopping_cart_fk")
     private List<ShoppingCart> shoppingCarts;
 

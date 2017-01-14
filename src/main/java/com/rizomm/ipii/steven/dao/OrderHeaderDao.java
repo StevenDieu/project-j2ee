@@ -1,15 +1,20 @@
 package com.rizomm.ipii.steven.dao;
 
 import com.rizomm.ipii.steven.model.OrderHeader;
+import com.rizomm.ipii.steven.model.ShoppingCart;
+import org.codehaus.jettison.json.JSONArray;
+import org.codehaus.jettison.json.JSONException;
+import org.codehaus.jettison.json.JSONObject;
 
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-
+import javax.persistence.TypedQuery;
 import java.util.List;
 
 import static com.rizomm.ipii.steven.helper.Utils.isEmpty;
 import static com.rizomm.ipii.steven.helper.Utils.isNotEmpty;
+import static com.rizomm.ipii.steven.model.OrderHeader.FIND_ALL;
 
 /**
  * Created by steven on 17/11/2016.
@@ -75,7 +80,61 @@ public class OrderHeaderDao implements IOrderHeaderDao {
      */
     @Override
     public List<OrderHeader> findAllOrder() {
-        return null;
+        final TypedQuery<OrderHeader> query = em.createNamedQuery(FIND_ALL, OrderHeader.class)
+                ;
+
+        if (isNotTest) {
+            em.joinTransaction();
+        }
+        return query.getResultList();
+    }
+
+    /**
+     * Method convertOrdersToJson convert all order for json
+     *
+     * @param listOrder of type List<OrderHeader>
+     * @return JSONObject
+     */
+    @Override
+    public JSONObject convertOrdersToJson(List<OrderHeader> listOrder, IProductDao PD) {
+        final JSONObject jsonProducts = new JSONObject();
+
+        try {
+            final JSONArray jsonArray = new JSONArray();
+            for (OrderHeader orderHeader : listOrder) {
+                jsonArray.put(convertOrderToJson(orderHeader, PD));
+            }
+            jsonProducts.put("order", jsonArray);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        return jsonProducts;
+    }
+
+    /**
+     * Method convertOrderToJson convert one order to json
+     *
+     * @param orderHeader of type OrderHeader
+     * @param PD
+     * @return JSONObject
+     */
+    @Override
+    public JSONObject convertOrderToJson(OrderHeader orderHeader, IProductDao PD) throws JSONException {
+        final JSONObject jsonOrder = new JSONObject();
+        final JSONArray jsonAllProduct = new JSONArray();
+        jsonOrder.put("id", orderHeader.getId());
+        for (ShoppingCart shoppingCart : orderHeader.getShoppingCarts()) {
+            JSONObject jsonProduct = PD.convertProductToJson(shoppingCart.getProduct());
+            jsonProduct.put("Quantity", shoppingCart.getQuantity());
+            jsonProduct.put("Total product", shoppingCart.getTotalPrice());
+            jsonAllProduct.put(jsonProduct);
+        }
+        jsonOrder.put("Product", jsonAllProduct);
+        jsonOrder.put("Total order", orderHeader.getTotal());
+        jsonOrder.put("Created", orderHeader.getCreated());
+        jsonOrder.put("Updated", orderHeader.getUpdated());
+        return jsonOrder;
     }
 
 }
