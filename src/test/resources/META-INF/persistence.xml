@@ -10,6 +10,7 @@
         <class>com.rizomm.ipii.steven.model.Category</class>
         <class>com.rizomm.ipii.steven.model.OrderHeader</class>
         <class>com.rizomm.ipii.steven.model.Newsletter</class>
+        <class>com.rizomm.ipii.steven.model.ShoppingCart</class>
         <properties>
             <property name="javax.persistence.schema-generation.database.action" value="drop-and-create"/>
             <property name="eclipselink.logging.level" value="INFO"/>
