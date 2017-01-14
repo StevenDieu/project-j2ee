@@ -11,7 +11,6 @@ import org.junit.Test;
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.rizomm.ipii.steven.model.ShoppingCart.DELETE_ALL;
 import static org.junit.Assert.*;
 
 /**
@@ -110,9 +109,9 @@ public class OrderHeaderDaoTest extends AbstractPersistentTest {
      * @return List<Product>
      */
     private List<ShoppingCart> createListShoppingCart() {
-        Category category = new Category( "test");
-        Product product = new Product( category, 5, 1.F, "Name of product", "description Product", "/img/picture");
-        Product product2 = new Product( category, 5, 1.F, "Name of product2", "description Product", "/img/picture");
+        Category category = new Category("test");
+        Product product = new Product(category, 5, 1.F, "Name of product", "description Product", "/img/picture");
+        Product product2 = new Product(category, 5, 1.F, "Name of product2", "description Product", "/img/picture");
         tx.begin();
         CD.createCategory(category);
         PD.createProduct(product);
@@ -143,7 +142,7 @@ public class OrderHeaderDaoTest extends AbstractPersistentTest {
      */
     private void deleteAllProduct() {
         tx.begin();
-        em.createNamedQuery(DELETE_ALL, Product.class).executeUpdate();
+        em.createQuery("delete from ShoppingCart", Product.class).executeUpdate();
         PD.deleteAllProduct();
         tx.commit();
         deleteAllCategory();
