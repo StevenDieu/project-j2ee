@@ -28,7 +28,7 @@ public class OrderHeaderDao implements IOrderHeaderDao {
      */
     @Override
     public OrderHeader createOrder(final OrderHeader order) {
-        if (isNotEmpty(order.getProducts())) {
+        if (isNotEmpty(order.getShoppingCarts())) {
             em.persist(order);
             if (isNotTest) {
                 em.flush();

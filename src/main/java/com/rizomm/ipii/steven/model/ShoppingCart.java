@@ -1,28 +1,67 @@
 package com.rizomm.ipii.steven.model;
 
+import javax.persistence.*;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotNull;
+import java.io.Serializable;
+
 /**
  * Created by Steven Dieu on 01/01/2017.
  */
-public class ShoppingCart {
+@Entity
+public class ShoppingCart implements Serializable {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "SHOPPING_CART_SEQ")
+    @SequenceGenerator(name = "SHOPPING_CART_SEQ", sequenceName = "shopping_cart_seq", allocationSize = 1, initialValue = 10)
+    private int id;
+
+    @ManyToOne
     private Product product;
+
+    @NotNull(message = "The quantity can't be empty")
+    @Min(value = 0, message = "The quantity can't be negative")
     private int quantity;
-    private String priceUnit;
-    private String totalPrice;
+
+    @NotNull(message = "The totalPrice can't be empty")
+    @Min(value = 0, message = "The totalPrice can't be negative")
+    private Double totalPrice;
+
+    /**
+     * Constructor ShoppingCart creates a new ShoppingCart instance.
+     */
+    public ShoppingCart() {
+    }
 
     /**
      * Constructor ShoppingCart creates a new ShoppingCart instance.
      *
      * @param product    of type Product
      * @param quantity   of type int
-     * @param priceUnit  of type String
-     * @param totalPrice of type String
+    $     * @param totalPrice of type Double
      */
-    public ShoppingCart(Product product, int quantity, String priceUnit, String totalPrice) {
+    public ShoppingCart(Product product, int quantity, Double totalPrice) {
         this.product = product;
         this.quantity = quantity;
-        this.priceUnit = priceUnit;
         this.totalPrice = totalPrice;
+    }
+
+    /**
+     * Method getId returns the id of this ShoppingCart object.
+     *
+     * @return the id (type int) of this ShoppingCart object.
+     */
+    public int getId() {
+        return id;
+    }
+
+    /**
+     * Method setId sets the id of this ShoppingCart object.
+     *
+     * @param id the id of this ShoppingCart object.
+     */
+    public void setId(int id) {
+        this.id = id;
     }
 
     /**
@@ -62,29 +101,11 @@ public class ShoppingCart {
     }
 
     /**
-     * Method getPriceUnit returns the priceUnit of this ShoppingCart object.
-     *
-     * @return the priceUnit (type String) of this ShoppingCart object.
-     */
-    public String getPriceUnit() {
-        return priceUnit;
-    }
-
-    /**
-     * Method setPriceUnit sets the priceUnit of this ShoppingCart object.
-     *
-     * @param priceUnit the priceUnit of this ShoppingCart object.
-     */
-    public void setPriceUnit(String priceUnit) {
-        this.priceUnit = priceUnit;
-    }
-
-    /**
      * Method getTotalPrice returns the totalPrice of this ShoppingCart object.
      *
      * @return the totalPrice (type String) of this ShoppingCart object.
      */
-    public String getTotalPrice() {
+    public Double getTotalPrice() {
         return totalPrice;
     }
 
@@ -93,7 +114,7 @@ public class ShoppingCart {
      *
      * @param totalPrice the totalPrice of this ShoppingCart object.
      */
-    public void setTotalPrice(String totalPrice) {
+    public void setTotalPrice(Double totalPrice) {
         this.totalPrice = totalPrice;
     }
 }

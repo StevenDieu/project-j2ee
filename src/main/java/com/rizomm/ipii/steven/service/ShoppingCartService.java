@@ -54,13 +54,11 @@ public class ShoppingCartService implements IShoppingCartService {
                 qty = shoppingCart.getQuantity() + qty;
                 if (qty > 0 && qty <= product.getStock()) {
                     shoppingCart.setQuantity(qty);
-                    shoppingCart.setPriceUnit(convertDoubleToStringWithDixieme(product.getPrice()));
-                    shoppingCart.setTotalPrice(convertDoubleToStringWithDixieme(product.getPrice() * shoppingCart.getQuantity()));
+                    shoppingCart.setTotalPrice(product.getPrice() * shoppingCart.getQuantity());
                 } else {
                     if (qty >= product.getStock()) {
                         shoppingCart.setQuantity(product.getStock());
-                        shoppingCart.setPriceUnit(convertDoubleToStringWithDixieme(product.getPrice()));
-                        shoppingCart.setTotalPrice(convertDoubleToStringWithDixieme(product.getPrice() * product.getStock()));
+                        shoppingCart.setTotalPrice(product.getPrice() * product.getStock());
                         return "Il n'y a plus assez de stock nous avons actualisé votre panier...";
                     }
                     return "Pour supprimer un produit veuillez cliquer sur la croix";
@@ -77,8 +75,7 @@ public class ShoppingCartService implements IShoppingCartService {
                 return "Il n'y a plus assez de stock nous avons actualisé votre panier...";
             }
 
-            final String priceString = convertDoubleToStringWithDixieme(product.getPrice());
-            listShoppingCart.add(new ShoppingCart(product, qty, priceString, priceString));
+            listShoppingCart.add(new ShoppingCart(product, qty, product.getPrice()));
         }
 
 

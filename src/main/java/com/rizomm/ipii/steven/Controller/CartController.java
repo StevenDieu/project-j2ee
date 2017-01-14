@@ -75,18 +75,28 @@ public class CartController implements Serializable {
      * Method createOrder to create an order with current cart
      */
     public void createOrder() {
-        List<Product> listShoppingCart = getShoppingCartService().getListProductForOrder(PD);
+        List<ShoppingCart> listShoppingCart = getShoppingCartService().getListShoppingCart();
         Double totalPrice = getShoppingCartService().getTotalPrice();
         if (listShoppingCart.size() > 0) {
             OrderHeader orderHeader = new OrderHeader(listShoppingCart, totalPrice);
             orderHeader = OHD.createOrder(orderHeader);
             getShoppingCartService().setListShoppingCart(new ArrayList<ShoppingCart>());
             message = "Votre numéros de commande est : " + orderHeader.getId();
-
         } else {
             message = "Votre panier est vide ou à été modifié";
         }
     }
+
+    /**
+     * Method convertDoubleToStringWithDixieme
+     *
+     * @param d of type double
+     * @return String
+     */
+    public String convertDoubleToStringWithDixieme(Double d) {
+        return Utils.convertDoubleToStringWithDixieme(d);
+    }
+
 
     /**
      * Method getAllProductCart returns the allProductCart of this CartController object.

@@ -49,8 +49,6 @@ public class Product implements Serializable {
     private String description;
     @NotNull(message = "The urlPicture can't be empty")
     private String urlPicture;
-    @ManyToMany(mappedBy = "products")
-    private List<OrderHeader> orders;
 
     /**
      * Constructor Product creates a new Product instance.

@@ -1,6 +1,8 @@
 package com.rizomm.ipii.steven.model;
 
 import javax.persistence.*;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.util.List;
 
@@ -13,9 +15,13 @@ public class OrderHeader extends AbstractTimestampEntity implements Serializable
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "ORDER_HEADER_SEQ")
     @SequenceGenerator(name = "ORDER_HEADER_SEQ", sequenceName = "order_header_seq", allocationSize = 1)
     private int id;
-    @ManyToMany
-    @JoinTable(name = "jnd_order_product", joinColumns = @JoinColumn(name = "order_fk"), inverseJoinColumns = @JoinColumn(name = "product_fk"))
-    private List<Product> products;
+
+    @OneToMany(cascade = CascadeType.PERSIST)
+    @JoinColumn(name = "shopping_cart_fk")
+    private List<ShoppingCart> shoppingCarts;
+
+    @NotNull(message = "The total can't be empty")
+    @Min(value = 0, message = "The total can't be negative")
     private double total;
 
     /**
@@ -28,23 +34,23 @@ public class OrderHeader extends AbstractTimestampEntity implements Serializable
      * Constructor OrderHeader creates a new OrderHeader instance.
      *
      * @param id       of type int
-     * @param products of type List<Product>
+     * @param shoppingCarts of type List<ShoppingCart>
      * @param total    of type double
      */
-    public OrderHeader(int id, List<Product> products, double total) {
+    public OrderHeader(int id, List<ShoppingCart> shoppingCarts, double total) {
         this.id = id;
-        this.products = products;
+        this.shoppingCarts = shoppingCarts;
         this.total = total;
     }
 
     /**
      * Constructor OrderHeader creates a new OrderHeader instance.
      *
-     * @param products of type List<Product>
+     * @param shoppingCarts of type List<Product>
      * @param total    of type double
      */
-    public OrderHeader(List<Product> products, double total) {
-        this.products = products;
+    public OrderHeader(List<ShoppingCart> shoppingCarts, double total) {
+        this.shoppingCarts = shoppingCarts;
         this.total = total;
     }
 
@@ -67,21 +73,21 @@ public class OrderHeader extends AbstractTimestampEntity implements Serializable
     }
 
     /**
-     * Method getProducts returns the products of this OrderHeader object.
+     * Method getShoppingCarts returns the products of this OrderHeader object.
      *
      * @return the products (type List<Product>) of this OrderHeader object.
      */
-    public List<Product> getProducts() {
-        return products;
+    public List<ShoppingCart> getShoppingCarts() {
+        return shoppingCarts;
     }
 
     /**
-     * Method setProducts sets the products of this OrderHeader object.
+     * Method setShoppingCarts sets the products of this OrderHeader object.
      *
-     * @param products the products of this OrderHeader object.
+     * @param shoppingCarts the products of this OrderHeader object.
      */
-    public void setProducts(List<Product> products) {
-        this.products = products;
+    public void setShoppingCarts(List<ShoppingCart> shoppingCarts) {
+        this.shoppingCarts = shoppingCarts;
     }
 
     /**

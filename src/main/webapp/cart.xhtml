@@ -63,7 +63,7 @@
                                 <h:panelGroup layout="block" styleClass="cart-item-info">
                                     <h3><h:link value="#{product.name}" outcome="product?id=#{product.id}"/></h3>
                                     <ul class="qty">
-                                        <li><p><h:outputText value="Prix utinaire : "/><h:outputText value=" #{shoppingCart.priceUnit} €"/></p></li>
+                                        <li><p><h:outputText value="Prix utinaire : "/><h:outputText value=" #{cartController.convertDoubleToStringWithDixieme(product.price)} €"/></p></li>
                                         <li class="qtyCart">
                                             <p>
                                                 <h:outputText value="Quantité : "/>
@@ -91,7 +91,7 @@
 
                                         <p>Prix total :
                                             <h:panelGroup id="#{idInfoProductTotalPrice}">
-                                                <h:outputText value="#{shoppingCart.totalPrice}"/>
+                                                <h:outputText value="#{cartController.convertDoubleToStringWithDixieme(shoppingCart.totalPrice)}"/>
                                             </h:panelGroup>
                                             <h:outputText value="€"/>
                                         </p>
